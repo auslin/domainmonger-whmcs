@@ -1,0 +1,69 @@
+name: Seed Issue Labels
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/seed-issue-labels.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  seed-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create or update DomainMonger labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = [
+              { name: 'feature', color: '1f6feb', description: 'New capability or enhancement' },
+              { name: 'bug', color: 'd73a4a', description: 'Reproducible problem or regression' },
+              { name: 'infrastructure', color: '5319e7', description: 'GitHub, cPanel, staging, deployment, backup, or workflow' },
+              { name: 'BDM', color: 'f58220', description: 'Bulk Domain Manager' },
+              { name: 'RegistrarDNS', color: '163a5f', description: 'RegistrarDNS / registrar integration' },
+              { name: 'DNSPlus', color: '214e7a', description: 'DNSPlus / DNSLite' },
+              { name: 'Expiring Domains', color: '0e8a16', description: 'Expiring Domains Tracker' },
+              { name: 'WHMCS Admin', color: '0052cc', description: 'WHMCS administration area' },
+              { name: 'WHMCS Client Area', color: '006b75', description: 'WHMCS client-facing area' },
+              { name: 'billing', color: 'b60205', description: 'Orders, invoices, payments, or billing behavior' },
+              { name: 'WordPress', color: '21759b', description: 'WordPress code or site behavior' },
+              { name: 'integration', color: '7057ff', description: 'WordPress / WHMCS or external-system integration' },
+              { name: 'cleanup', color: 'cfd3d7', description: 'Removal of retired or obsolete code' },
+              { name: 'staging', color: 'fbca04', description: 'Staging environment setup or validation' },
+              { name: 'testing', color: 'bfdadc', description: 'Needs or documents testing' },
+              { name: 'blocked', color: '000000', description: 'Cannot proceed until a dependency is resolved' }
+            ];
+
+            const current = await github.paginate(github.rest.issues.listLabelsForRepo, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100
+            });
+            const byName = new Map(current.map(label => [label.name.toLowerCase(), label]));
+
+            for (const label of labels) {
+              const existing = byName.get(label.name.toLowerCase());
+              if (existing) {
+                await github.rest.issues.updateLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: existing.name,
+                  new_name: label.name,
+                  color: label.color,
+                  description: label.description
+                });
+              } else {
+                await github.rest.issues.createLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: label.name,
+                  color: label.color,
+                  description: label.description
+                });
+              }
+            }

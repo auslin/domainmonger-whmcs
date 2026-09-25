@@ -1,0 +1,54 @@
+name: Feature
+description: Request or track a new DomainMonger capability or enhancement.
+title: "[Feature] "
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Bulk Domain Manager (BDM)
+        - RegistrarDNS
+        - DNSPlus / DNSLite
+        - Expiring Domains Tracker
+        - WHMCS Admin
+        - WHMCS Client Area
+        - Orders / Billing / Payments
+        - WordPress / WHMCS Integration
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What should this change accomplish?
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: Current behavior
+      description: Describe the current workflow or limitation.
+  - type: textarea
+    id: requested
+    attributes:
+      label: Requested behavior
+      description: Describe the desired workflow and important safeguards.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: List the checks that must pass before this is considered complete.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: textarea
+    id: testing
+    attributes:
+      label: Testing / deployment notes
+      description: Include staging, rollback, restore-point, or production considerations.

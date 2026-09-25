@@ -1734,6 +1734,10 @@ function multibulkupdater_add_payment_method(int $clientId): array
         }
     }
 
+    if (isset($modules['mailin'])) {
+        return ['ok' => true, 'module' => 'mailin', 'message' => ''];
+    }
+
     if ($defaultGateway !== '' && isset($modules[$defaultGateway])) {
         return ['ok' => true, 'module' => $defaultGateway, 'message' => ''];
     }
@@ -2247,7 +2251,6 @@ function multibulkupdater_add_execute(array $domains, array $preflight, int $yea
                 'domainid' => $domainId,
                 'registrar' => $registrar,
                 'regperiod' => $years,
-                'status' => 'Active',
             ]);
         } catch (Throwable $e) {
             $update = ['result' => 'error', 'message' => $e->getMessage()];

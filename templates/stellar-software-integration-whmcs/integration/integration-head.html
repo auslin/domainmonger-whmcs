@@ -1,94 +1,81 @@
-<!-- 
 
-	WordPress Theme Integration Setup: https://www.zomex.com/docs/wordpress-themes/how-to-install/
-	HTML Template Integration Setup: https://www.zomex.com/docs/html-templates/how-to-install/
 
--->
-    <link rel='stylesheet' id='wp-block-library-css' href='https://domainmonger.com/wp-includes/css/dist/block-library/style.min.css' type='text/css' media='all' />
 
-  
-            
-        <link rel='stylesheet' id='stellar-fontawesome' href='https://domainmonger.com/wp-content/themes/stellar/libs/fonts/css/fontawesome.min.css' type='text/css' media='all' />
-        <link rel='stylesheet' id='stellar-fontawesome-solid' href='https://domainmonger.com/wp-content/themes/stellar/libs/fonts/css/fontawesome-solid.min.css' type='text/css' media='all' />
-        <link rel='stylesheet' id='stellar-fontawesome-regular' href='https://domainmonger.com/wp-content/themes/stellar/libs/fonts/css/fontawesome-regular.min.css' type='text/css' media='all' />
-        <link rel='stylesheet' id='stellar-fontawesome-light' href='https://domainmonger.com/wp-content/themes/stellar/libs/fonts/css/fontawesome-light.min.css' type='text/css' media='all' />
-        <link rel='stylesheet' id='stellar-fontawesome-brands' href='https://domainmonger.com/wp-content/themes/stellar/libs/fonts/css/fontawesome-brands.min.css' type='text/css' media='all' />
-        <link rel='stylesheet' id='stellar-fontawesome-duotone' href='https://domainmonger.com/wp-content/themes/stellar/libs/fonts/css/fontawesome-duotone.min.css' type='text/css' media='all' />
-    
-        
+<link rel='stylesheet' href='frontend/css/designs/.css?ver=' type='text/css' media='all' />
 
-{literal}<script>
+<link rel='stylesheet' href='frontend/css/wizardpanel.min.css?ver=' type='text/css' media='all' />
 
-if(wizardpanel_options('colorscheme_toggle')=='off') {
+<link rel='stylesheet' href='frontend/css/wordpress.min.css?ver=' type='text/css' media='all' />
 
-  var colortoggle = false;
+<link rel='stylesheet' href='frontend/css/integrations/.min.css?ver=' type='text/css' media='all' />
 
-} else {
-  
-  var colortoggle = true;
-  
-}
+  <script type='text/javascript' src='frontend/js/menu1.min.js?ver='></script>
 
-if(wizardpanel_options('colorscheme')=='light') {
 
-  var colortoggle_default = window.colortoggle_default || 'colortoggle-light';
+  <link rel='stylesheet' href='frontend/css/designs/-dark.css?ver=' type='text/css' media='all' />
 
-} else {
-  
-  var colortoggle_default = window.colortoggle_default || 'colortoggle-dark';
-  
-}	
+  <link rel='stylesheet' href='frontend/css/wizardpanel-dark.min.css?ver=' type='text/css' media='all' />
 
-</script>
-{/literal}
-{literal}<script>
-(function () {
-try {
-  var cookieName = 'colortoggle-mode';
-  var colortoggle_default = window.colortoggle_default || 'colortoggle-light';
+    <script>
 
-  function getCookie(name) {
-    var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    return match ? match[2] : null;
-  }
 
-  var mode = getCookie(cookieName) || localStorage.getItem(cookieName);
+    var colortoggle = true;
 
-  if (!mode) {
-    mode = colortoggle_default;
-  }
 
-  function applyMode() {
-    if (mode === 'colortoggle-dark') {
-      document.body.classList.remove('colortoggle-light');
-      document.body.classList.add('colortoggle-dark');
-    } else {
-      document.body.classList.remove('colortoggle-dark');
-      document.body.classList.add('colortoggle-light');
+
+    var colortoggle_default = window.colortoggle_default || 'colortoggle-dark';
+
+
+  </script>
+
+    <script>
+  (function () {
+  try {
+    var cookieName = 'colortoggle-mode';
+    var colortoggle_default = window.colortoggle_default || 'colortoggle-light';
+
+    function getCookie(name) {
+      var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      return match ? match[2] : null;
     }
+
+    var mode = getCookie(cookieName) || localStorage.getItem(cookieName);
+
+    if (!mode) {
+      mode = colortoggle_default;
+    }
+
+    function applyMode() {
+      if (mode === 'colortoggle-dark') {
+        document.body.classList.remove('colortoggle-light');
+        document.body.classList.add('colortoggle-dark');
+      } else {
+        document.body.classList.remove('colortoggle-dark');
+        document.body.classList.add('colortoggle-light');
+      }
+    }
+
+    if (document.body) {
+      applyMode();
+    } else {
+      document.addEventListener('DOMContentLoaded', applyMode);
+    }
+  } catch (e) {
+    // fail silently
   }
+  })();
+  </script>
 
-  if (document.body) {
-    applyMode();
-  } else {
-    document.addEventListener('DOMContentLoaded', applyMode);
-  }
-} catch (e) {
-  // fail silently
-}
-})();
-</script>
-{/literal}
-<link rel='stylesheet' id='stellar-layout-css' href='https://domainmonger.com/wp-content/themes/stellar/libs/css/layout.min.css' type='text/css' media='all' />
-<link rel='stylesheet' id='stellar-wordpress-css' href='https://domainmonger.com/wp-content/themes/stellar/libs/css/wordpress.min.css' type='text/css' media='all' />
-<link rel='stylesheet' id='stellar-wordpress-css' href='https://domainmonger.com/wp-content/themes/stellar/libs/css/whmcs.min.css' type='text/css' media='all' />
+  <script type='text/javascript' src='frontend/js/colortoggle.min.js?ver='></script>
 
-<script type='text/javascript' src='https://domainmonger.com/wp-content/themes/stellar/libs/js/template.min.js' id='stellar-template-js'></script>
+
+<script type='text/javascript' src='frontend/js/wizardpanel.min.js?ver='></script>
 
 
 
 
-{literal}<style>:root {--container-width:90%;--container-maxwidth:100%;}.subbanner {background-image:url('https://domainmonger.com/wp-content/themes/stellar/libs/images/background.jpg');}.cta-container {background-image:none;}</style>{/literal}{literal}<script>jQuery(function($) { jQuery(document).ready( function() { jQuery('.headermain').stickUp(); }); });</script>{/literal}
+
+
+
+<style>:root {}</style>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-	<link rel="shortcut icon" href="https://domainmonger.com/wp-content/uploads/2026/06/favicon.png" />

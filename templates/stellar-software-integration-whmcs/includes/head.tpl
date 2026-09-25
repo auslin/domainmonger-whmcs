@@ -18,7 +18,7 @@
 {* {\WHMCS\View\Asset::fontCssInclude('open-sans-family.css')} *}
 <link href="{assetPath file='all.min.css'}?v={$versionHash}" rel="stylesheet">
 <link href="{assetPath file='theme.min.css'}?v={$versionHash}" rel="stylesheet">
-<link href="{$WEB_ROOT}/assets/css/fontawesome-all.min.css" rel="stylesheet">
+{* <link href="{$WEB_ROOT}/assets/css/fontawesome-all.min.css" rel="stylesheet"> *}
 {assetExists file="custom.css"}
 <link href="{$__assetPath__}" rel="stylesheet">
 {/assetExists}

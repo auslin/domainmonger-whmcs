@@ -1,154 +1,46 @@
-<!-- 
-
-	WordPress Theme Integration Setup: https://www.zomex.com/docs/wordpress-themes/how-to-install/
-	HTML Template Integration Setup: https://www.zomex.com/docs/html-templates/how-to-install/
-
--->
-<div class="basecontainer"> 
-	
-
-	<div class="toolbarmain-container">
-		
-		<div class="toolbarmain contentcontainer">
-			
-			<div class="toolbarmain-text">
-				Premium Hosting - Awesome Service!			</div><!-- .toolbarmain-text -->
-			
-						
-			<div class="toolbarmain-menu">
-				<div class="menu-toolbar-container"><ul><li class=" menu-item menu-item-type-custom menu-item-object-custom"><a href="tel:800.939.0079"><i class="fas fa-phone-square"></i>800.939.0079</a></li>
-<li class="contact menu-item menu-item-type-custom menu-item-object-custom"><a href="https://host50.domainmonger.com:2096/" target="_blank" rel="noopener noreferrer"><i class="fas fa-envelope"></i>Webmail</a></li>
-<li class="register menu-item menu-item-type-custom menu-item-object-custom"><a href="/manage/cart.php?a=add&domain=register"><i class="fas fa-globe"></i>Domains</a></li>
-<li class="myaccount menu-item menu-item-type-custom menu-item-object-custom"><a href="/manage/clientarea.php" data-dm-whmcs-account-link="1"><i class="fas fa-lock"></i>Login</a></li>
-</ul></div>			</div><!-- .toolbarmain-menu -->
-
-			<script>
-			(function () {
-				'use strict';
-
-				if (window.domainmongerWhmcsToolbarAccount1405Loaded) {
-					return;
-				}
-				window.domainmongerWhmcsToolbarAccount1405Loaded = true;
-
-				var cacheKey = 'domainmongerWhmcsToolbarAccount1405';
-				var cacheLifetime = 60000;
-
-				function accountLink() {
-					return document.querySelector('.toolbarmain-menu a[data-dm-whmcs-account-link="1"]');
-				}
-
-				function setAccountLabel(isLoggedIn) {
-					var link = accountLink();
-					var childNodes;
-					var i;
-
-					if (!link) {
-						return;
-					}
-
-					childNodes = Array.prototype.slice.call(link.childNodes || []);
-					for (i = 0; i < childNodes.length; i += 1) {
-						if (childNodes[i].nodeType === 3) {
-							link.removeChild(childNodes[i]);
-						}
-					}
-
-					link.appendChild(document.createTextNode(isLoggedIn ? 'Dashboard' : 'Login'));
-					link.setAttribute('aria-label', isLoggedIn ? 'Dashboard' : 'Login');
-				}
-
-				function readCachedState() {
-					var cached;
-
-					try {
-						cached = JSON.parse(window.sessionStorage.getItem(cacheKey) || 'null');
-						if (cached && typeof cached.loggedIn === 'boolean' && Number(cached.expires) > Date.now()) {
-							setAccountLabel(cached.loggedIn);
-						}
-					} catch (ignore) {
-						/* Session storage can be unavailable in privacy modes. */
-					}
-				}
-
-				function saveState(isLoggedIn) {
-					try {
-						window.sessionStorage.setItem(cacheKey, JSON.stringify({
-							loggedIn: isLoggedIn,
-							expires: Date.now() + cacheLifetime
-						}));
-					} catch (ignore) {
-						/* The live check still works without storage. */
-					}
-				}
-
-				function checkWhmcsSession() {
-					if (!window.fetch || !accountLink()) {
-						return;
-					}
-
-					window.fetch('/manage/clientarea.php?dm-toolbar-auth-check=1405', {
-						method: 'GET',
-						credentials: 'same-origin',
-						cache: 'no-store',
-						redirect: 'follow',
-						headers: {
-							'X-Requested-With': 'XMLHttpRequest'
-						}
-					}).then(function (response) {
-						return response.text().then(function (html) {
-							return {
-								html: html,
-								url: String(response.url || '')
-							};
-						});
-					}).then(function (result) {
-						var hasLogoutLink = /href\s*=\s*["\'][^"\']*\/logout\.php(?:[?"\'])/i.test(result.html);
-						var isLoginRoute = /\/manage\/index\.php\?[^#]*\brp=(?:%2F|\/)login(?:[&#]|$)/i.test(result.url);
-						var hasLoginForm = /<form\b[^>]*(?:id\s*=\s*["\']frmLogin["\']|action\s*=\s*["\'][^"\']*(?:\/login|dologin))/i.test(result.html);
-
-						if (hasLogoutLink) {
-							setAccountLabel(true);
-							saveState(true);
-						} else if (isLoginRoute || hasLoginForm) {
-							setAccountLabel(false);
-							saveState(false);
-						}
-					}).catch(function () {
-						/* Keep the current label when WHMCS cannot be checked safely. */
-					});
-				}
-
-				readCachedState();
-				checkWhmcsSession();
-			}());
-			</script>
-		
-		</div><!-- .toolbarmain -->
-	
-	</div><!-- .toolbarmain-container -->
 
 
-<header class="headermain headermain-design1">
+<div class="basecontainer">
 
-	<div class="contentcontainer">			
-		
-		<div class="headermain-inner">
-		
-			<div class="headermain-logo">
-									<a href="https://domainmonger.com">
+
+
+    <div class="toolbarmain-container">
+
+        <div class="toolbarmain contentcontainer">
+
+            <div class="toolbarmain-text">
+                Premium Hosting - Awesome Service!            </div><!-- .toolbarmain-text -->
+
+
+            <div class="toolbarmain-menu">
+                <div class="menu-toolbar-container"><ul><li class=" menu-item menu-item-type-custom menu-item-object-custom"><a href="tel:800.939.0079">800.939.0079</a></li>
+<li class="contact menu-item menu-item-type-custom menu-item-object-custom"><a href="https://host50.domainmonger.com:2096/">Webmail</a></li>
+<li class="register menu-item menu-item-type-custom menu-item-object-custom"><a href="/manage/cart.php?a=add&domain=register">Domains</a></li>
+<li class="myaccount menu-item menu-item-type-custom menu-item-object-custom"><a href="/manage/clientarea.php">Login</a></li>
+</ul></div>            </div><!-- .toolbarmain-menu -->
+
+        </div><!-- .toolbarmain -->
+
+    </div><!-- .toolbarmain-container -->
+
+
+
+
+	<header class="headermain headermain-design1 headermain-menu-menu1">
+
+			<div class="headermain-inner">
+
+									<a href="https://domainmonger.com/" class="headermain-logo">
 						<img src="https://domainmonger.com/wp-content/uploads/2026/06/logo.png" alt="Domainmonger Logo" />
 					</a>
-						
-			</div><!-- .headermain-logo -->
-			
-			<div class="navmain-container">
-				<nav class="navmain">
-					<a href="https://domainmonger.com" class="navmain-mobile-home"><i class="fas fa-home"></i></a><a href="#" class="navmain-mobile-icon"></a><ul><li class="navmain-home"><a href="https://domainmonger.com"><i class="fas fa-home"></i></a></li><li id="menu-item-6142" class="nav-design1 menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6142 navmain-dropdown navmain-dropdown-single"><a>Domains</a><div class="navmain-subcontainer"><div class="navmain-links">	<div id="menu-item-6141" class="navmain-icon navmain-icon-registerdomain menu-item menu-item-type-custom menu-item-object-custom navmain-link"><a href="https://domainmonger.com/manage/cart.php?a=add&domain=register"><div class="navmain-link-heading">Register Domain</div><div class="navmain-link-text">Register a domain</div></a></div>	<div id="menu-item-6132" class="navmain-icon navmain-icon-transferdomain menu-item menu-item-type-custom menu-item-object-custom navmain-link"><a href="/manage/cart.php?a=add&domain=transfer"><div class="navmain-link-heading">Transfer Domain</div><div class="navmain-link-text">Move your domain to us</div></a></div></div></div></li><li id="menu-item-6366" class="nav-design1 menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-6366 navmain-dropdown navmain-dropdown-single"><a href="https://domainmonger.com/shared-hosting/">Hosting</a><div class="navmain-subcontainer"><div class="navmain-links">	<div id="menu-item-6374" class="navmain-icon navmain-icon-custom1 menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/shared-hosting/"><div class="navmain-link-heading">Shared Hosting</div><div class="navmain-link-text">Shared Hosting plans</div></a></div>	<div id="menu-item-6423" class="menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/business-hosting/"><div class="navmain-link-heading">Business Hosting</div></a></div>	<div id="menu-item-6373" class="navmain-icon navmain-icon-custom2 menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/reseller-hosting/"><div class="navmain-link-heading">Reseller Hosting</div><div class="navmain-link-text">Reseller Hosting plans</div></a></div>	<div id="menu-item-6372" class="navmain-icon navmain-icon-testimonials menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/compare-hosting/"><div class="navmain-link-heading">Compare Hosting</div><div class="navmain-link-text">Compare our hosting options</div></a></div></div></div></li><li id="menu-item-6371" class="nav-design1 menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-6371 navmain-dropdown navmain-dropdown-single"><a href="https://domainmonger.com/email-hosting/">Email / SSL</a><div class="navmain-subcontainer"><div class="navmain-links">	<div id="menu-item-6376" class="navmain-icon navmain-icon-contact menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/email-hosting/"><div class="navmain-link-heading">Email Hosting</div><div class="navmain-link-text">Email packages</div></a></div>	<div id="menu-item-6444" class="menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/ssl-certificates/"><div class="navmain-link-heading">SSL Certificates</div></a></div></div></div></li><li id="menu-item-6370" class="nav-design1 menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-6370 navmain-dropdown navmain-dropdown-single"><a href="https://domainmonger.com/company/">Company</a><div class="navmain-subcontainer"><div class="navmain-links">	<div id="menu-item-6377" class="navmain-icon navmain-icon-company menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/company/"><div class="navmain-link-heading">Company</div><div class="navmain-link-text">All about us</div></a></div>	<div id="menu-item-6381" class="navmain-icon navmain-icon-knowledgebase menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/legal/"><div class="navmain-link-heading">Legal</div><div class="navmain-link-text">Legal documents</div></a></div></div></div></li><li class="navmain-cta"><a href="https://domainmonger.com/manage/cart.php"><i class="fas fa-shopping-cart"></i>Order</a></ul>				</nav><!-- .navmain -->
-			</div><!-- .navmain-container -->
-			
-		</div><!-- .headermain-inner -->
-		
-	</div><!-- .contentcontainer -->
 
-</header><!-- .headermain -->
+
+									<div class="navmain-container">
+						<nav class="navmain">
+							<a href="https://domainmonger.com/" class="navmain-mobile-home"><i class="fas fa-home"></i></a><a href="#" class="navmain-mobile-icon"></a><ul><li class="navmain-home"><a href="https://domainmonger.com/"><i class="fas fa-home"></i></a></li><li id="menu-item-6142" class="nav-design1 menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-6142 navmain-dropdown navmain-dropdown-single"><a>Domains</a><div class="navmain-subcontainer"><div class="navmain-links">   <div id="menu-item-6141" class="navmain-icon navmain-icon-registerdomain menu-item menu-item-type-custom menu-item-object-custom navmain-link"><a href="https://domainmonger.com/manage/cart.php?a=add&amp;domain=register"><div class="navmain-link-heading">Register Domain</div><div class="navmain-link-text">Register a domain</div></a></div>   <div id="menu-item-6132" class="navmain-icon navmain-icon-transferdomain menu-item menu-item-type-custom menu-item-object-custom navmain-link"><a href="/manage/cart.php?a=add&amp;domain=transfer"><div class="navmain-link-heading">Transfer Domain</div><div class="navmain-link-text">Move your domain to us</div></a></div></div></div></li><li id="menu-item-6366" class="nav-design1 menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-6366 navmain-dropdown navmain-dropdown-single"><a href="https://domainmonger.com/shared-hosting/">Hosting</a><div class="navmain-subcontainer"><div class="navmain-links">   <div id="menu-item-6374" class="navmain-icon navmain-icon-custom1 menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/shared-hosting/"><div class="navmain-link-heading">Shared Hosting</div><div class="navmain-link-text">Shared Hosting plans</div></a></div>   <div id="menu-item-6423" class="menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/business-hosting/"><div class="navmain-link-heading">Business Hosting</div></a></div>   <div id="menu-item-6373" class="navmain-icon navmain-icon-custom2 menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/reseller-hosting/"><div class="navmain-link-heading">Reseller Hosting</div><div class="navmain-link-text">Reseller Hosting plans</div></a></div>   <div id="menu-item-6372" class="navmain-icon navmain-icon-testimonials menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/compare-hosting/"><div class="navmain-link-heading">Compare Hosting</div><div class="navmain-link-text">Compare our hosting options</div></a></div></div></div></li><li id="menu-item-6371" class="nav-design1 menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-6371 navmain-dropdown navmain-dropdown-single"><a href="https://domainmonger.com/email-hosting/">Email / SSL</a><div class="navmain-subcontainer"><div class="navmain-links">   <div id="menu-item-6376" class="navmain-icon navmain-icon-contact menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/email-hosting/"><div class="navmain-link-heading">Email Hosting</div><div class="navmain-link-text">Email packages</div></a></div>   <div id="menu-item-6444" class="menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/ssl-certificates/"><div class="navmain-link-heading">SSL Certificates</div></a></div></div></div></li><li id="menu-item-6370" class="nav-design1 menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-6370 navmain-dropdown navmain-dropdown-single"><a href="https://domainmonger.com/company/">Company</a><div class="navmain-subcontainer"><div class="navmain-links">   <div id="menu-item-6377" class="navmain-icon navmain-icon-company menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/company/"><div class="navmain-link-heading">Company</div><div class="navmain-link-text">All about us</div></a></div>   <div id="menu-item-6381" class="navmain-icon navmain-icon-knowledgebase menu-item menu-item-type-post_type menu-item-object-page navmain-link"><a href="https://domainmonger.com/legal/"><div class="navmain-link-heading">Legal</div><div class="navmain-link-text">Legal documents</div></a></div></div></div></li><li class="navmain-cta"><a href="https://domainmonger.com/manage/cart.php"><i class="fas fa-shopping-cart"></i>Order</a></ul>						</nav><!-- .navmain -->
+					</div><!-- .navmain-container -->
+
+
+			</div><!-- .headermain-inner -->
+
+	</header><!-- .headermain -->

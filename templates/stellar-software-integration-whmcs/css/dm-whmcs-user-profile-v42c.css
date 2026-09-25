@@ -1,0 +1,209 @@
+/* DomainMonger WHMCS v9 consistency - User Profile page v42c */
+.whmcs-templatefile-user-profile .dm-user-profile-page,
+.dm-user-profile-page {
+    color: #293f56;
+    margin-bottom: 28px;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-card,
+.dm-user-profile-page .dm-profile-card {
+    margin: 0 0 22px;
+    background: #fff;
+    border: 1px solid rgba(17, 43, 77, 0.12);
+    border-radius: 8px;
+    box-shadow: 0 3px 12px rgba(17, 43, 77, 0.06);
+    overflow: hidden;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-card-body,
+.dm-user-profile-page .dm-profile-card-body {
+    padding: 0;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-section-header,
+.dm-user-profile-page .dm-profile-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 18px;
+    background: #0f3d63;
+    border-bottom: 1px solid rgba(17, 43, 77, 0.12);
+}
+
+.whmcs-templatefile-user-profile .dm-profile-title,
+.dm-user-profile-page .dm-profile-title {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-form,
+.dm-user-profile-page .dm-profile-form {
+    padding: 20px 18px 18px;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-form-row,
+.dm-user-profile-page .dm-profile-form-row {
+    margin-bottom: 4px;
+}
+
+.whmcs-templatefile-user-profile .dm-form-group,
+.dm-user-profile-page .dm-form-group {
+    margin-bottom: 16px;
+}
+
+.whmcs-templatefile-user-profile .dm-form-label,
+.dm-user-profile-page .dm-form-label {
+    margin-bottom: 6px;
+    color: #344d68;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.whmcs-templatefile-user-profile .dm-form-control,
+.dm-user-profile-page .dm-form-control,
+.whmcs-templatefile-user-profile .form-control,
+.dm-user-profile-page .form-control {
+    min-height: 38px;
+    border: 1px solid rgba(17, 43, 77, 0.18);
+    border-radius: 6px;
+    box-shadow: none;
+    color: #293f56;
+}
+
+.whmcs-templatefile-user-profile .dm-form-control:focus,
+.dm-user-profile-page .dm-form-control:focus,
+.whmcs-templatefile-user-profile .form-control:focus,
+.dm-user-profile-page .form-control:focus {
+    border-color: #2b6f9f;
+    box-shadow: 0 0 0 3px rgba(43, 111, 159, 0.14);
+}
+
+.whmcs-templatefile-user-profile .dm-form-control:disabled,
+.dm-user-profile-page .dm-form-control:disabled,
+.whmcs-templatefile-user-profile .form-control:disabled,
+.dm-user-profile-page .form-control:disabled {
+    background: #f4f7fa;
+    color: #6d7f91;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-actions,
+.dm-user-profile-page .dm-profile-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(17, 43, 77, 0.08);
+}
+
+.whmcs-templatefile-user-profile .dm-profile-actions .btn,
+.dm-user-profile-page .dm-profile-actions .btn {
+    min-height: 36px;
+    padding: 7px 15px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-actions .btn-primary,
+.dm-user-profile-page .dm-profile-actions .btn-primary,
+.whmcs-templatefile-user-profile .dm-btn-primary,
+.dm-user-profile-page .dm-btn-primary {
+    background: #f28c28;
+    border-color: #f28c28;
+    color: #fff;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-actions .btn-primary:hover,
+.dm-user-profile-page .dm-profile-actions .btn-primary:hover,
+.whmcs-templatefile-user-profile .dm-btn-primary:hover,
+.dm-user-profile-page .dm-btn-primary:hover {
+    background: #df7d1f;
+    border-color: #df7d1f;
+    color: #fff;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-actions .btn-default,
+.dm-user-profile-page .dm-profile-actions .btn-default,
+.whmcs-templatefile-user-profile .dm-profile-actions .btn-secondary,
+.dm-user-profile-page .dm-profile-actions .btn-secondary,
+.whmcs-templatefile-user-profile .dm-btn-secondary,
+.dm-user-profile-page .dm-btn-secondary {
+    background: #2b6f9f;
+    border-color: #2b6f9f;
+    color: #fff;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-actions .btn-default:hover,
+.dm-user-profile-page .dm-profile-actions .btn-default:hover,
+.whmcs-templatefile-user-profile .dm-profile-actions .btn-secondary:hover,
+.dm-user-profile-page .dm-profile-actions .btn-secondary:hover,
+.whmcs-templatefile-user-profile .dm-btn-secondary:hover,
+.dm-user-profile-page .dm-btn-secondary:hover {
+    background: #245d86;
+    border-color: #245d86;
+    color: #fff;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-email-header,
+.dm-user-profile-page .dm-profile-email-header {
+    min-height: 50px;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-email-status,
+.dm-user-profile-page .dm-profile-email-status {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-badge,
+.dm-user-profile-page .dm-profile-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-badge-muted,
+.dm-user-profile-page .dm-profile-badge-muted {
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+}
+
+.whmcs-templatefile-user-profile .dm-profile-badge-success,
+.dm-user-profile-page .dm-profile-badge-success {
+    background: #2e9d62;
+    color: #fff;
+}
+
+@media (max-width: 767px) {
+    .whmcs-templatefile-user-profile .dm-profile-section-header,
+    .dm-user-profile-page .dm-profile-section-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .whmcs-templatefile-user-profile .dm-profile-email-status,
+    .dm-user-profile-page .dm-profile-email-status {
+        justify-content: flex-start;
+    }
+
+    .whmcs-templatefile-user-profile .dm-profile-form,
+    .dm-user-profile-page .dm-profile-form {
+        padding: 18px 14px 16px;
+    }
+}

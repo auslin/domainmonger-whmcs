@@ -1,0 +1,219 @@
+/* DomainMonger v8x classic namespinner register page
+   Patch 208 - scoped to standard_cart_2 register domain page only. */
+
+#order-standard_cart .dm-v8x-register-page .header-lined {
+    margin-bottom: 18px;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-search-card {
+    background: #fff;
+    border: 1px solid #d8e0e8;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 22px;
+    overflow: hidden;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-search-header {
+    background: #163a5f;
+    color: #fff;
+    padding: 14px 18px;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-search-header h2 {
+    color: #fff;
+    font-size: 20px;
+    line-height: 1.3;
+    margin: 0;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-search-body {
+    padding: 20px;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-search-help {
+    color: #5c6f82;
+    margin: 0 0 14px;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-search-box .form-control {
+    border-color: #c8d3de;
+    min-height: 46px;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-search-box .form-control:focus {
+    border-color: #f58220;
+    box-shadow: 0 0 0 0.2rem rgba(245, 130, 32, 0.18);
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-search-box .btn-primary,
+#order-standard_cart .dm-v8x-register-page .dm-v8x-add-btn.btn-primary {
+    background: #f58220;
+    border-color: #f58220;
+    color: #fff;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-search-box .btn-primary:hover,
+#order-standard_cart .dm-v8x-register-page .dm-v8x-search-box .btn-primary:focus,
+#order-standard_cart .dm-v8x-register-page .dm-v8x-add-btn.btn-primary:hover,
+#order-standard_cart .dm-v8x-register-page .dm-v8x-add-btn.btn-primary:focus {
+    background: #d96f17;
+    border-color: #d96f17;
+    color: #fff;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-add-btn.checkout {
+    background: #163a5f;
+    border-color: #163a5f;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-add-btn.checkout:hover,
+#order-standard_cart .dm-v8x-register-page .dm-v8x-add-btn.checkout:focus {
+    background: #214e7a;
+    border-color: #214e7a;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-status {
+    margin: 0 0 18px;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-results-card {
+    background: #fff;
+    border: 1px solid #d8e0e8;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-results-header {
+    align-items: center;
+    background: #163a5f;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 18px;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-results-header h3 {
+    color: #fff;
+    font-size: 18px;
+    margin: 0;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-results-count {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-results-body {
+    padding: 0;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-table-wrap {
+    overflow-x: auto;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-results-table {
+    margin: 0;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-results-table th {
+    background: #f6f8fa;
+    border-bottom: 1px solid #d8e0e8;
+    color: #163a5f;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-results-table td {
+    vertical-align: middle;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-domain-name {
+    color: #1f2933;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-domain-unavailable {
+    color: #7b8794;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-price {
+    white-space: nowrap;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-action-cell {
+    text-align: right;
+    white-space: nowrap;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-empty {
+    color: #7b8794;
+    padding: 22px;
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    #order-standard_cart .dm-v8x-register-page .dm-v8x-search-body {
+        padding: 16px;
+    }
+
+    #order-standard_cart .dm-v8x-register-page .dm-v8x-results-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    #order-standard_cart .dm-v8x-register-page .dm-v8x-search-box.input-group {
+        display: block;
+    }
+
+    #order-standard_cart .dm-v8x-register-page .dm-v8x-search-box .form-control,
+    #order-standard_cart .dm-v8x-register-page .dm-v8x-search-box .input-group-btn,
+    #order-standard_cart .dm-v8x-register-page .dm-v8x-search-box .input-group-append,
+    #order-standard_cart .dm-v8x-register-page .dm-v8x-search-box .btn {
+        display: block;
+        width: 100%;
+    }
+
+    #order-standard_cart .dm-v8x-register-page .dm-v8x-search-box .btn {
+        margin-top: 10px;
+    }
+}
+
+
+/* Patch 209 live-readiness refinements */
+#order-standard_cart .dm-v8x-register-page .dm-v8x-results-table {
+    min-width: 680px;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-results-table tr[id^="dmV8xResultRow"] td {
+    transition: background-color 0.15s ease-in-out;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-add-btn.btn-danger {
+    background: #b94a48;
+    border-color: #b94a48;
+    color: #fff;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-add-btn.btn-danger:hover,
+#order-standard_cart .dm-v8x-register-page .dm-v8x-add-btn.btn-danger:focus {
+    background: #9f3e3c;
+    border-color: #9f3e3c;
+    color: #fff;
+}
+
+
+/* Patch 210 v8x Show More Suggestions */
+#order-standard_cart .dm-v8x-register-page .dm-v8x-more-wrap {
+    border-top: 1px solid #d8e0e8;
+    padding: 14px 18px;
+    text-align: center;
+}
+
+#order-standard_cart .dm-v8x-register-page .dm-v8x-more-wrap .btn {
+    min-width: 190px;
+}

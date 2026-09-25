@@ -1,0 +1,103 @@
+/* DomainMonger WHMCS v9 - Submit Ticket editor cleanup v2
+   Targets the generated editor for the client_ticket_open message field. */
+
+.dm-submit-ticket-form .md-editor,
+.dm-submit-ticket-form div.md-editor.active,
+body.whmcsbody .md-editor:has(textarea.markdown-editor[data-auto-save-name="client_ticket_open"]),
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 {
+    border: 1px solid #cfd9e3 !important;
+    border-radius: 6px !important;
+    background: #ffffff !important;
+    overflow: hidden !important;
+    box-shadow: none !important;
+}
+
+.dm-submit-ticket-form .md-editor > .md-header,
+.dm-submit-ticket-form .md-editor > .btn-toolbar,
+.dm-submit-ticket-form .md-editor > .md-header.btn-toolbar,
+.dm-submit-ticket-form .md-editor .md-header,
+.dm-submit-ticket-form .md-editor .btn-toolbar,
+body.whmcsbody .md-editor:has(textarea.markdown-editor[data-auto-save-name="client_ticket_open"]) > .md-header,
+body.whmcsbody .md-editor:has(textarea.markdown-editor[data-auto-save-name="client_ticket_open"]) > .btn-toolbar,
+body.whmcsbody .md-editor:has(textarea.markdown-editor[data-auto-save-name="client_ticket_open"]) .md-header,
+body.whmcsbody .md-editor:has(textarea.markdown-editor[data-auto-save-name="client_ticket_open"]) .btn-toolbar,
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 > .md-header,
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 > .btn-toolbar,
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 .md-header,
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 .btn-toolbar {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 4px !important;
+    min-height: 42px !important;
+    padding: 6px 8px !important;
+    margin: 0 !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    border: 0 !important;
+    border-bottom: 1px solid #d6e0ea !important;
+    box-shadow: none !important;
+}
+
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 .md-header .btn,
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 .btn-toolbar .btn,
+.dm-submit-ticket-form .md-editor .md-header .btn,
+.dm-submit-ticket-form .md-editor .btn-toolbar .btn {
+    margin: 0 2px 0 0 !important;
+    box-shadow: none !important;
+    line-height: 1.25 !important;
+}
+
+.dm-submit-ticket-form .md-editor > textarea.markdown-editor,
+.dm-submit-ticket-form .md-editor > .md-preview,
+body.whmcsbody .md-editor:has(textarea.markdown-editor[data-auto-save-name="client_ticket_open"]) > textarea.markdown-editor,
+body.whmcsbody .md-editor:has(textarea.markdown-editor[data-auto-save-name="client_ticket_open"]) > .md-preview,
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 > textarea.markdown-editor,
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 > .md-preview {
+    background: #ffffff !important;
+    border-top: 0 !important;
+    border-bottom: 1px solid #d6e0ea !important;
+    box-shadow: none !important;
+}
+
+.dm-submit-ticket-form .md-editor > .md-footer,
+.dm-submit-ticket-form .md-editor .md-footer,
+.dm-submit-ticket-form .md-editor > .markdown-editor-status,
+.dm-submit-ticket-form .md-editor .markdown-editor-status,
+.dm-submit-ticket-form .md-editor [id$="-footer"],
+body.whmcsbody .md-editor:has(textarea.markdown-editor[data-auto-save-name="client_ticket_open"]) > .md-footer,
+body.whmcsbody .md-editor:has(textarea.markdown-editor[data-auto-save-name="client_ticket_open"]) .md-footer,
+body.whmcsbody .md-editor:has(textarea.markdown-editor[data-auto-save-name="client_ticket_open"]) .markdown-editor-status,
+body.whmcsbody .md-editor:has(textarea.markdown-editor[data-auto-save-name="client_ticket_open"]) [id$="-footer"],
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 > .md-footer,
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 .md-footer,
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 .markdown-editor-status,
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 [id$="-footer"] {
+    display: block !important;
+    clear: both !important;
+    width: 100% !important;
+    min-height: 30px !important;
+    height: auto !important;
+    line-height: 1.5 !important;
+    margin: 0 !important;
+    padding: 6px 12px !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    background-image: none !important;
+    border: 0 !important;
+    color: #53687d !important;
+    text-align: right !important;
+    overflow: visible !important;
+    white-space: normal !important;
+    box-shadow: none !important;
+}
+
+body.whmcsbody .md-editor.dm-submit-ticket-editor-620 .small-font,
+.dm-submit-ticket-form .md-editor .small-font {
+    color: #53687d !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+}

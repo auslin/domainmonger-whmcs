@@ -1,0 +1,154 @@
+html {
+	overflow-y: scroll;
+}
+h2 {
+    color: #5BADFF;
+    font-size: 18px;
+    font-weight: normal;
+    margin: 0;
+    margin-top: 10px;
+    padding:5px 10px 10px;
+    border-bottom: 1px dashed #ccc;
+}
+.rowcolor1 td {
+    padding: 4px;
+    border-bottom: 1px dashed #ccc;
+    background-color: #f8f8f8;
+}
+.rowcolor2 td {
+    padding: 4px;
+    border-bottom: 1px dashed #ccc;
+    background-color: #f3f3f3;
+}
+.topborder td {
+    border-bottom: 1px dashed #ccc;
+    height: 1px;
+}
+/*
+h2 {
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    margin-top: 10px;
+    padding:5px 10px 10px;
+    border-bottom: 1px solid #F0E6C6;
+}
+.rowcolor1 td {
+    background-color: #F7F1DF;
+    padding: 4px;
+    border-bottom: 1px solid #F0E6C6;
+}
+.rowcolor2 td {
+    background-color: #FAF8E2;
+    padding: 4px;
+    border-bottom: 1px solid #F0E6C6;
+}
+.topborder {
+    background-color: #F0E6C6;
+    height: 1px;
+}
+*/
+.domainavailable {
+    color: #9AC003;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 20px 0 20px;
+}
+.domainunavailable {
+    color: #cc0000;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 20px 0 20px;
+}
+.domaininvalid {
+    color: #cc0000;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 20px 0 20px;
+}
+.errormsg {
+    color: #cc0000;
+    background-color: #FFBFBF;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    display: none;
+}
+#cartsummary {
+    background-color: #f8f8f8;
+    color: #000000;
+    width: 200px;
+    font-size: 11px;
+    border: 1px solid #ccc;
+}
+#cartsummary div.currency {
+    text-align: right;
+    margin: 4px 4px 0 0;
+    font-size: 9px;
+}
+#cartsummary div.currency select {
+    font-size: 9px;
+}
+#cartsummary div.heading {
+    background-color: #f2f2f2;
+    text-align: center;
+    border-bottom:1px solid #ccc;
+    color: #333;
+    font-size: 16px;
+    font-weight: bold;
+    padding:5px 10px 5px;
+}
+#cartsummary div.heading div.text {
+    float: left;
+    text-align: center;
+    width: 140px;
+    padding-left: 20px;
+}
+#cartsummary #loader {
+    float: right;
+    width: 20px;
+    padding-top: 2px;
+    display: none;
+}
+#cartsummary div.itemdesc {
+    margin: 10px 0 0 0;
+    padding: 0 5px 0 5px;
+    text-align: left;
+}
+#cartsummary div.itemprice {
+    padding-right: 5px;
+    text-align: right;
+    font-weight: bold;
+    color: #888;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed #ccc;
+    margin: 0 0 10px 0;
+}
+#cartsummary div.subtotals {
+    text-align: right;
+    padding: 0 10px 10px 0;
+    margin: 0;
+}
+#cartsummary div.totalduelabel {
+    text-align: right;
+    padding: 0 10px 0 0;
+    margin: 0;
+}
+#cartsummary div.totaldue {
+    font-family: Tahoma;
+    font-size: 26px;
+    text-align: right;
+    padding: 0 5px 5px 5px;
+    border-bottom: 1px dashed #ccc;
+    margin: 0 0 10px 0;
+}
+label.error {
+    color: red;
+    padding-left: .5em;
+}

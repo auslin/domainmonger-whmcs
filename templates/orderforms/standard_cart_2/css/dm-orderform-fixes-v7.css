@@ -1,0 +1,246 @@
+/* DomainMonger test patch v6 - standard_cart_2 choose-domain alignment.
+   Fixes v5 sidebar regression: hidden-sm was being hidden at every desktop width.
+   Scope: order form only. Keeps the simple standard_cart_2 domain form. */
+
+/* Base hidden helper used by WHMCS JS result blocks. */
+.hidden,
+#order-standard_cart .hidden {
+    display: none !important;
+}
+
+/* Bootstrap 3 visibility helper compatibility.
+   These must be breakpoint-specific. Do not hide hidden-sm on md/lg screens. */
+.visible-xs,
+.visible-sm,
+.visible-md,
+.visible-lg,
+#order-standard_cart .visible-xs,
+#order-standard_cart .visible-sm,
+#order-standard_cart .visible-md,
+#order-standard_cart .visible-lg {
+    display: none !important;
+}
+
+@media (max-width: 767.98px) {
+    #order-standard_cart .hidden-xs { display: none !important; }
+    #order-standard_cart .visible-xs { display: block !important; }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    #order-standard_cart .hidden-sm { display: none !important; }
+    #order-standard_cart .visible-sm { display: block !important; }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    #order-standard_cart .hidden-md { display: none !important; }
+    #order-standard_cart .visible-md { display: block !important; }
+}
+
+@media (min-width: 1200px) {
+    #order-standard_cart .hidden-lg { display: none !important; }
+    #order-standard_cart .visible-lg { display: block !important; }
+}
+
+/* Stable left-sidebar/right-content layout for standard_cart_2. */
+#order-standard_cart .dm-choose-domain-layout {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+#order-standard_cart .dm-orderform-sidebar {
+    order: 1;
+}
+
+#order-standard_cart .dm-orderform-main {
+    order: 2;
+}
+
+@media (min-width: 768px) {
+    #order-standard_cart .dm-orderform-sidebar {
+        flex: 0 0 25%;
+        max-width: 25%;
+        display: block;
+    }
+
+    #order-standard_cart .dm-orderform-main {
+        flex: 0 0 75%;
+        max-width: 75%;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #order-standard_cart .dm-orderform-sidebar,
+    #order-standard_cart .dm-orderform-main {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+/* Bootstrap compatibility for the old col-xs-* classes used by standard_cart_2. */
+#order-standard_cart .col-xs-2,
+#order-standard_cart .col-xs-3,
+#order-standard_cart .col-xs-5,
+#order-standard_cart .col-xs-7,
+#order-standard_cart .col-xs-9 {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+#order-standard_cart .col-xs-2 { flex: 0 0 16.66666667%; max-width: 16.66666667%; }
+#order-standard_cart .col-xs-3 { flex: 0 0 25%; max-width: 25%; }
+#order-standard_cart .col-xs-5 { flex: 0 0 41.66666667%; max-width: 41.66666667%; }
+#order-standard_cart .col-xs-7 { flex: 0 0 58.33333333%; max-width: 58.33333333%; }
+#order-standard_cart .col-xs-9 { flex: 0 0 75%; max-width: 75%; }
+
+/* Align the domain rows: www label, input, TLD, and submit button on one baseline. */
+#order-standard_cart #domainregister > .row,
+#order-standard_cart #domaintransfer > .row,
+#order-standard_cart #domainowndomain > .row,
+#order-standard_cart #domainsubdomain > .row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+}
+
+#order-standard_cart #domainregister .domains-row,
+#order-standard_cart #domaintransfer .domains-row {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    margin-left: -2px;
+    margin-right: -2px;
+}
+
+#order-standard_cart #domainregister .domains-row > .col-xs-9,
+#order-standard_cart #domainregister .domains-row > .col-xs-3,
+#order-standard_cart #domaintransfer .domains-row > .col-xs-9,
+#order-standard_cart #domaintransfer .domains-row > .col-xs-3 {
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+#order-standard_cart #domainregister .input-group,
+#order-standard_cart #domaintransfer .input-group {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#order-standard_cart #domainregister .input-group-addon,
+#order-standard_cart #domaintransfer .input-group-addon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    min-width: 44px;
+    height: 36px;
+    padding: 6px 10px;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-right: 0;
+    border-radius: 4px 0 0 4px;
+    background: #eee;
+    line-height: 1.42857143;
+}
+
+#order-standard_cart #domainregister .input-group .form-control,
+#order-standard_cart #domaintransfer .input-group .form-control {
+    flex: 1 1 auto;
+    width: 1%;
+    min-width: 0;
+    height: 36px;
+    border-radius: 0 4px 4px 0;
+}
+
+#order-standard_cart #registertld,
+#order-standard_cart #transfertld,
+#order-standard_cart #btnCheckAvailability,
+#order-standard_cart #domainregister button[type="submit"],
+#order-standard_cart #domaintransfer button[type="submit"] {
+    height: 36px;
+    line-height: 1.42857143;
+}
+
+#order-standard_cart #domainregister .btn-block,
+#order-standard_cart #domaintransfer .btn-block {
+    display: block;
+    width: 100%;
+}
+
+#order-standard_cart .domain-selection-options .option {
+    margin-bottom: 14px;
+}
+
+#order-standard_cart .domain-input-group {
+    margin-top: 12px;
+}
+
+@media (max-width: 767.98px) {
+    #order-standard_cart #domainregister > .row,
+    #order-standard_cart #domaintransfer > .row,
+    #order-standard_cart #domainowndomain > .row,
+    #order-standard_cart #domainsubdomain > .row,
+    #order-standard_cart #domainregister .domains-row,
+    #order-standard_cart #domaintransfer .domains-row {
+        flex-wrap: wrap;
+    }
+
+    #order-standard_cart #domainregister .domains-row > .col-xs-9,
+    #order-standard_cart #domaintransfer .domains-row > .col-xs-9 {
+        flex: 0 0 70%;
+        max-width: 70%;
+    }
+
+    #order-standard_cart #domainregister .domains-row > .col-xs-3,
+    #order-standard_cart #domaintransfer .domains-row > .col-xs-3 {
+        flex: 0 0 30%;
+        max-width: 30%;
+    }
+}
+
+/* Patch v7: restore sidebar card styling while keeping Patch 6 alignment. */
+#order-standard_cart .dm-orderform-sidebar .card-sidebar {
+    border: 1px solid #d3d3d3;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+}
+
+#order-standard_cart .dm-orderform-sidebar .card-sidebar .card-header,
+#order-standard_cart .dm-orderform-sidebar .card-sidebar .panel-heading {
+    background: #253044;
+    color: #fff;
+    border-bottom: 0;
+    padding: 10px 15px;
+}
+
+#order-standard_cart .dm-orderform-sidebar .card-sidebar .panel-title,
+#order-standard_cart .dm-orderform-sidebar .card-sidebar .panel-title i,
+#order-standard_cart .dm-orderform-sidebar .card-sidebar .panel-minimise,
+#order-standard_cart .dm-orderform-sidebar .card-sidebar .card-minimise {
+    color: #fff;
+}
+
+#order-standard_cart .dm-orderform-sidebar .card-sidebar .list-group,
+#order-standard_cart .dm-orderform-sidebar .card-sidebar .collapsable-card-body {
+    border-radius: 0;
+}
+
+#order-standard_cart .dm-orderform-sidebar .card-sidebar .list-group-item {
+    margin: 0;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+    padding: 8px 15px;
+}
+
+#order-standard_cart .dm-orderform-sidebar .card-sidebar .list-group-item:first-child {
+    border-top: 0;
+}
+
+#order-standard_cart .dm-orderform-sidebar .card-sidebar .list-group-item:last-child {
+    border-bottom: 0;
+}

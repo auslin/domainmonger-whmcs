@@ -1,0 +1,404 @@
+/* DomainMonger WHMCS v9 consistency - Email History page, matched to My Services v41d */
+.whmcs-templatefile-clientareaemails .dm-email-history-page,
+.dm-email-history-page {
+    margin-bottom: 28px;
+}
+
+/* Remove the standalone page-card feel from the first Patch 41 attempt.
+   My Services uses the DataTables controls + table directly in the content area. */
+.whmcs-templatefile-clientareaemails .dm-email-table-container,
+.dm-email-history-page .dm-email-table-container {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper,
+.dm-email-history-page #tableEmailsList_wrapper {
+    color: #293f56;
+}
+
+/* Match the My Services top control row. */
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_info,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_info {
+    padding-top: 0;
+    margin-bottom: 10px;
+    color: #51667d;
+    font-size: 13px;
+    line-height: 34px;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_filter,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_filter {
+    float: right;
+    margin: 0 0 10px;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_filter label,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_filter label,
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_length label,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_length label {
+    margin-bottom: 0;
+    color: #51667d;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_filter input,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_filter input {
+    min-width: 185px;
+    min-height: 34px;
+    padding: 6px 12px;
+    border: 1px solid rgba(17, 43, 77, 0.18);
+    border-radius: 6px;
+    box-shadow: none;
+    color: #293f56;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_length,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_length {
+    margin-top: 10px;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_length select,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_length select {
+    min-height: 34px;
+    padding: 5px 28px 5px 10px;
+    border: 1px solid rgba(17, 43, 77, 0.18);
+    border-radius: 6px;
+    box-shadow: none;
+    color: #293f56;
+}
+
+/* Match the My Services table structure and header color. */
+.whmcs-templatefile-clientareaemails table#tableEmailsList,
+.dm-email-history-page table#tableEmailsList {
+    width: 100% !important;
+    margin: 0 !important;
+    border-collapse: collapse;
+    border: 1px solid rgba(17, 43, 77, 0.14);
+    background: #fff;
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th,
+.whmcs-templatefile-clientareaemails table#tableEmailsList.dataTable thead > tr > th,
+.whmcs-templatefile-clientareaemails table#tableEmailsList.table-list thead th,
+.dm-email-history-page table#tableEmailsList thead th,
+.dm-email-history-page table#tableEmailsList.dataTable thead > tr > th,
+.dm-email-history-page table#tableEmailsList.table-list thead th {
+    position: relative;
+    vertical-align: middle;
+    padding: 14px 34px 14px 16px !important;
+    background-color: #2f435f !important;
+    background-image: none !important;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    color: #fff !important;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* Keep active sorted columns from turning orange/dark independently. */
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_asc,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_desc,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_disabled,
+.dm-email-history-page table#tableEmailsList thead th.sorting,
+.dm-email-history-page table#tableEmailsList thead th.sorting_asc,
+.dm-email-history-page table#tableEmailsList thead th.sorting_desc,
+.dm-email-history-page table#tableEmailsList thead th.sorting_disabled {
+    background-color: #2f435f !important;
+    background-image: none !important;
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.dm-email-date-col,
+.dm-email-history-page table#tableEmailsList thead th.dm-email-date-col {
+    width: 220px;
+    text-align: center;
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.dm-email-subject-col,
+.dm-email-history-page table#tableEmailsList thead th.dm-email-subject-col {
+    text-align: left;
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.dm-email-action-col,
+.dm-email-history-page table#tableEmailsList thead th.dm-email-action-col {
+    width: 160px;
+    text-align: center;
+    padding-right: 16px !important;
+}
+
+/* Compact sort arrows like the Services/Domains list. */
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting:before,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting:after,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_asc:before,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_asc:after,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_desc:before,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_desc:after,
+.dm-email-history-page table#tableEmailsList thead th.sorting:before,
+.dm-email-history-page table#tableEmailsList thead th.sorting:after,
+.dm-email-history-page table#tableEmailsList thead th.sorting_asc:before,
+.dm-email-history-page table#tableEmailsList thead th.sorting_asc:after,
+.dm-email-history-page table#tableEmailsList thead th.sorting_desc:before,
+.dm-email-history-page table#tableEmailsList thead th.sorting_desc:after {
+    position: absolute;
+    right: 12px;
+    color: rgba(255,255,255,0.55) !important;
+    font-size: 8px;
+    line-height: 8px;
+    opacity: 1 !important;
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting:before,
+.dm-email-history-page table#tableEmailsList thead th.sorting:before,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_asc:before,
+.dm-email-history-page table#tableEmailsList thead th.sorting_asc:before,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_desc:before,
+.dm-email-history-page table#tableEmailsList thead th.sorting_desc:before {
+    content: "▲" !important;
+    top: calc(50% - 7px);
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting:after,
+.dm-email-history-page table#tableEmailsList thead th.sorting:after,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_asc:after,
+.dm-email-history-page table#tableEmailsList thead th.sorting_asc:after,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_desc:after,
+.dm-email-history-page table#tableEmailsList thead th.sorting_desc:after {
+    content: "▼" !important;
+    top: calc(50% + 1px);
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_asc:before,
+.dm-email-history-page table#tableEmailsList thead th.sorting_asc:before,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_desc:after,
+.dm-email-history-page table#tableEmailsList thead th.sorting_desc:after {
+    color: #fff !important;
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_asc:after,
+.dm-email-history-page table#tableEmailsList thead th.sorting_asc:after,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.sorting_desc:before,
+.dm-email-history-page table#tableEmailsList thead th.sorting_desc:before {
+    color: rgba(255,255,255,0.32) !important;
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.dm-email-action-col:before,
+.whmcs-templatefile-clientareaemails table#tableEmailsList thead th.dm-email-action-col:after,
+.dm-email-history-page table#tableEmailsList thead th.dm-email-action-col:before,
+.dm-email-history-page table#tableEmailsList thead th.dm-email-action-col:after {
+    display: none !important;
+    content: none !important;
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList tbody td,
+.dm-email-history-page table#tableEmailsList tbody td {
+    vertical-align: middle;
+    padding: 15px 16px;
+    border-top: 1px solid rgba(17, 43, 77, 0.12);
+    color: #293f56;
+    font-size: 14px;
+    line-height: 1.35;
+    background: #fff;
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList tbody tr:first-child td,
+.dm-email-history-page table#tableEmailsList tbody tr:first-child td {
+    border-top: 0;
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList tbody tr.dm-email-row,
+.dm-email-history-page table#tableEmailsList tbody tr.dm-email-row {
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.whmcs-templatefile-clientareaemails table#tableEmailsList tbody tr.dm-email-row:hover td,
+.dm-email-history-page table#tableEmailsList tbody tr.dm-email-row:hover td {
+    background: #f8fbfe;
+}
+
+.whmcs-templatefile-clientareaemails .dm-email-date,
+.dm-email-history-page .dm-email-date {
+    color: #293f56;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.whmcs-templatefile-clientareaemails .dm-email-subject,
+.dm-email-history-page .dm-email-subject {
+    text-align: left;
+}
+
+.whmcs-templatefile-clientareaemails .dm-email-subject-text,
+.dm-email-history-page .dm-email-subject-text {
+    color: #173a63;
+    font-weight: 600;
+}
+
+.whmcs-templatefile-clientareaemails .dm-email-attachment,
+.dm-email-history-page .dm-email-attachment {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    color: #6d7f94;
+    font-size: 14px;
+}
+
+.whmcs-templatefile-clientareaemails .dm-email-action,
+.dm-email-history-page .dm-email-action {
+    width: 160px;
+    white-space: nowrap;
+}
+
+.whmcs-templatefile-clientareaemails .dm-email-view-btn,
+.dm-email-history-page .dm-email-view-btn {
+    min-height: 30px;
+    padding: 6px 12px;
+    border: 0 !important;
+    border-radius: 4px;
+    background: #1f5f8f !important;
+    color: #fff !important;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+.whmcs-templatefile-clientareaemails .dm-email-view-btn:hover,
+.whmcs-templatefile-clientareaemails .dm-email-view-btn:focus,
+.dm-email-history-page .dm-email-view-btn:hover,
+.dm-email-history-page .dm-email-view-btn:focus {
+    background: #184d75 !important;
+    color: #fff !important;
+    box-shadow: none !important;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_paginate,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_paginate {
+    padding-top: 10px;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_paginate .paginate_button,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_paginate .paginate_button {
+    min-width: 34px;
+    margin-left: 4px;
+    padding: 6px 10px;
+    border: 1px solid rgba(17, 43, 77, 0.12) !important;
+    border-radius: 4px;
+    color: #293f56 !important;
+    background: #fff !important;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_paginate .paginate_button.current,
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_paginate .paginate_button.current:hover,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_paginate .paginate_button.current,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_paginate .paginate_button.current:hover {
+    color: #fff !important;
+    background: #2f435f !important;
+    border-color: #2f435f !important;
+}
+
+.whmcs-templatefile-clientareaemails .dm-table-loading,
+.dm-email-history-page .dm-table-loading {
+    padding: 34px 16px;
+    color: #6d7f94;
+}
+
+@media (max-width: 767.98px) {
+    .whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_filter,
+    .dm-email-history-page #tableEmailsList_wrapper .dataTables_filter,
+    .whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_length,
+    .dm-email-history-page #tableEmailsList_wrapper .dataTables_length {
+        float: none;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 12px;
+    }
+
+    .whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_filter input,
+    .dm-email-history-page #tableEmailsList_wrapper .dataTables_filter input,
+    .whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_length select,
+    .dm-email-history-page #tableEmailsList_wrapper .dataTables_length select {
+        width: 100%;
+        min-width: 0;
+        margin-left: 0;
+    }
+
+    .whmcs-templatefile-clientareaemails table#tableEmailsList thead th.dm-email-date-col,
+    .dm-email-history-page table#tableEmailsList thead th.dm-email-date-col {
+        width: auto;
+    }
+
+    .whmcs-templatefile-clientareaemails table#tableEmailsList tbody td,
+    .dm-email-history-page table#tableEmailsList tbody td {
+        padding: 12px 14px;
+    }
+
+    .whmcs-templatefile-clientareaemails .dm-email-action,
+    .dm-email-history-page .dm-email-action {
+        text-align: left !important;
+    }
+}
+
+
+/* DM Patch 597: Give Email History top DataTables controls breathing room. */
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper > .row:first-child,
+.dm-email-history-page #tableEmailsList_wrapper > .row:first-child {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_info,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_info {
+    padding-left: 12px !important;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_filter,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_filter {
+    padding-right: 12px !important;
+}
+
+@media (max-width: 767px) {
+    .whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_info,
+    .dm-email-history-page #tableEmailsList_wrapper .dataTables_info,
+    .whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_filter,
+    .dm-email-history-page #tableEmailsList_wrapper .dataTables_filter {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+}
+
+
+/* DM Patch 598: Lower Email History top controls away from table top edge. */
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_info,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_info {
+    padding-top: 8px !important;
+    line-height: 34px !important;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_filter,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_filter {
+    padding-top: 8px !important;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper .dataTables_filter input,
+.dm-email-history-page #tableEmailsList_wrapper .dataTables_filter input {
+    margin-top: 0 !important;
+    vertical-align: middle !important;
+}
+
+.whmcs-templatefile-clientareaemails #tableEmailsList_wrapper table#tableEmailsList,
+.dm-email-history-page #tableEmailsList_wrapper table#tableEmailsList {
+    clear: both !important;
+}
+

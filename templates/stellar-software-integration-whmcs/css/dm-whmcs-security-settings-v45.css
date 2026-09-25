@@ -1,0 +1,331 @@
+/* DomainMonger WHMCS v9 consistency - Security Settings page */
+.whmcs-templatefile-user-security .dm-security-settings-page,
+.dm-security-settings-page {
+    color: #293f56;
+    margin-bottom: 28px;
+}
+
+.whmcs-templatefile-user-security .dm-security-intro-card,
+.dm-security-settings-page .dm-security-intro-card,
+.whmcs-templatefile-user-security .dm-security-card,
+.dm-security-settings-page .dm-security-card {
+    margin: 0 0 22px;
+    background: #fff;
+    border: 1px solid rgba(17, 43, 77, 0.12);
+    border-radius: 8px;
+    box-shadow: 0 3px 12px rgba(17, 43, 77, 0.06);
+    overflow: hidden;
+}
+
+.whmcs-templatefile-user-security .dm-security-intro-body,
+.dm-security-settings-page .dm-security-intro-body {
+    padding: 18px 18px 16px;
+}
+
+.whmcs-templatefile-user-security .dm-security-page-title,
+.dm-security-settings-page .dm-security-page-title {
+    margin: 0 0 6px;
+    color: #0f3d63;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.whmcs-templatefile-user-security .dm-security-page-intro,
+.dm-security-settings-page .dm-security-page-intro {
+    margin: 0;
+    color: #63758a;
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.whmcs-templatefile-user-security .dm-security-card-body,
+.dm-security-settings-page .dm-security-card-body {
+    padding: 0;
+}
+
+.whmcs-templatefile-user-security .dm-security-section-header,
+.dm-security-settings-page .dm-security-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 18px;
+    background: #0f3d63;
+    border-bottom: 1px solid rgba(17, 43, 77, 0.12);
+}
+
+.whmcs-templatefile-user-security .dm-security-title,
+.dm-security-settings-page .dm-security-title {
+    margin: 0;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.whmcs-templatefile-user-security .dm-security-section-content,
+.dm-security-settings-page .dm-security-section-content,
+.whmcs-templatefile-user-security .dm-security-form,
+.dm-security-settings-page .dm-security-form {
+    padding: 20px 18px 18px;
+}
+
+.whmcs-templatefile-user-security .dm-form-group,
+.dm-security-settings-page .dm-form-group {
+    margin-bottom: 16px;
+}
+
+.whmcs-templatefile-user-security .dm-form-label,
+.dm-security-settings-page .dm-form-label {
+    display: block;
+    margin-bottom: 6px;
+    color: #344d68;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.whmcs-templatefile-user-security .dm-form-control,
+.dm-security-settings-page .dm-form-control,
+.whmcs-templatefile-user-security .form-control,
+.dm-security-settings-page .form-control,
+.whmcs-templatefile-user-security .custom-select,
+.dm-security-settings-page .custom-select {
+    min-height: 38px;
+    border: 1px solid rgba(17, 43, 77, 0.18);
+    border-radius: 6px;
+    box-shadow: none;
+    color: #293f56;
+}
+
+.whmcs-templatefile-user-security .dm-form-control:focus,
+.dm-security-settings-page .dm-form-control:focus,
+.whmcs-templatefile-user-security .form-control:focus,
+.dm-security-settings-page .form-control:focus,
+.whmcs-templatefile-user-security .custom-select:focus,
+.dm-security-settings-page .custom-select:focus {
+    border-color: #2b6f9f;
+    box-shadow: 0 0 0 3px rgba(43, 111, 159, 0.14);
+}
+
+.whmcs-templatefile-user-security .dm-security-form-row,
+.dm-security-settings-page .dm-security-form-row {
+    margin-bottom: 4px;
+}
+
+.whmcs-templatefile-user-security .dm-security-actions,
+.dm-security-settings-page .dm-security-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(17, 43, 77, 0.08);
+}
+
+.whmcs-templatefile-user-security .dm-security-actions .btn,
+.dm-security-settings-page .dm-security-actions .btn,
+.whmcs-templatefile-user-security .dm-linked-accounts-content .btn,
+.dm-security-settings-page .dm-linked-accounts-content .btn {
+    min-height: 36px;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.whmcs-templatefile-user-security .dm-btn-primary,
+.dm-security-settings-page .dm-btn-primary,
+.whmcs-templatefile-user-security .dm-security-actions .btn-primary,
+.dm-security-settings-page .dm-security-actions .btn-primary,
+.whmcs-templatefile-user-security .dm-security-actions .btn-success,
+.dm-security-settings-page .dm-security-actions .btn-success {
+    background: #f28c28;
+    border-color: #f28c28;
+    color: #fff;
+}
+
+.whmcs-templatefile-user-security .dm-btn-primary:hover,
+.dm-security-settings-page .dm-btn-primary:hover,
+.whmcs-templatefile-user-security .dm-security-actions .btn-primary:hover,
+.dm-security-settings-page .dm-security-actions .btn-primary:hover,
+.whmcs-templatefile-user-security .dm-security-actions .btn-success:hover,
+.dm-security-settings-page .dm-security-actions .btn-success:hover {
+    background: #df7d1f;
+    border-color: #df7d1f;
+    color: #fff;
+}
+
+.whmcs-templatefile-user-security .dm-btn-secondary,
+.dm-security-settings-page .dm-btn-secondary,
+.whmcs-templatefile-user-security .dm-security-actions .btn-default,
+.dm-security-settings-page .dm-security-actions .btn-default,
+.whmcs-templatefile-user-security .dm-security-actions .btn-secondary,
+.dm-security-settings-page .dm-security-actions .btn-secondary,
+.whmcs-templatefile-user-security .dm-linked-accounts-content .btn-default,
+.dm-security-settings-page .dm-linked-accounts-content .btn-default {
+    background: #2b6f9f;
+    border-color: #2b6f9f;
+    color: #fff;
+}
+
+.whmcs-templatefile-user-security .dm-btn-secondary:hover,
+.dm-security-settings-page .dm-btn-secondary:hover,
+.whmcs-templatefile-user-security .dm-security-actions .btn-default:hover,
+.dm-security-settings-page .dm-security-actions .btn-default:hover,
+.whmcs-templatefile-user-security .dm-security-actions .btn-secondary:hover,
+.dm-security-settings-page .dm-security-actions .btn-secondary:hover,
+.whmcs-templatefile-user-security .dm-linked-accounts-content .btn-default:hover,
+.dm-security-settings-page .dm-linked-accounts-content .btn-default:hover {
+    background: #245d86;
+    border-color: #245d86;
+    color: #fff;
+}
+
+.whmcs-templatefile-user-security .dm-btn-danger,
+.dm-security-settings-page .dm-btn-danger,
+.whmcs-templatefile-user-security .dm-security-actions .btn-danger,
+.dm-security-settings-page .dm-security-actions .btn-danger {
+    background: #b7473f;
+    border-color: #b7473f;
+    color: #fff;
+}
+
+.whmcs-templatefile-user-security .dm-btn-danger:hover,
+.dm-security-settings-page .dm-btn-danger:hover,
+.whmcs-templatefile-user-security .dm-security-actions .btn-danger:hover,
+.dm-security-settings-page .dm-security-actions .btn-danger:hover {
+    background: #9f3b34;
+    border-color: #9f3b34;
+    color: #fff;
+}
+
+.whmcs-templatefile-user-security .dm-security-badge,
+.dm-security-settings-page .dm-security-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.whmcs-templatefile-user-security .dm-security-badge-success,
+.dm-security-settings-page .dm-security-badge-success {
+    background: #e4f3e9;
+    color: #2b7643;
+}
+
+.whmcs-templatefile-user-security .dm-security-badge-muted,
+.dm-security-settings-page .dm-security-badge-muted {
+    background: #e9eef4;
+    color: #53687d;
+}
+
+.whmcs-templatefile-user-security .dm-two-factor-current,
+.dm-security-settings-page .dm-two-factor-current {
+    margin: 0 0 12px;
+    color: #344d68;
+    font-size: 14px;
+}
+
+.whmcs-templatefile-user-security .dm-two-factor-alert,
+.dm-security-settings-page .dm-two-factor-alert {
+    margin-bottom: 14px;
+}
+
+.whmcs-templatefile-user-security .dm-two-factor-alert .alert,
+.dm-security-settings-page .dm-two-factor-alert .alert {
+    margin-bottom: 0;
+    border-radius: 6px;
+    border-color: rgba(242, 140, 40, 0.25);
+}
+
+.whmcs-templatefile-user-security .dm-linked-accounts-content,
+.dm-security-settings-page .dm-linked-accounts-content {
+    color: #344d68;
+}
+
+.whmcs-templatefile-user-security .dm-linked-accounts-content .table,
+.dm-security-settings-page .dm-linked-accounts-content .table {
+    margin-bottom: 0;
+    color: #293f56;
+}
+
+.whmcs-templatefile-user-security .dm-linked-accounts-content .table thead th,
+.dm-security-settings-page .dm-linked-accounts-content .table thead th {
+    background: #0f3d63;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.14);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.whmcs-templatefile-user-security .dm-linked-accounts-content .table tbody td,
+.dm-security-settings-page .dm-linked-accounts-content .table tbody td {
+    vertical-align: middle;
+    border-color: rgba(17, 43, 77, 0.08);
+}
+
+.whmcs-templatefile-user-security .dm-security-linked-table,
+.dm-security-settings-page .dm-security-linked-table {
+    margin-top: 14px;
+}
+
+.whmcs-templatefile-user-security .modal.twofa-setup .modal-content,
+.dm-security-settings-page ~ .modal.twofa-setup .modal-content {
+    border: 0;
+    border-radius: 8px;
+    box-shadow: 0 8px 28px rgba(17, 43, 77, 0.22);
+    overflow: hidden;
+}
+
+.whmcs-templatefile-user-security .modal.twofa-setup .modal-header,
+.dm-security-settings-page ~ .modal.twofa-setup .modal-header {
+    background: #0f3d63 !important;
+    border-bottom: 0;
+}
+
+.whmcs-templatefile-user-security .modal.twofa-setup .modal-title,
+.dm-security-settings-page ~ .modal.twofa-setup .modal-title {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.whmcs-templatefile-user-security .modal.twofa-setup .btn-primary,
+.dm-security-settings-page ~ .modal.twofa-setup .btn-primary {
+    background: #f28c28;
+    border-color: #f28c28;
+    color: #fff;
+}
+
+.whmcs-templatefile-user-security .modal.twofa-setup .btn-primary:hover,
+.dm-security-settings-page ~ .modal.twofa-setup .btn-primary:hover {
+    background: #df7d1f;
+    border-color: #df7d1f;
+    color: #fff;
+}
+
+@media (max-width: 767px) {
+    .whmcs-templatefile-user-security .dm-security-intro-body,
+    .dm-security-settings-page .dm-security-intro-body,
+    .whmcs-templatefile-user-security .dm-security-section-content,
+    .dm-security-settings-page .dm-security-section-content,
+    .whmcs-templatefile-user-security .dm-security-form,
+    .dm-security-settings-page .dm-security-form {
+        padding: 18px 14px 16px;
+    }
+
+    .whmcs-templatefile-user-security .dm-security-section-header,
+    .dm-security-settings-page .dm-security-section-header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+        padding: 14px;
+    }
+}

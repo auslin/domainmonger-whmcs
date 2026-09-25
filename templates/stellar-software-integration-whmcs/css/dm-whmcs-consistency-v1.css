@@ -1,0 +1,3881 @@
+/*
+ * Domainmonger WHMCS v9 consistency layer - Patch 7
+ * Scope: active Stellar WHMCS client theme only.
+ * Intent: normalize common WHMCS client-area UI elements without touching cart logic
+ * or the ClouDNS module templates/styles. Patch 7 adds a focused Domains List polish pass while preserving the service-card actions.
+ */
+
+:root {
+    --dm-whmcs-navy: #202f3f;
+    --dm-whmcs-navy-dark: #171f2a;
+    --dm-whmcs-navy-soft: #33465c;
+    --dm-whmcs-action-blue: #2f5574;
+    --dm-whmcs-action-blue-hover: #24425b;
+    --dm-whmcs-action-blue-border: #20394e;
+    --dm-whmcs-orange: #f58220;
+    --dm-whmcs-orange-dark: #dd6f12;
+    --dm-whmcs-page-bg: #f5f6f8;
+    --dm-whmcs-border: #d9e0e7;
+    --dm-whmcs-border-soft: #e8edf2;
+    --dm-whmcs-text: #263647;
+    --dm-whmcs-muted: #66788a;
+    --dm-whmcs-radius: 6px;
+    --dm-whmcs-shadow: 0 2px 10px rgba(17, 31, 46, 0.06);
+}
+
+/* Keep this first pass away from cart pages and service product-details/module pages. */
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body {
+    background: var(--dm-whmcs-page-bg);
+    padding-top: 32px;
+    padding-bottom: 48px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .primary-content {
+    color: var(--dm-whmcs-text);
+}
+
+/* Logged-in WHMCS submenu: make it feel intentional and less default/bootstrap-like. */
+body.whmcsbody .whmcssubmenu {
+    background: #ffffff;
+    border-top: 1px solid var(--dm-whmcs-border-soft);
+    border-bottom: 1px solid var(--dm-whmcs-border);
+    box-shadow: 0 1px 4px rgba(17, 31, 46, 0.04);
+}
+
+body.whmcsbody .whmcssubmenu .navbar,
+body.whmcsbody .whmcssubmenu .main-navbar-wrapper {
+    min-height: 38px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+body.whmcsbody .whmcssubmenu .navbar-nav > li > a,
+body.whmcsbody .whmcssubmenu .navbar-nav .nav-link,
+body.whmcsbody .whmcssubmenu .navbar-nav .dropdown-toggle {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 600;
+    padding: 10px 12px;
+    text-decoration: none;
+}
+
+body.whmcsbody .whmcssubmenu .navbar-nav > li > a:hover,
+body.whmcsbody .whmcssubmenu .navbar-nav .nav-link:hover,
+body.whmcsbody .whmcssubmenu .navbar-nav .dropdown-toggle:hover,
+body.whmcsbody .whmcssubmenu .navbar-nav .active > a,
+body.whmcsbody .whmcssubmenu .navbar-nav .nav-link.active {
+    color: var(--dm-whmcs-orange);
+}
+
+body.whmcsbody .whmcssubmenu .dropdown-menu {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    box-shadow: var(--dm-whmcs-shadow);
+}
+
+body.whmcsbody .whmcssubmenu .dropdown-item:hover,
+body.whmcsbody .whmcssubmenu .dropdown-item:focus {
+    background: #fff3e8;
+    color: var(--dm-whmcs-navy-dark);
+}
+
+/* Network issue banner language/style cleanup. */
+body.whmcsbody .network-issue-alert {
+    border: 0;
+    border-bottom: 1px solid #efd895;
+    border-radius: 0;
+    color: #5b4214;
+    font-weight: 600;
+}
+
+body.whmcsbody .network-issue-alert .alert-link {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+body.whmcsbody .network-issue-alert .alert-link:hover {
+    color: var(--dm-whmcs-orange-dark);
+    text-decoration: underline;
+}
+
+/* Dashboard stat tiles. */
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) .tiles .tile {
+    background: #ffffff;
+    border: 1px solid var(--dm-whmcs-border);
+    color: var(--dm-whmcs-text);
+    min-height: 86px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) .tiles .tile:hover {
+    border-color: #f2b27b;
+    box-shadow: var(--dm-whmcs-shadow);
+    transform: translateY(-1px);
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) .tiles .tile .stat {
+    color: var(--dm-whmcs-orange);
+    font-weight: 700;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) .tiles .tile .title {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 700;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) .tiles .tile .highlight {
+    background: var(--dm-whmcs-orange) !important;
+}
+
+/* Cards, sidebars and panels. */
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .card,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .panel {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    box-shadow: var(--dm-whmcs-shadow);
+    overflow: hidden;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .card-header,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .panel-heading {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark);
+    color: #ffffff !important;
+    padding: 11px 16px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .card-header .card-title,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .panel-heading,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .card-header h1,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .card-header h2,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .card-header h3,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .card-header h4,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .card-header h5 {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .card-body,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .panel-body {
+    background: #ffffff;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .card-footer,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .panel-footer {
+    background: #fbfcfd;
+    border-top: 1px solid var(--dm-whmcs-border-soft);
+}
+
+/* Sidebar lists. */
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) .sidebar .list-group-item {
+    border-color: var(--dm-whmcs-border-soft);
+    color: var(--dm-whmcs-text);
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) .sidebar .list-group-item:hover,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) .sidebar .list-group-item.active {
+    background: #fff3e8;
+    color: var(--dm-whmcs-navy-dark);
+}
+
+/* Buttons: keep primary action language orange, secondary actions navy/gray. */
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn {
+    border-radius: var(--dm-whmcs-radius);
+    font-weight: 700;
+    line-height: 1.25;
+    min-height: 36px;
+    padding: 8px 14px;
+    text-decoration: none;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn-xs,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn-sm {
+    min-height: 30px;
+    padding: 5px 10px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn-primary,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn-success,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .bg-color-gold,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .bg-color-orange {
+    background: var(--dm-whmcs-orange) !important;
+    border-color: var(--dm-whmcs-orange-dark) !important;
+    color: #ffffff !important;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn-primary:hover,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn-success:hover,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .bg-color-gold:hover,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .bg-color-orange:hover {
+    background: var(--dm-whmcs-orange-dark) !important;
+    border-color: #c65f0d !important;
+    color: #ffffff !important;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn-default,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn-secondary,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn-dark {
+    background: var(--dm-whmcs-action-blue) !important;
+    border-color: var(--dm-whmcs-action-blue-border) !important;
+    color: #ffffff !important;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn-default:hover,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn-secondary:hover,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .btn-dark:hover {
+    background: var(--dm-whmcs-action-blue-hover) !important;
+    border-color: var(--dm-whmcs-action-blue-border) !important;
+    color: #ffffff !important;
+}
+
+/* Dashboard refinement pass: use ClouDNS-like button proportions while keeping WHMCS blue/orange language. */
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card {
+    margin-bottom: 22px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card-header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card-header .float-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .btn,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .sidebar .btn {
+    align-items: center;
+    display: inline-flex;
+    gap: 4px;
+    justify-content: center;
+    min-height: 32px;
+    padding: 6px 12px;
+    white-space: nowrap;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .btn-xs,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .btn-sm,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .sidebar .btn-xs,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .sidebar .btn-sm {
+    min-height: 28px;
+    padding: 4px 10px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card-body,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .list-group-item {
+    line-height: 1.45;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .list-group-item .btn,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card-body .btn {
+    margin-left: 10px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .list-group-item .btn:first-child,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card-body .btn:first-child {
+    margin-left: 0;
+}
+
+/* Keep split dropdown buttons attached, but add breathing room before the next action. */
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .list-group-item .btn-group,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card-body .btn-group {
+    display: inline-flex;
+    margin-left: 10px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .list-group-item .btn-group:first-child,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card-body .btn-group:first-child {
+    margin-left: 0;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .list-group-item .btn-group .btn,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card-body .btn-group .btn {
+    margin-left: 0;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .list-group-item .btn-group + .btn,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card-body .btn-group + .btn {
+    margin-left: 0;
+}
+
+/* Client-area home domain registration panel: fix uneven input/button height and spacing. */
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .card-body {
+    padding: 18px 22px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card[menuItemName="Register a New Domain"] form {
+    margin-bottom: 0;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .input-group {
+    align-items: stretch;
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 0 auto;
+    max-width: 420px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .input-group .form-control {
+    border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    height: 36px;
+    min-height: 36px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .input-group-btn {
+    display: flex;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .input-group .btn {
+    border-radius: 0;
+    height: 36px;
+    margin-left: 0;
+    min-height: 36px;
+    padding: 6px 14px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .input-group .btn:first-child {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    margin-left: -1px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .input-group .btn:last-child {
+    border-bottom-right-radius: var(--dm-whmcs-radius);
+    border-top-right-radius: var(--dm-whmcs-radius);
+}
+
+@media (max-width: 575.98px) {
+    body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .input-group {
+        flex-wrap: wrap;
+        max-width: none;
+    }
+
+    body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .input-group .form-control {
+        border-radius: var(--dm-whmcs-radius) !important;
+        flex-basis: 100%;
+        margin-bottom: 8px;
+    }
+
+    body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .input-group-btn {
+        gap: 8px;
+        width: 100%;
+    }
+
+    body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .input-group .btn {
+        border-radius: var(--dm-whmcs-radius);
+        flex: 1 1 auto;
+    }
+}
+
+/* Forms and tables. */
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .form-control,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .custom-select,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body select.form-control {
+    border-color: #cfd8e3;
+    border-radius: var(--dm-whmcs-radius);
+    color: var(--dm-whmcs-text);
+    min-height: 38px;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .form-control:focus,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .custom-select:focus {
+    border-color: var(--dm-whmcs-orange);
+    box-shadow: 0 0 0 0.12rem rgba(245, 130, 32, 0.18);
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .table {
+    color: var(--dm-whmcs-text);
+    margin-bottom: 0;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .table thead th {
+    background: #f8fafc;
+    border-bottom: 1px solid var(--dm-whmcs-border);
+    color: var(--dm-whmcs-navy-dark);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .table td {
+    border-color: var(--dm-whmcs-border-soft);
+    vertical-align: middle;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .badge {
+    border-radius: 4px;
+    font-weight: 700;
+    padding: 4px 7px;
+}
+
+/* General alerts inside content. */
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .alert {
+    border-radius: var(--dm-whmcs-radius);
+    border-width: 1px;
+    box-shadow: 0 1px 4px rgba(17, 31, 46, 0.04);
+}
+
+/* Keep mobile changes light. */
+@media (max-width: 767.98px) {
+    body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body {
+        padding-top: 20px;
+        padding-bottom: 32px;
+    }
+
+    body.whmcsbody .whmcssubmenu .navbar-nav > li > a,
+    body.whmcsbody .whmcssubmenu .navbar-nav .nav-link,
+    body.whmcsbody .whmcssubmenu .navbar-nav .dropdown-toggle {
+        padding: 9px 10px;
+    }
+}
+
+
+/* Patch 4: active product quick actions.
+   The WHMCS stock item uses split dropdowns that can duplicate cPanel.
+   The child-template override renders direct actions; this section makes them
+   read as a clean cPanel/Webmail/View Details button row. */
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions .btn {
+    align-items: center;
+    display: inline-flex;
+    gap: 6px;
+    height: 32px;
+    justify-content: center;
+    line-height: 1.1;
+    margin: 0;
+    min-height: 32px;
+    padding: 6px 12px;
+    white-space: nowrap;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions .dm-service-action-btn {
+    background: var(--dm-whmcs-action-blue);
+    border-color: var(--dm-whmcs-action-blue-border);
+    color: #ffffff;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions .dm-service-action-btn:hover,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions .dm-service-action-btn:focus {
+    background: var(--dm-whmcs-action-blue-hover);
+    border-color: var(--dm-whmcs-action-blue-border);
+    color: #ffffff;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions .dm-service-action-accent {
+    background: var(--dm-whmcs-orange);
+    border-color: var(--dm-whmcs-orange-dark);
+    color: #ffffff;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions .dm-service-action-accent:hover,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions .dm-service-action-accent:focus {
+    background: var(--dm-whmcs-orange-dark);
+    border-color: var(--dm-whmcs-orange-dark);
+    color: #ffffff;
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions .btn-view-details {
+    background: #ffffff;
+    border-color: var(--dm-whmcs-border);
+    color: var(--dm-whmcs-navy-dark);
+}
+
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions .btn-view-details:hover,
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions .btn-view-details:focus {
+    background: #f8fafc;
+    color: var(--dm-whmcs-navy-dark);
+}
+
+@media (max-width: 575.98px) {
+    body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions {
+        justify-content: flex-start;
+        width: 100%;
+    }
+
+    body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions .btn {
+        flex: 1 1 auto;
+    }
+}
+
+/* Patch 6: simplify active service quick actions to one cPanel button, one Webmail button, and View Details. */
+body.whmcsbody:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) #main-body .client-home-cards .div-service-buttons.dm-service-actions-simple .btn {
+    min-width: 104px;
+}
+
+
+/* Patch 7: Domains list cleanup.
+   Scope this to the WHMCS domains list only so ClouDNS and cart/order pages stay untouched. */
+body.whmcsbody.whmcs-templatefile-clientareadomains #main-body .primary-content > .tab-content {
+    background: #ffffff;
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    box-shadow: var(--dm-whmcs-shadow);
+    padding: 18px 20px 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #domainForm {
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #domainForm > .btn-group {
+    align-items: center;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 16px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #domainForm > .btn-group > .btn,
+body.whmcsbody.whmcs-templatefile-clientareadomains #domainForm > .btn-group > .btn-group > .btn {
+    border-radius: var(--dm-whmcs-radius) !important;
+    height: 34px;
+    margin-left: 0 !important;
+    min-height: 34px;
+    padding: 6px 12px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #domainForm > .btn-group > .btn-group {
+    margin-left: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains .table-container {
+    clear: both;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList_wrapper .dataTables_length,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList_wrapper .dataTables_info {
+    color: var(--dm-whmcs-muted);
+    font-weight: 600;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList_wrapper .dataTables_filter {
+    margin-bottom: 8px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList_wrapper .dataTables_filter input {
+    border: 1px solid #cfd8e3;
+    border-radius: var(--dm-whmcs-radius);
+    box-shadow: none;
+    height: 34px;
+    min-height: 34px;
+    padding: 6px 12px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList {
+    border: 1px solid var(--dm-whmcs-border);
+    border-collapse: separate;
+    border-radius: var(--dm-whmcs-radius);
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark) !important;
+    color: #ffffff !important;
+    font-size: 12px;
+    height: 38px;
+    letter-spacing: 0.02em;
+    padding: 9px 12px;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_desc:after {
+    color: rgba(255, 255, 255, 0.55) !important;
+    opacity: 1 !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody td {
+    background: #ffffff;
+    border-color: var(--dm-whmcs-border-soft);
+    padding: 11px 12px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody tr:hover td {
+    background: #fff9f3;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody td:nth-child(1),
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody td:nth-child(2) {
+    text-align: center;
+    width: 34px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody td:nth-child(3) a {
+    color: var(--dm-whmcs-orange-dark);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody td:nth-child(3) a:hover {
+    color: var(--dm-whmcs-orange);
+    text-decoration: underline;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody small {
+    color: var(--dm-whmcs-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 3px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList .status,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList .label.status {
+    border-radius: 4px;
+    display: inline-flex;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+    min-height: 22px;
+    padding: 6px 8px;
+    text-transform: none;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList_wrapper .pagination {
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList_wrapper .pagination .page-link {
+    border-color: var(--dm-whmcs-border);
+    color: var(--dm-whmcs-action-blue);
+    font-weight: 700;
+    min-height: 32px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList_wrapper .pagination .active .page-link,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList_wrapper .pagination .page-item.active .page-link {
+    background: var(--dm-whmcs-action-blue);
+    border-color: var(--dm-whmcs-action-blue-border);
+    color: #ffffff;
+}
+
+@media (max-width: 767.98px) {
+    body.whmcsbody.whmcs-templatefile-clientareadomains #main-body .primary-content > .tab-content {
+        padding: 14px;
+    }
+
+    body.whmcsbody.whmcs-templatefile-clientareadomains #domainForm > .btn-group {
+        display: flex;
+        width: 100%;
+    }
+
+    body.whmcsbody.whmcs-templatefile-clientareadomains #domainForm > .btn-group > .btn,
+    body.whmcsbody.whmcs-templatefile-clientareadomains #domainForm > .btn-group > .btn-group,
+    body.whmcsbody.whmcs-templatefile-clientareadomains #domainForm > .btn-group > .btn-group > .btn {
+        flex: 1 1 auto;
+    }
+}
+
+/* Patch 8: Domains list header alignment, select-all checkbox, and CloudNS-style sort indicators. */
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th {
+    position: relative;
+    white-space: nowrap;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.bulk-select-column,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.ssl-column {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    text-align: center !important;
+    width: 42px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.bulk-select-column input[type="checkbox"] {
+    accent-color: var(--dm-whmcs-orange);
+    cursor: pointer;
+    height: 13px;
+    margin: 0;
+    vertical-align: middle;
+    width: 13px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th:nth-child(3) {
+    padding-left: 14px !important;
+    text-align: left !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody td:nth-child(3) {
+    text-align: left;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_desc {
+    background-image: none !important;
+    cursor: pointer;
+    padding-right: 24px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_desc:after {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    display: block !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 7px !important;
+    font-weight: 700 !important;
+    height: 8px !important;
+    line-height: 8px !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    right: 9px !important;
+    speak: never;
+    width: 8px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_desc:before {
+    content: "▲" !important;
+    top: calc(50% - 9px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_desc:after {
+    content: "▼" !important;
+    top: calc(50% + 1px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_desc:after {
+    color: #ffffff !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.sorting_desc:before {
+    color: rgba(255, 255, 255, 0.25) !important;
+}
+
+
+/* Patch 9: Keep the wide Domain-column sort arrows visually attached to the Domain label. */
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting_desc {
+    padding-right: 12px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting_desc:after {
+    left: 72px !important;
+    right: auto !important;
+}
+
+
+/* Patch 10/11: Keep the Select All checkbox column sortable, but hide sort controls on SSL/utility columns. */
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.bulk-select-column {
+    cursor: pointer !important;
+    padding-left: 8px !important;
+    padding-right: 18px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.bulk-select-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.bulk-select-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.bulk-select-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.bulk-select-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.bulk-select-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.bulk-select-column.sorting_desc:after {
+    left: auto !important;
+    right: 5px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.bulk-select-column input[type="checkbox"] {
+    position: relative;
+    z-index: 2;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.ssl-column {
+    cursor: default !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.ssl-column:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.ssl-column:after {
+    content: "" !important;
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.ssl-column.sorting,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.ssl-column.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.ssl-column.sorting_desc {
+    background-image: none !important;
+}
+
+
+/* Patch 12: Domains list header/data alignment for date and status columns. */
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column {
+    text-align: center !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody td:nth-child(4),
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody td:nth-child(5),
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody td:nth-child(6) {
+    text-align: center !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column {
+    min-width: 132px;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column {
+    min-width: 88px;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column.sorting_desc:after {
+    left: calc(50% + 54px) !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column.sorting_desc:after {
+    left: calc(50% + 48px) !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column.sorting_desc:after {
+    left: calc(50% + 30px) !important;
+    right: auto !important;
+}
+
+
+/* Patch 13: Prevent Domains list date/status header labels from overlapping sort arrows.
+   Keep headers centered over their data, but reserve arrow space at the right edge. */
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column {
+    min-width: 156px !important;
+    padding-left: 18px !important;
+    padding-right: 34px !important;
+    text-align: center !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column {
+    min-width: 104px !important;
+    padding-left: 16px !important;
+    padding-right: 30px !important;
+    text-align: center !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.registration-date-column.sorting_desc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.next-due-date-column.sorting_desc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.status-column.sorting_desc:after {
+    left: auto !important;
+    right: 12px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody td:nth-child(4),
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody td:nth-child(5) {
+    min-width: 156px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList tbody td:nth-child(6) {
+    min-width: 104px;
+}
+
+
+/* Patch 14: Give the Domain header the same label-to-arrow breathing room as the other sortable headers. */
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareadomains #tableDomainsList thead th.domain-column.sorting_desc:after {
+    left: 86px !important;
+    right: auto !important;
+}
+
+/* Patch 15: Services list polish to match the Domains list table treatment. */
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList_wrapper .dataTables_length,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList_wrapper .dataTables_info {
+    color: var(--dm-whmcs-muted);
+    font-weight: 600;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList_wrapper .dataTables_filter {
+    margin-bottom: 8px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList_wrapper .dataTables_filter input {
+    border: 1px solid #cfd8e3;
+    border-radius: var(--dm-whmcs-radius);
+    box-shadow: none;
+    height: 34px;
+    min-height: 34px;
+    padding: 6px 12px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList {
+    border: 1px solid var(--dm-whmcs-border);
+    border-collapse: separate;
+    border-radius: var(--dm-whmcs-radius);
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark) !important;
+    color: #ffffff !important;
+    font-size: 12px;
+    height: 38px;
+    letter-spacing: 0.02em;
+    padding: 9px 12px;
+    position: relative;
+    text-transform: uppercase;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody td {
+    background: #ffffff;
+    border-color: var(--dm-whmcs-border-soft);
+    padding: 11px 12px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody tr:hover td {
+    background: #fff9f3;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.ssl-column,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody td:nth-child(1) {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    text-align: center !important;
+    width: 42px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody td:nth-child(2) {
+    text-align: left !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody td:nth-child(2) strong {
+    color: var(--dm-whmcs-text);
+    font-weight: 800;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody td:nth-child(2) a {
+    color: var(--dm-whmcs-orange-dark);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody td:nth-child(2) a:hover {
+    color: var(--dm-whmcs-orange);
+    text-decoration: underline;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.price-column,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.next-due-date-column,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody td:nth-child(3),
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody td:nth-child(4),
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody td:nth-child(5) {
+    text-align: center !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.price-column,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.next-due-date-column {
+    min-width: 156px !important;
+    padding-left: 18px !important;
+    padding-right: 34px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column {
+    min-width: 104px !important;
+    padding-left: 16px !important;
+    padding-right: 30px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody td:nth-child(3),
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody td:nth-child(4) {
+    min-width: 156px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList tbody td:nth-child(5) {
+    min-width: 104px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList .status,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList .label.status {
+    border-radius: 4px;
+    display: inline-flex;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+    min-height: 22px;
+    padding: 6px 8px;
+    text-transform: none;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_desc {
+    background-image: none !important;
+    cursor: pointer;
+    padding-right: 24px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_desc:after {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    display: block !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 7px !important;
+    font-weight: 700 !important;
+    height: 8px !important;
+    line-height: 8px !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    right: 9px !important;
+    speak: never;
+    width: 8px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_desc:before {
+    content: "▲" !important;
+    top: calc(50% - 9px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_desc:after {
+    content: "▼" !important;
+    top: calc(50% + 1px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_desc:after {
+    color: #ffffff !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.sorting_desc:before {
+    color: rgba(255, 255, 255, 0.25) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.ssl-column {
+    cursor: default !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.ssl-column:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.ssl-column:after {
+    content: "" !important;
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc {
+    padding-right: 12px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc:after {
+    left: 90px !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.price-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.price-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.price-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.price-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.price-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.price-column.sorting_desc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.next-due-date-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.next-due-date-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.next-due-date-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.next-due-date-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.next-due-date-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.next-due-date-column.sorting_desc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column.sorting_desc:after {
+    left: auto !important;
+    right: 12px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList_wrapper .pagination {
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList_wrapper .pagination .page-link {
+    border-color: var(--dm-whmcs-border);
+    color: var(--dm-whmcs-action-blue);
+    font-weight: 700;
+    min-height: 32px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList_wrapper .pagination .active .page-link,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList_wrapper .pagination .page-item.active .page-link {
+    background: var(--dm-whmcs-action-blue);
+    border-color: var(--dm-whmcs-action-blue-border);
+    color: #ffffff;
+}
+
+
+/* Patch 16: Match Services-list sort arrow spacing to the Domains-list baseline.
+   Keep the wide Product column arrows close to the Product label, like Domain. */
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc:after {
+    left: 86px !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.price-column.sorting,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.price-column.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.price-column.sorting_desc,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.next-due-date-column.sorting,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.next-due-date-column.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.next-due-date-column.sorting_desc,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column.sorting,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column.sorting_desc {
+    padding-right: 34px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column.sorting,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.status-column.sorting_desc {
+    padding-right: 30px !important;
+}
+
+
+/* Patch 17: Services list sort-arrow cleanup.
+   Keep the Product/Service arrows attached to the full label without overlapping it. */
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc:after {
+    left: 124px !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc {
+    padding-left: 14px !important;
+    padding-right: 40px !important;
+}
+
+
+/* Patch 18: Match Services-list Product/Service arrow spacing to the Domains-list Domain header spacing. */
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc:after {
+    left: 86px !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc {
+    padding-left: 14px !important;
+    padding-right: 24px !important;
+}
+
+
+/* Patch 19: Services list Product/Service arrow correction.
+   The Product/Service label is longer than Domain, so the arrows need a larger
+   absolute offset to create the same visual label-to-arrow gap. */
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc:after {
+    left: 132px !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareaproducts #tableServicesList thead th.service-product-column.sorting_desc {
+    padding-left: 14px !important;
+    padding-right: 48px !important;
+}
+
+
+/* Patch 20: Invoices list polish to match Domains and Services list treatment. */
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList_wrapper .dataTables_length,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList_wrapper .dataTables_info {
+    color: var(--dm-whmcs-muted);
+    font-size: 13px;
+    padding: 8px 0;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList_wrapper .dataTables_filter {
+    margin-bottom: 12px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList_wrapper .dataTables_filter input {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius-sm);
+    min-height: 34px;
+    padding: 6px 10px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList {
+    background: #ffffff;
+    border: 1px solid var(--dm-whmcs-border-soft);
+    border-collapse: separate;
+    border-radius: var(--dm-whmcs-radius);
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark) !important;
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .02em;
+    padding: 11px 14px;
+    position: relative;
+    text-transform: none;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td {
+    border-top: 1px solid var(--dm-whmcs-border-soft);
+    padding: 13px 14px;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody tr:hover td {
+    background: #fbfdff;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(1) {
+    text-align: left !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-date-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-due-date-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-total-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-status-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(2),
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(3),
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(4),
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(5) {
+    text-align: center !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-date-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-due-date-column {
+    min-width: 132px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-total-column {
+    min-width: 110px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-status-column {
+    min-width: 104px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList .status,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList .label.status {
+    border-radius: 999px;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.2;
+    min-width: 74px;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_desc {
+    background-image: none !important;
+    cursor: pointer;
+    padding-right: 34px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_desc:after {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    display: block !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 7px !important;
+    font-weight: 700 !important;
+    height: 8px !important;
+    line-height: 8px !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    right: 12px !important;
+    speak: never;
+    width: 8px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_desc:before {
+    content: "▲" !important;
+    top: calc(50% - 9px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_desc:after {
+    content: "▼" !important;
+    top: calc(50% + 1px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_desc:after {
+    color: #ffffff !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_desc:before {
+    color: rgba(255, 255, 255, 0.25) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting_desc:after {
+    left: 88px !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting_desc {
+    padding-left: 14px !important;
+    padding-right: 30px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList_wrapper .pagination {
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList_wrapper .pagination .page-link {
+    border-color: var(--dm-whmcs-border);
+    color: var(--dm-whmcs-action-blue);
+    font-weight: 700;
+    min-height: 32px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList_wrapper .pagination .active .page-link,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList_wrapper .pagination .page-item.active .page-link {
+    background: var(--dm-whmcs-action-blue);
+    border-color: var(--dm-whmcs-action-blue-border);
+    color: #ffffff;
+}
+
+
+/* Patch 21: Invoices list column layout, select-all checkbox, and per-column sort-arrow spacing. */
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(1) {
+    text-align: center !important;
+    width: 46px !important;
+    min-width: 46px !important;
+    max-width: 46px !important;
+    padding-left: 8px !important;
+    padding-right: 18px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column input,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(1) input {
+    margin: 0;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(2) {
+    min-width: 160px !important;
+    white-space: nowrap !important;
+    text-align: left !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-date-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-due-date-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(3),
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(4) {
+    min-width: 112px !important;
+    width: 112px !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-total-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(5) {
+    min-width: 104px !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-status-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(6) {
+    min-width: 104px !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+}
+
+/* Reset Patch 20's generic arrow location, then place arrows just right of each label. */
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.sorting_desc:after {
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_desc:after {
+    left: 31px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-number-column.sorting_desc:after {
+    left: 86px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-date-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-date-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-date-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-date-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-date-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-date-column.sorting_desc:after {
+    left: calc(50% + 41px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-due-date-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-due-date-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-due-date-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-due-date-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-due-date-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-due-date-column.sorting_desc:after {
+    left: calc(50% + 31px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-total-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-total-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-total-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-total-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-total-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-total-column.sorting_desc:after {
+    left: calc(50% + 26px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-status-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-status-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-status-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-status-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-status-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-status-column.sorting_desc:after {
+    left: calc(50% + 30px) !important;
+}
+
+
+/* Patch 22: Invoices list checkbox-column arrow placement.
+   Keep the checkbox sortable, but move its sort arrows beside the checkbox instead of behind it. */
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(1) {
+    width: 58px !important;
+    min-width: 58px !important;
+    max-width: 58px !important;
+    padding-left: 10px !important;
+    padding-right: 24px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column input {
+    position: relative;
+    left: -6px;
+    z-index: 2;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_desc:after {
+    left: 38px !important;
+    right: auto !important;
+}
+
+
+/* Patch 23: Invoices list checkbox-column arrow separation.
+   Put the Select All checkbox and its sort arrows in separate fixed zones so the arrows cannot sit behind the checkbox. */
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column {
+    position: relative !important;
+    width: 74px !important;
+    min-width: 74px !important;
+    max-width: 74px !important;
+    padding-left: 10px !important;
+    padding-right: 30px !important;
+    text-align: left !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(1) {
+    width: 74px !important;
+    min-width: 74px !important;
+    max-width: 74px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    text-align: center !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column input {
+    position: absolute !important;
+    left: 16px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 3 !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_desc:after {
+    left: auto !important;
+    right: 14px !important;
+    z-index: 1 !important;
+}
+
+
+/* Patch 24: Invoices checkbox column final alignment.
+   Narrow the column back down, align the header Select All checkbox with row checkboxes,
+   and keep the sort arrows beside—not behind—the checkbox. */
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(1) {
+    width: 54px !important;
+    min-width: 54px !important;
+    max-width: 54px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+    text-align: center !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column {
+    position: relative !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column input {
+    position: absolute !important;
+    left: 20px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin: 0 !important;
+    z-index: 3 !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(1) input {
+    margin: 0 !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_desc:after {
+    left: auto !important;
+    right: 7px !important;
+    z-index: 1 !important;
+}
+
+
+/* Patch 25: Invoices checkbox column alignment.
+   Center the Select All checkbox on the same vertical line as the row checkboxes,
+   while keeping the sortable arrows in a narrow right-side lane. */
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(1) {
+    width: 46px !important;
+    min-width: 46px !important;
+    max-width: 46px !important;
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column input,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList tbody td:nth-child(1) input {
+    display: inline-block !important;
+    left: auto !important;
+    margin: 0 auto !important;
+    position: static !important;
+    top: auto !important;
+    transform: none !important;
+    vertical-align: middle !important;
+    z-index: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareainvoices #tableInvoicesList thead th.invoice-select-column.sorting_desc:after {
+    left: auto !important;
+    right: 3px !important;
+    z-index: 1 !important;
+}
+
+
+/* Patch 26: Quotes list table treatment to match Domains/Services/Invoices, without checkboxes. */
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList_wrapper .dataTables_length,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList_wrapper .dataTables_info {
+    color: var(--dm-whmcs-muted);
+    font-size: 13px;
+    margin: 8px 0 12px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList_wrapper .dataTables_filter {
+    margin: 4px 0 14px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList_wrapper .dataTables_filter input {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    min-height: 36px;
+    padding: 7px 10px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList {
+    background: #ffffff;
+    border: 1px solid var(--dm-whmcs-border-soft);
+    border-collapse: separate;
+    border-radius: var(--dm-whmcs-radius-lg);
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark) !important;
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+    padding: 11px 10px;
+    position: relative;
+    text-transform: none;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList tbody td {
+    border-top: 1px solid var(--dm-whmcs-border-soft);
+    padding: 12px 10px;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList tbody tr:hover td {
+    background: #fbfcff;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-number-column,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList tbody td.quote-number-cell {
+    text-align: center !important;
+    white-space: nowrap;
+    width: 96px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-subject-column,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList tbody td.quote-subject-cell {
+    text-align: left !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-date-column,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-valid-column,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList tbody td.quote-date-cell,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList tbody td.quote-valid-cell {
+    text-align: center !important;
+    white-space: nowrap;
+    width: 126px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-stage-column,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList tbody td.quote-stage-cell {
+    text-align: center !important;
+    white-space: nowrap;
+    width: 106px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-action-column,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList tbody td:last-child {
+    text-align: center !important;
+    width: 118px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList .status,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList .label.status {
+    border-radius: 999px;
+    display: inline-flex;
+    font-size: 12px;
+    font-weight: 800;
+    justify-content: center;
+    min-width: 72px;
+    padding: 6px 10px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_asc,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_desc {
+    background-image: none !important;
+    cursor: pointer;
+    padding-right: 30px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_desc:after {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    display: block !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 7px !important;
+    font-weight: 700 !important;
+    height: 8px !important;
+    line-height: 8px !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    speak: never;
+    width: 8px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_desc:before {
+    content: "▲" !important;
+    top: calc(50% - 9px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_desc:after {
+    content: "▼" !important;
+    top: calc(50% + 1px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_desc:after {
+    color: #ffffff !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.sorting_desc:before {
+    color: rgba(255, 255, 255, 0.25) !important;
+}
+
+/* Per-column quote sort-arrow placement: just right of header text. */
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-number-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-number-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-number-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-number-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-number-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-number-column.sorting_desc:after {
+    left: calc(50% + 30px) !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-subject-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-subject-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-subject-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-subject-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-subject-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-subject-column.sorting_desc:after {
+    left: 74px !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-date-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-date-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-date-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-date-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-date-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-date-column.sorting_desc:after {
+    left: calc(50% + 44px) !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-valid-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-valid-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-valid-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-valid-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-valid-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-valid-column.sorting_desc:after {
+    left: calc(50% + 38px) !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-stage-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-stage-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-stage-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-stage-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-stage-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-stage-column.sorting_desc:after {
+    left: calc(50% + 30px) !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-action-column:before,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList thead th.quote-action-column:after {
+    content: "" !important;
+    display: none !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList_wrapper .pagination {
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList_wrapper .pagination .page-link {
+    border-color: var(--dm-whmcs-border);
+    color: var(--dm-whmcs-action-blue);
+    font-weight: 700;
+    min-height: 32px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList_wrapper .pagination .active .page-link,
+body.whmcsbody.whmcs-templatefile-clientareaquotes #tableQuotesList_wrapper .pagination .page-item.active .page-link {
+    background: var(--dm-whmcs-action-blue);
+    border-color: var(--dm-whmcs-action-blue-border);
+    color: #ffffff;
+}
+
+
+/* Patch 27: Add Funds page cleanup. */
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-page {
+    margin: 0 auto;
+    max-width: 760px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-card {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius-lg);
+    box-shadow: 0 8px 22px rgba(15, 46, 71, 0.07);
+    margin-bottom: 22px;
+    overflow: hidden;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-card .card-header {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark);
+    color: #ffffff !important;
+    padding: 11px 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-card .card-title {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-limits .table {
+    border: 0;
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-limits .table th,
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-limits .table td {
+    border-color: var(--dm-whmcs-border-soft);
+    padding: 12px 16px;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-limits .table th {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 700;
+    width: 55%;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-limits .table td {
+    color: var(--dm-whmcs-text);
+    font-weight: 600;
+    text-align: right;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-form .card-body {
+    padding: 18px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-form label {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-form .form-control,
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-form .custom-select {
+    border-color: var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    min-height: 38px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-form .form-group {
+    margin-bottom: 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-form .btn-block {
+    margin-top: 4px;
+    min-height: 40px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-card .card-footer {
+    background: #fbfcfd;
+    border-top: 1px solid var(--dm-whmcs-border-soft);
+    color: var(--dm-whmcs-muted);
+    padding: 12px 16px;
+}
+
+@media (max-width: 575.98px) {
+    body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-limits .table th,
+    body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-limits .table td {
+        display: block;
+        text-align: left;
+        width: 100%;
+    }
+
+    body.whmcsbody.whmcs-templatefile-clientareaaddfunds .dm-add-funds-limits .table td {
+        padding-top: 0;
+    }
+}
+
+
+/* Patch 29: Payment Methods page cleanup. */
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-methods-card {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius-lg);
+    box-shadow: 0 8px 22px rgba(15, 46, 71, 0.07);
+    overflow: hidden;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-methods-card .card-header {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark);
+    color: #ffffff !important;
+    padding: 11px 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-methods-heading {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-methods-card .card-title {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-methods-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-methods-actions .btn {
+    min-height: 32px;
+    padding: 6px 12px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-methods-card .card-body {
+    padding: 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-methods-intro {
+    color: var(--dm-whmcs-muted);
+    margin-bottom: 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-methods-table-wrap {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    overflow-x: auto;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods #payMethodList {
+    border: 0;
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods #payMethodList thead th {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark) !important;
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    padding: 10px 12px;
+    text-transform: none;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods #payMethodList tbody td {
+    border-color: var(--dm-whmcs-border-soft);
+    padding: 12px;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods #payMethodList tbody tr:hover td {
+    background: #fbfcfd;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods #payMethodList .payment-icon-column {
+    text-align: center;
+    width: 48px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods #payMethodList .payment-icon-column i {
+    color: var(--dm-whmcs-action-blue);
+    font-size: 18px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods #payMethodList .payment-name-column {
+    font-weight: 700;
+    min-width: 130px;
+    white-space: nowrap;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods #payMethodList .payment-description-column {
+    min-width: 180px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods #payMethodList .payment-status-column {
+    min-width: 120px;
+    white-space: nowrap;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-default {
+    color: var(--dm-whmcs-muted);
+    font-weight: 600;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods #payMethodList .payment-actions-column {
+    min-width: 275px;
+    text-align: right;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-method-row-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-end;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-method-row-actions .btn {
+    min-height: 30px;
+    padding: 5px 10px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-methods-empty {
+    color: var(--dm-whmcs-muted);
+    font-weight: 600;
+    padding: 22px 12px !important;
+}
+
+@media (max-width: 767.98px) {
+    body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-methods-heading {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-methods-actions {
+        justify-content: flex-start;
+    }
+
+    body.whmcsbody.whmcs-templatefile-account-paymentmethods #payMethodList .payment-actions-column {
+        min-width: 220px;
+        text-align: left;
+    }
+
+    body.whmcsbody.whmcs-templatefile-account-paymentmethods .dm-payment-method-row-actions {
+        justify-content: flex-start;
+    }
+}
+
+
+/* Patch 30: Support Tickets list cleanup. */
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_length,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_info {
+    color: var(--dm-whmcs-muted);
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_filter {
+    margin-bottom: 10px;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_filter input {
+    border-color: var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    min-height: 34px;
+    padding: 6px 10px;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist .dm-support-tickets-table-wrap,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper {
+    background: #ffffff;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius-lg);
+    box-shadow: 0 8px 22px rgba(15, 46, 71, 0.07);
+    margin-bottom: 14px;
+    overflow: hidden;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark) !important;
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    padding: 10px 12px;
+    text-transform: none;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList tbody td {
+    border-color: var(--dm-whmcs-border-soft);
+    padding: 12px;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList tbody tr:hover td {
+    background: #fbfcfd;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList .support-dept-column,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList tbody td:nth-child(1) {
+    min-width: 130px;
+    width: 16%;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList .support-subject-column,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList tbody td:nth-child(2) {
+    min-width: 300px;
+    width: 48%;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList tbody td:nth-child(2) a {
+    border-left-color: var(--dm-whmcs-orange) !important;
+    color: var(--dm-whmcs-navy-dark);
+    display: inline-flex;
+    flex-direction: column;
+    gap: 2px;
+    line-height: 1.25;
+    padding-left: 10px;
+    text-decoration: none;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList tbody td:nth-child(2) a:hover {
+    color: var(--dm-whmcs-orange-dark);
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList .ticket-number {
+    color: var(--dm-whmcs-muted);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList .ticket-subject {
+    font-weight: 700;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList .ticket-subject.unread {
+    color: var(--dm-whmcs-orange-dark);
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList .support-status-column,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList tbody td:nth-child(3) {
+    min-width: 120px;
+    text-align: center;
+    width: 14%;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList .support-lastreply-column,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList tbody td:nth-child(4) {
+    min-width: 170px;
+    text-align: center;
+    width: 22%;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList .status,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList .label.status {
+    border-radius: 999px;
+    display: inline-flex;
+    font-size: 11px;
+    font-weight: 800;
+    justify-content: center;
+    line-height: 1.1;
+    min-width: 76px;
+    padding: 5px 9px;
+    text-transform: none;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_asc,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_desc {
+    background-image: none !important;
+    cursor: pointer;
+    padding-right: 34px !important;
+    position: relative;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting:before,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting:after,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_desc:after {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    display: block !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 7px !important;
+    font-weight: 700 !important;
+    height: 8px !important;
+    line-height: 8px !important;
+    opacity: 1 !important;
+    position: absolute !important;
+    right: 12px !important;
+    speak: never;
+    width: 8px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting:before,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_desc:before {
+    content: "▲" !important;
+    top: calc(50% - 9px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting:after,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_desc:after {
+    content: "▼" !important;
+    top: calc(50% + 1px) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_desc:after {
+    color: #ffffff !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.sorting_desc:before {
+    color: rgba(255, 255, 255, 0.25) !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-dept-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-dept-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-dept-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-dept-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-dept-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-dept-column.sorting_desc:after {
+    left: 94px !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-subject-column.sorting:before,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-subject-column.sorting:after,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-subject-column.sorting_asc:before,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-subject-column.sorting_asc:after,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-subject-column.sorting_desc:before,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-subject-column.sorting_desc:after {
+    left: 72px !important;
+    right: auto !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-status-column,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList thead th.support-lastreply-column {
+    text-align: center !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .pagination {
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .pagination .page-link {
+    border-color: var(--dm-whmcs-border);
+    color: var(--dm-whmcs-action-blue);
+    font-weight: 700;
+    min-height: 32px;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .pagination .active .page-link,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .pagination .page-item.active .page-link {
+    background: var(--dm-whmcs-action-blue);
+    border-color: var(--dm-whmcs-action-blue-border);
+    color: #ffffff;
+}
+
+
+/* Patch 31: Announcements list/detail cleanup. */
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-card,
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-view-card,
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-comments-card {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius-lg);
+    box-shadow: 0 8px 22px rgba(15, 46, 71, 0.07);
+    overflow: hidden;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-card .card-header,
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-view-card .card-header {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark);
+    color: #ffffff !important;
+    padding: 11px 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-card .card-title,
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-view-card .card-title {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-card .card-body,
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-view-card .card-body {
+    padding: 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcement-item {
+    border: 1px solid var(--dm-whmcs-border-soft);
+    border-radius: var(--dm-whmcs-radius);
+    margin-bottom: 16px;
+    padding: 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcement-item:last-child {
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcement-heading,
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-view-heading {
+    align-items: flex-start;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcement-heading h2 {
+    font-size: 20px;
+    line-height: 1.3;
+    margin: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcement-heading h2 a {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcement-heading h2 a:hover {
+    color: var(--dm-whmcs-orange);
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcement-meta,
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-meta {
+    border-bottom: 1px solid var(--dm-whmcs-border-soft);
+    color: var(--dm-whmcs-muted);
+    font-size: 13px;
+    margin: 10px 0 14px;
+    padding-bottom: 10px;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcement-summary,
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-body {
+    color: var(--dm-whmcs-text);
+    line-height: 1.65;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcement-summary {
+    margin-bottom: 14px;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcement-read-more {
+    min-height: 32px;
+    padding: 6px 12px;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-pagination .pagination {
+    margin-top: 18px;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-pagination .page-link {
+    border-color: var(--dm-whmcs-border);
+    color: var(--dm-whmcs-action-blue);
+    font-weight: 700;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-pagination .active .page-link,
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-pagination .page-item.active .page-link {
+    background: var(--dm-whmcs-action-blue);
+    border-color: var(--dm-whmcs-action-blue-border);
+    color: #ffffff;
+}
+
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-body {
+    padding: 12px 0 4px;
+}
+
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-view-actions {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+
+@media (max-width: 575.98px) {
+    body.whmcsbody.whmcs-templatefile-announcements .dm-announcement-heading,
+    body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-view-heading,
+    body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-view-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}
+
+
+/* Patch 32: Announcements spacing refinement.
+   Give the announcement card body and empty-state alert breathing room so sections do not touch. */
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-card {
+    margin-bottom: 24px;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-card .card-body {
+    padding: 18px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcement-item {
+    margin-bottom: 0 !important;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-list > .alert,
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-card .card-body > .alert {
+    margin: 0 !important;
+}
+
+body.whmcsbody.whmcs-templatefile-announcements .dm-announcements-card + .dm-announcements-pagination {
+    margin-top: 18px;
+}
+
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-view-card,
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-comments-card {
+    margin-bottom: 24px;
+}
+
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-view-card .card-body,
+body.whmcsbody.whmcs-templatefile-viewannouncement .dm-announcement-comments-card .card-body {
+    padding: 18px !important;
+}
+
+
+/* Patch 33: Announcements empty-state spacing hardening.
+   Use unique classes without body-template selectors so route/body-class differences cannot block it. */
+.dm-announcements-card .card-body {
+    padding: 20px !important;
+}
+
+.dm-announcements-list {
+    display: block;
+}
+
+.dm-announcements-empty-state {
+    padding: 4px 0;
+}
+
+.dm-announcements-empty-state .alert {
+    margin: 0 !important;
+}
+
+.dm-announcements-card .card-header + .card-body .dm-announcements-empty-state {
+    margin-top: 4px !important;
+}
+
+.dm-announcement-item + .dm-announcement-item {
+    margin-top: 16px !important;
+}
+
+.dm-announcements-pagination {
+    margin-top: 18px !important;
+}
+
+
+/* Patch 35: Knowledgebase pages. */
+body.whmcsbody .dm-kb-page {
+    margin-bottom: 24px;
+}
+
+body.whmcsbody .dm-kb-search-form {
+    margin-bottom: 22px !important;
+}
+
+body.whmcsbody .dm-kb-search {
+    box-shadow: 0 8px 20px rgba(15, 46, 71, 0.06);
+}
+
+body.whmcsbody .dm-kb-search .form-control {
+    border-color: var(--dm-whmcs-border);
+    min-height: 44px;
+}
+
+body.whmcsbody .dm-kb-search .btn {
+    min-height: 44px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+body.whmcsbody .dm-kb-category-grid > [class*="col-"] {
+    display: flex;
+}
+
+body.whmcsbody .dm-kb-category-card,
+body.whmcsbody .dm-kb-list-card,
+body.whmcsbody .dm-kb-article-card {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius-lg);
+    box-shadow: 0 8px 22px rgba(15, 46, 71, 0.07);
+    margin-bottom: 22px;
+    overflow: hidden;
+    width: 100%;
+}
+
+body.whmcsbody .dm-kb-category-card .card-body {
+    color: var(--dm-whmcs-text);
+    display: block;
+    padding: 16px;
+    text-decoration: none;
+}
+
+body.whmcsbody .dm-kb-category-card .card-body:hover {
+    background: #fbfcfd;
+    color: var(--dm-whmcs-text);
+    text-decoration: none;
+}
+
+body.whmcsbody .dm-kb-category-title {
+    align-items: flex-start;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+body.whmcsbody .dm-kb-title-main,
+body.whmcsbody .dm-kb-article-title {
+    color: var(--dm-whmcs-navy-dark);
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+body.whmcsbody .dm-kb-title-main i,
+body.whmcsbody .dm-kb-article-title i {
+    color: var(--dm-whmcs-action-blue);
+}
+
+body.whmcsbody .dm-kb-description {
+    color: var(--dm-whmcs-muted);
+    margin: 0;
+}
+
+body.whmcsbody .dm-kb-count,
+body.whmcsbody .dm-kb-meta .badge,
+body.whmcsbody .dm-kb-category-card .badge-info {
+    background: var(--dm-whmcs-action-blue) !important;
+    color: #ffffff !important;
+    font-weight: 700;
+}
+
+body.whmcsbody .dm-kb-list-card .card-header,
+body.whmcsbody .dm-kb-article-card .card-header {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark);
+    color: #ffffff !important;
+    padding: 11px 16px;
+}
+
+body.whmcsbody .dm-kb-list-card .card-title,
+body.whmcsbody .dm-kb-article-card .card-title {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+body.whmcsbody .dm-kb-article-item {
+    border-color: var(--dm-whmcs-border-soft) !important;
+    color: var(--dm-whmcs-text);
+    padding: 13px 16px;
+    text-decoration: none;
+}
+
+body.whmcsbody .dm-kb-article-item:hover {
+    background: #fbfcfd;
+    color: var(--dm-whmcs-text);
+    text-decoration: none;
+}
+
+body.whmcsbody .dm-kb-article-item small {
+    color: var(--dm-whmcs-muted);
+    display: block;
+    margin-top: 5px;
+}
+
+body.whmcsbody .dm-kb-empty-state,
+body.whmcsbody .dm-kb-empty-row {
+    margin-top: 14px;
+}
+
+body.whmcsbody .dm-kb-article-heading {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+body.whmcsbody .dm-kb-article-card .card-body {
+    padding: 18px;
+}
+
+body.whmcsbody .dm-kb-meta {
+    border-bottom: 1px solid var(--dm-whmcs-border-soft);
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+}
+
+body.whmcsbody .dm-kb-article-content {
+    color: var(--dm-whmcs-text);
+    line-height: 1.65;
+}
+
+body.whmcsbody .dm-kb-helpful-box {
+    border-top: 1px solid var(--dm-whmcs-border-soft);
+    margin-top: 20px;
+    padding-top: 18px;
+}
+
+body.whmcsbody .dm-kb-helpful-box h4 {
+    color: var(--dm-whmcs-navy-dark);
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+body.whmcsbody .dm-kb-helpful-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+body.whmcsbody .dm-kb-page-actions {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+
+body.whmcsbody .dm-kb-page-actions .btn {
+    min-width: 110px;
+}
+
+@media (max-width: 575.98px) {
+    body.whmcsbody .dm-kb-category-title,
+    body.whmcsbody .dm-kb-article-heading,
+    body.whmcsbody .dm-kb-page-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    body.whmcsbody .dm-kb-page-actions .btn {
+        width: 100%;
+    }
+}
+
+
+/* Patch 36: Downloads page cleanup. */
+.dm-downloads-page {
+    margin-bottom: 24px;
+}
+
+.dm-downloads-search-form {
+    margin-bottom: 20px;
+}
+
+.dm-downloads-search {
+    border-radius: var(--dm-whmcs-radius-lg);
+    box-shadow: 0 8px 22px rgba(15, 46, 71, 0.06);
+    overflow: hidden;
+}
+
+.dm-downloads-search .form-control {
+    border-color: var(--dm-whmcs-border);
+    min-height: 46px;
+}
+
+.dm-downloads-search .btn {
+    min-width: 110px;
+}
+
+.dm-downloads-category-grid {
+    margin-bottom: 10px;
+}
+
+.dm-downloads-category-card,
+.dm-downloads-list-card {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius-lg);
+    box-shadow: 0 8px 22px rgba(15, 46, 71, 0.07);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.dm-downloads-category-card .card-body {
+    color: var(--dm-whmcs-text);
+    display: block;
+    min-height: 98px;
+    padding: 16px;
+    text-decoration: none !important;
+}
+
+.dm-downloads-category-card .card-body:hover {
+    background: #fbfcfd;
+    color: var(--dm-whmcs-text);
+}
+
+.dm-downloads-category-title {
+    align-items: center;
+    color: var(--dm-whmcs-navy-dark);
+    display: flex;
+    font-size: 16px;
+    font-weight: 800;
+    gap: 10px;
+    justify-content: space-between;
+    line-height: 1.35;
+}
+
+.dm-downloads-category-title i {
+    color: var(--dm-whmcs-action-blue);
+}
+
+.dm-downloads-category-title .badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 8px;
+}
+
+.dm-downloads-category-description {
+    color: var(--dm-whmcs-muted);
+    line-height: 1.45;
+    margin: 8px 0 0;
+}
+
+.dm-downloads-list-card .card-header {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark);
+    color: #ffffff !important;
+    padding: 11px 16px;
+}
+
+.dm-downloads-list-card .card-title {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.dm-downloads-list-card .card-title i {
+    color: #ffffff !important;
+}
+
+.dm-downloads-list .dm-download-item {
+    border-color: var(--dm-whmcs-border-soft);
+    color: var(--dm-whmcs-text);
+    padding: 14px 16px;
+    text-decoration: none !important;
+}
+
+.dm-downloads-list .dm-download-item:hover {
+    background: #fbfcfd;
+    color: var(--dm-whmcs-text);
+}
+
+.dm-download-item-main {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.dm-download-item-title {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.dm-download-item-title img,
+.dm-download-item-title i {
+    margin-right: 5px;
+}
+
+.dm-download-restricted {
+    white-space: nowrap;
+}
+
+.dm-download-item-description {
+    color: var(--dm-whmcs-muted);
+    display: block;
+    line-height: 1.45;
+}
+
+.dm-downloads-none,
+.dm-downloads-empty {
+    color: var(--dm-whmcs-muted);
+    font-weight: 600;
+}
+
+.dm-downloads-back {
+    margin-top: 2px;
+}
+
+.dm-downloads-denied-card .card-body {
+    padding: 18px;
+}
+
+.dm-downloads-denied-card p {
+    color: var(--dm-whmcs-text);
+    line-height: 1.55;
+}
+
+@media (max-width: 575.98px) {
+    .dm-downloads-category-title,
+    .dm-download-item-main {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .dm-downloads-search .btn {
+        min-width: 88px;
+    }
+}
+
+
+/* Patch 37: Server Status page cleanup. */
+.dm-server-status-page {
+    margin-bottom: 24px;
+}
+
+.dm-server-status-alert {
+    margin-bottom: 18px;
+}
+
+.dm-server-status-card {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius-lg);
+    box-shadow: 0 8px 22px rgba(15, 46, 71, 0.07);
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.dm-server-status-card > .card-header {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark);
+    color: #ffffff !important;
+    padding: 11px 16px;
+}
+
+.dm-server-status-card > .card-header .card-title,
+.dm-server-status-card > .card-header .card-title i {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.dm-server-status-card > .card-body {
+    padding: 16px;
+}
+
+.dm-server-status-intro {
+    color: var(--dm-whmcs-muted);
+    line-height: 1.55;
+    margin: 0 0 16px;
+}
+
+.dm-server-status-table-wrap {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    overflow-x: auto;
+}
+
+.dm-server-status-table {
+    border: 0;
+    margin-bottom: 0;
+}
+
+.dm-server-status-table thead th {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark) !important;
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    padding: 10px 12px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+.dm-server-status-table tbody td {
+    border-color: var(--dm-whmcs-border-soft);
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.dm-server-status-table tbody tr:hover td {
+    background: #fbfcfd;
+}
+
+.dm-server-name {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 800;
+    min-width: 160px;
+}
+
+.dm-server-status-check {
+    color: var(--dm-whmcs-action-blue);
+    font-weight: 700;
+    min-width: 78px;
+    white-space: nowrap;
+}
+
+.dm-server-status-link {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.dm-server-status-empty,
+.dm-network-no-issues-card .card-body {
+    color: var(--dm-whmcs-muted);
+    font-weight: 600;
+    text-align: center;
+}
+
+.dm-network-issues-section {
+    margin-top: 20px;
+}
+
+.dm-network-issue-heading {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+.dm-network-issue-title {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.dm-network-issue-meta {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.dm-network-issue-status {
+    color: rgba(255,255,255,0.86);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.dm-network-issue-affecting {
+    color: var(--dm-whmcs-navy-dark);
+    font-size: 15px;
+    line-height: 1.45;
+    margin-bottom: 10px;
+}
+
+.dm-network-issue-dates {
+    color: var(--dm-whmcs-muted);
+    margin-bottom: 12px;
+}
+
+.dm-network-issue-dates i {
+    color: var(--dm-whmcs-action-blue);
+}
+
+.dm-network-issue-client-alert {
+    margin-bottom: 12px;
+}
+
+.dm-network-issue-description {
+    color: var(--dm-whmcs-text);
+    line-height: 1.55;
+}
+
+.dm-network-issues-pagination {
+    margin-top: 4px;
+}
+
+.dm-network-issues-pagination .pagination {
+    justify-content: center;
+}
+
+@media (max-width: 575.98px) {
+    .dm-network-issue-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .dm-network-issue-meta {
+        justify-content: flex-start;
+    }
+}
+
+
+/* Patch 38: Submit Ticket page cleanup. */
+.dm-submit-ticket-card {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius-lg);
+    box-shadow: 0 8px 22px rgba(15, 46, 71, 0.07);
+    margin-bottom: 22px;
+    overflow: hidden;
+}
+
+.dm-submit-ticket-card .card-header {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark);
+    color: #ffffff !important;
+    padding: 11px 16px;
+}
+
+.dm-submit-ticket-card .card-title {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.dm-submit-ticket-card .card-body {
+    padding: 18px;
+}
+
+.dm-submit-ticket-intro {
+    color: var(--dm-whmcs-muted);
+    line-height: 1.55;
+    margin: 0 0 16px;
+}
+
+.dm-ticket-department-list {
+    display: grid;
+    gap: 12px;
+}
+
+.dm-ticket-department-card {
+    align-items: center;
+    background: #ffffff;
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    color: var(--dm-whmcs-text);
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    text-decoration: none !important;
+    transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+.dm-ticket-department-card:hover,
+.dm-ticket-department-card:focus {
+    background: #fbfcfd;
+    border-color: var(--dm-whmcs-action-blue);
+    color: var(--dm-whmcs-text);
+    box-shadow: 0 5px 14px rgba(15, 46, 71, 0.06);
+}
+
+.dm-ticket-department-icon {
+    align-items: center;
+    background: rgba(34, 95, 140, 0.10);
+    border-radius: 999px;
+    color: var(--dm-whmcs-action-blue);
+    display: inline-flex;
+    flex: 0 0 38px;
+    height: 38px;
+    justify-content: center;
+    width: 38px;
+}
+
+.dm-ticket-department-content {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.dm-ticket-department-name {
+    color: var(--dm-whmcs-navy-dark);
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+.dm-ticket-department-description {
+    color: var(--dm-whmcs-muted);
+    display: block;
+    line-height: 1.45;
+    margin-top: 2px;
+}
+
+.dm-ticket-department-arrow {
+    color: var(--dm-whmcs-muted);
+    flex: 0 0 auto;
+}
+
+.dm-submit-ticket-section {
+    border-bottom: 1px solid var(--dm-whmcs-border-soft);
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+}
+
+.dm-submit-ticket-section:last-of-type {
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.dm-submit-ticket-section-title {
+    color: var(--dm-whmcs-navy-dark);
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.dm-submit-ticket-form-card label {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.dm-submit-ticket-form-card .form-control,
+.dm-submit-ticket-form-card .custom-select,
+.dm-submit-ticket-form-card select,
+.dm-submit-ticket-form-card textarea {
+    border-color: var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+}
+
+.dm-submit-ticket-form-card .form-control,
+.dm-submit-ticket-form-card select {
+    min-height: 38px;
+}
+
+.dm-submit-ticket-form-card textarea.form-control {
+    line-height: 1.5;
+    min-height: 210px;
+}
+
+.dm-submit-ticket-form-card .custom-file-label {
+    border-color: var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius) 0 0 var(--dm-whmcs-radius);
+    min-height: 38px;
+    padding-top: 8px;
+}
+
+.dm-submit-ticket-form-card .input-group-append .btn {
+    min-height: 38px;
+}
+
+.dm-submit-ticket-upload-note {
+    margin-top: 6px;
+}
+
+.dm-submit-ticket-captcha {
+    margin: 18px 0 14px;
+}
+
+.dm-submit-ticket-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 6px 0 0;
+}
+
+.dm-submit-ticket-actions .btn {
+    min-height: 38px;
+    min-width: 112px;
+}
+
+.dm-submit-ticket-kb-list {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    overflow: hidden;
+}
+
+.dm-submit-ticket-kb-item {
+    border-color: var(--dm-whmcs-border-soft);
+    padding: 12px 14px;
+}
+
+.dm-submit-ticket-kb-item a {
+    color: var(--dm-whmcs-text);
+    display: block;
+    text-decoration: none !important;
+}
+
+.dm-submit-ticket-kb-title {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 800;
+}
+
+.dm-submit-ticket-kb-item small {
+    color: var(--dm-whmcs-muted);
+    display: block;
+    line-height: 1.45;
+    margin-top: 3px;
+}
+
+.dm-submit-ticket-confirm-message {
+    color: var(--dm-whmcs-text);
+    line-height: 1.55;
+    margin: 16px auto;
+    max-width: 720px;
+    text-align: center;
+}
+
+.dm-submit-ticket-success {
+    margin-bottom: 16px;
+}
+
+@media (max-width: 575.98px) {
+    .dm-ticket-department-card {
+        align-items: flex-start;
+    }
+
+    .dm-submit-ticket-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .dm-submit-ticket-actions .btn {
+        width: 100%;
+    }
+}
+
+
+/* Patch 40: My Details page cleanup. */
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-page {
+    margin-bottom: 24px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-card {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius-lg);
+    box-shadow: 0 8px 22px rgba(15, 46, 71, 0.07);
+    margin-bottom: 22px;
+    overflow: hidden;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-card .card-header {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark);
+    color: #ffffff !important;
+    padding: 11px 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-card .card-title {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-card .card-body {
+    padding: 18px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-grid > [class*="col-"] {
+    margin-bottom: 8px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-section-title {
+    border-bottom: 1px solid var(--dm-whmcs-border-soft);
+    color: var(--dm-whmcs-navy-dark);
+    font-size: 14px;
+    font-weight: 800;
+    margin: 2px 0 14px;
+    padding-bottom: 8px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-form label {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-form .form-group {
+    margin-bottom: 15px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-form .form-control,
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-form .custom-select,
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-form select,
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-form textarea {
+    border-color: var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    min-height: 38px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-form .form-control:focus,
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-form .custom-select:focus,
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-form select:focus,
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-form textarea:focus {
+    border-color: var(--dm-whmcs-action-blue);
+    box-shadow: 0 0 0 0.15rem rgba(31, 102, 140, 0.15);
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-custom-field {
+    color: var(--dm-whmcs-muted);
+    font-size: 13px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-custom-field input,
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-custom-field select,
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-custom-field textarea {
+    margin-bottom: 4px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-check-list {
+    padding-left: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-check-list label {
+    align-items: center;
+    color: var(--dm-whmcs-text);
+    display: inline-flex;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-check-list .form-check-input {
+    margin-left: 0;
+    margin-right: 8px;
+    position: static;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-actions {
+    align-items: center;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-actions .btn {
+    min-height: 38px;
+    min-width: 120px;
+}
+
+@media (max-width: 767.98px) {
+    body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-card .card-body {
+        padding: 15px;
+    }
+
+    body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    body.whmcsbody.whmcs-templatefile-clientareadetails .dm-my-details-actions .btn {
+        width: 100%;
+    }
+}
+
+
+/* Patch 41: User Management page cleanup and language display support. */
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-card,
+body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-card {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius-lg);
+    box-shadow: 0 8px 22px rgba(15, 46, 71, 0.07);
+    margin-bottom: 22px;
+    overflow: hidden;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-card .card-header,
+body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-card .card-header {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark);
+    color: #ffffff !important;
+    padding: 11px 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-card .card-title,
+body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-card .card-title {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-card .card-body,
+body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-card .card-body {
+    padding: 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-summary,
+body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-summary {
+    color: var(--dm-whmcs-muted);
+    margin-bottom: 15px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-table-wrap {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    margin-bottom: 10px;
+    overflow-x: auto;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-table {
+    border: 0;
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-table thead th {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark) !important;
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 10px 12px;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-table tbody td {
+    border-color: var(--dm-whmcs-border-soft);
+    padding: 12px;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-actions-heading,
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-actions-cell {
+    text-align: right;
+    width: 310px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-email-row {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-email {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 700;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-last-login {
+    color: var(--dm-whmcs-muted);
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-row-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-end;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-row-actions .btn {
+    min-height: 30px;
+    padding: 5px 10px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-note {
+    font-size: 13px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-invite-form .form-control {
+    border-color: var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    min-height: 38px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-radio-row {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-radio-row label,
+body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-permission-option {
+    color: var(--dm-whmcs-text);
+    font-weight: 600;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-radio-row .form-check-input,
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-permission-option .form-check-input,
+body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-permission-option .form-check-input {
+    margin-left: 0;
+    margin-right: 8px;
+    position: static;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-permissions-box,
+body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-permissions-box {
+    background: #fbfcfd;
+    border: 1px solid var(--dm-whmcs-border-soft);
+    border-radius: var(--dm-whmcs-radius);
+    padding: 12px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-permission-option,
+body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-permission-option {
+    align-items: flex-start;
+    display: flex;
+    margin: 0 0 10px;
+    width: 100%;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-permission-option:last-child,
+body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-permission-option:last-child {
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-section-title {
+    border-bottom: 1px solid var(--dm-whmcs-border-soft);
+    color: var(--dm-whmcs-navy-dark);
+    font-size: 14px;
+    font-weight: 800;
+    margin: 0 0 14px;
+    padding-bottom: 8px;
+}
+
+body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-actions-footer {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    margin: 16px 0 0;
+}
+
+@media (max-width: 767.98px) {
+    body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-actions-heading,
+    body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-actions-cell {
+        min-width: 230px;
+        text-align: left;
+    }
+
+    body.whmcsbody.whmcs-templatefile-account-user-management .dm-user-management-row-actions {
+        justify-content: flex-start;
+    }
+
+    body.whmcsbody.whmcs-templatefile-account-user-permissions .dm-user-management-actions-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}
+
+
+/* Patch 43: Account Security page cleanup. */
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-page {
+    margin-bottom: 24px;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-intro {
+    background: #fbfcfd;
+    border: 1px solid var(--dm-whmcs-border-soft);
+    border-radius: var(--dm-whmcs-radius);
+    color: var(--dm-whmcs-muted);
+    margin-bottom: 18px;
+    padding: 12px 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-intro p {
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-card {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius-lg);
+    box-shadow: 0 8px 22px rgba(15, 46, 71, 0.07);
+    margin-bottom: 22px;
+    overflow: hidden;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-card .card-header {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark);
+    color: #ffffff !important;
+    padding: 11px 16px;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-card .card-title {
+    color: #ffffff !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-card .card-body {
+    padding: 18px;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-form label {
+    color: var(--dm-whmcs-navy-dark);
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-form .form-control,
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-form .custom-select,
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-form select {
+    border-color: var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    min-height: 38px;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-form .form-control:focus,
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-form .custom-select:focus,
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-form select:focus {
+    border-color: var(--dm-whmcs-action-blue);
+    box-shadow: 0 0 0 0.15rem rgba(31, 102, 140, 0.15);
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 6px;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-actions .btn,
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-actions input.btn {
+    min-height: 38px;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-status-box {
+    background: #fbfcfd;
+    border: 1px solid var(--dm-whmcs-border-soft);
+    border-radius: var(--dm-whmcs-radius);
+    margin-bottom: 14px;
+    padding: 12px 14px;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-security-status-box p {
+    margin-bottom: 0;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-linked-accounts-intro {
+    color: var(--dm-whmcs-muted);
+    line-height: 1.55;
+    margin-bottom: 14px;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-provider-prelinking {
+    margin-bottom: 18px;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security .dm-linked-accounts-table-wrap {
+    border: 1px solid var(--dm-whmcs-border);
+    border-radius: var(--dm-whmcs-radius);
+    margin-top: 14px;
+    overflow-x: auto;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security #tableLinkedAccounts {
+    border: 0;
+    margin-bottom: 0 !important;
+    width: 100% !important;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security #tableLinkedAccounts thead th {
+    background: var(--dm-whmcs-navy-soft) !important;
+    border-bottom: 1px solid var(--dm-whmcs-navy-dark) !important;
+    color: #ffffff !important;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 10px 12px;
+    text-align: left !important;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security #tableLinkedAccounts tbody td {
+    border-color: var(--dm-whmcs-border-soft);
+    padding: 12px;
+    vertical-align: middle;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security #tableLinkedAccounts tbody tr:hover td {
+    background: #fbfcfd;
+}
+
+body.whmcsbody.whmcs-templatefile-user-security #tableLinkedAccounts td.text-center {
+    color: var(--dm-whmcs-muted);
+    font-weight: 600;
+    padding: 20px 12px !important;
+}
+
+@media (max-width: 575.98px) {
+    body.whmcsbody.whmcs-templatefile-user-security .dm-security-card .card-body {
+        padding: 15px;
+    }
+
+    body.whmcsbody.whmcs-templatefile-user-security .dm-security-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    body.whmcsbody.whmcs-templatefile-user-security .dm-security-actions .btn,
+    body.whmcsbody.whmcs-templatefile-user-security .dm-security-actions input.btn {
+        width: 100%;
+    }
+}

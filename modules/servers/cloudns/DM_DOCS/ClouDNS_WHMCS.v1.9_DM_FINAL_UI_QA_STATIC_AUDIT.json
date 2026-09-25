@@ -1,0 +1,16 @@
+{
+  "qa_results": {
+    "Baseline": "ClouDNS_WHMCS.v1.9_DM_SOCIAL_CLEANUP_REMOVED_install_only.zip",
+    "Host / Points To toggle present": true,
+    "Failed DNS social cleanup CSS removed": true,
+    "Failed module-wide social cleanup CSS absent": true,
+    "Zones List page shell styling present": true,
+    "Zones List color/accent styling present": true,
+    "Zones List typography/table styling present": true,
+    "Menu/navigation polish present": true,
+    "Button/link taxonomy present": true,
+    "TTL/action icon spacing fix present": true,
+    "Unclassified btn elements found": 0
+  },
+  "unclassified_btn_lines": []
+}

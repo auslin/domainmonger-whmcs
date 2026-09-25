@@ -1,0 +1,25 @@
+/**
+ * Domainmonger standard_cart_2 customizations for WHMCS 9.0.5.
+ *
+ * Purpose:
+ * - Keep the WHMCS 9.0.5 standard_cart template/CSS/JS baseline.
+ * - Recreate the v8.5 standard_cart_2 product-selection behavior where
+ *   Categories and Actions dropdown panels are visible above the products.
+ */
+
+#order-standard_cart .dm-product-category-actions .sidebar-collapsed {
+    display: block !important;
+    margin-top: 0;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+#order-standard_cart .dm-product-category-actions .sidebar-collapsed .panel,
+#order-standard_cart .dm-product-category-actions .sidebar-collapsed .card {
+    margin-bottom: 12px;
+}
+
+#order-standard_cart .dm-product-category-actions .sidebar-collapsed .panel:last-child,
+#order-standard_cart .dm-product-category-actions .sidebar-collapsed .card:last-child {
+    margin-bottom: 0;
+}

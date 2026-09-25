@@ -1,0 +1,49 @@
+# ============================================
+# DomainMonger WHMCS Git Exclusions
+# ============================================
+
+# Secrets / live configuration
+configuration.php
+**/configuration.php
+.env
+.env.*
+*.key
+*.pem
+
+# Runtime / generated data
+attachments/
+downloads/
+templates_c/
+slider_c/
+pipe/
+*.log
+error_log
+debug.log
+
+# Historical import data
+import_script/
+
+# WHMCS/vendor dependencies
+vendor/
+
+# IDE / OS metadata
+.vs/
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Archives / database dumps / backups
+*.sql
+*.sql.gz
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.bak
+
+# Deployment working data
+.deploy/
+
+# Required ClouDNS module source file
+!modules/servers/cloudns/cloudns_core/configuration.php

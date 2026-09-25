@@ -1,0 +1,422 @@
+/* DomainMonger WHMCS v9 consistency - order/cart visual pass (Patch 54)
+   Scope: standard_cart/standard_cart_2 order form only. No cart logic changes. */
+
+body.whmcsbody #order-standard_cart {
+    color: #293f56;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+body.whmcsbody #order-standard_cart a {
+    color: #245c91;
+}
+
+body.whmcsbody #order-standard_cart a:hover,
+body.whmcsbody #order-standard_cart a:focus {
+    color: #f58220;
+    text-decoration: none;
+}
+
+/* Page headings inside the cart flow */
+body.whmcsbody #order-standard_cart .header-lined {
+    margin: 0 0 18px;
+    padding: 0;
+    border: 0;
+}
+
+body.whmcsbody #order-standard_cart .header-lined h1 {
+    margin: 0 0 8px;
+    color: #163a5f;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+body.whmcsbody #order-standard_cart .header-lined p {
+    margin: 0;
+    color: #5f7185;
+    font-size: 14px;
+}
+
+/* Shared cart panels/cards */
+body.whmcsbody #order-standard_cart .products .product,
+body.whmcsbody #order-standard_cart .panel,
+body.whmcsbody #order-standard_cart .domain-selection-options .option,
+body.whmcsbody #order-standard_cart .summary-container,
+body.whmcsbody #order-standard_cart .view-cart-items,
+body.whmcsbody #order-standard_cart .checkout-security-msg,
+body.whmcsbody #order-standard_cart .already-registered,
+body.whmcsbody #order-standard_cart .account-select-container,
+body.whmcsbody #order-standard_cart .apply-credit-container,
+body.whmcsbody #order-standard_cart .cc-input-container,
+body.whmcsbody #order-standard_cart .existing-cc-grid .paymethod-info,
+body.whmcsbody #order-standard_cart .domain-checker-result-headline,
+body.whmcsbody #order-standard_cart .domain-lookup-result {
+    border: 1px solid rgba(17, 43, 77, 0.12);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(17, 43, 77, 0.055);
+}
+
+body.whmcsbody #order-standard_cart .products .product {
+    overflow: hidden;
+    padding: 0;
+    margin-bottom: 22px;
+}
+
+body.whmcsbody #order-standard_cart .products .product header,
+body.whmcsbody #order-standard_cart .panel > .panel-heading,
+body.whmcsbody #order-standard_cart .view-cart-items-header,
+body.whmcsbody #order-standard_cart .summary-container .clearfix:first-child,
+body.whmcsbody #order-standard_cart .cart-sidebar .panel-heading {
+    background: #163a5f;
+    color: #fff;
+    border: 0;
+    border-radius: 8px 8px 0 0;
+}
+
+body.whmcsbody #order-standard_cart .products .product header {
+    margin: 0;
+    padding: 12px 16px;
+}
+
+body.whmcsbody #order-standard_cart .products .product header span,
+body.whmcsbody #order-standard_cart .panel > .panel-heading,
+body.whmcsbody #order-standard_cart .panel > .panel-heading .panel-title,
+body.whmcsbody #order-standard_cart .panel > .panel-heading a {
+    color: #fff;
+}
+
+body.whmcsbody #order-standard_cart .products .product header span {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+body.whmcsbody #order-standard_cart .products .product header .qty {
+    color: rgba(255,255,255,0.78);
+    font-size: 12px;
+    font-weight: 500;
+}
+
+body.whmcsbody #order-standard_cart .products .product div.product-desc {
+    padding: 16px;
+    color: #445b73;
+    font-size: 13px;
+}
+
+body.whmcsbody #order-standard_cart .products .product div.product-desc ul {
+    margin-bottom: 0;
+    padding-left: 18px;
+}
+
+body.whmcsbody #order-standard_cart .products .product footer {
+    padding: 16px 16px 18px;
+    color: #445b73;
+}
+
+body.whmcsbody #order-standard_cart .products .product span.feature-value,
+body.whmcsbody #order-standard_cart .products .product div.product-pricing span.price,
+body.whmcsbody #order-standard_cart .total-due-today .amt {
+    color: #163a5f;
+    font-weight: 700;
+}
+
+/* Sidebar/menu panels in the cart flow */
+body.whmcsbody #order-standard_cart .sidebar .panel,
+body.whmcsbody #order-standard_cart .cart-sidebar .panel {
+    overflow: hidden;
+    margin-bottom: 18px;
+}
+
+body.whmcsbody #order-standard_cart .sidebar .panel-heading,
+body.whmcsbody #order-standard_cart .cart-sidebar .panel-heading {
+    padding: 11px 14px;
+}
+
+body.whmcsbody #order-standard_cart .sidebar .panel-title,
+body.whmcsbody #order-standard_cart .cart-sidebar .panel-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+body.whmcsbody #order-standard_cart .sidebar .list-group-item,
+body.whmcsbody #order-standard_cart .cart-sidebar .list-group-item {
+    border-color: rgba(17, 43, 77, 0.09);
+    color: #293f56;
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+body.whmcsbody #order-standard_cart .sidebar .list-group-item:hover,
+body.whmcsbody #order-standard_cart .cart-sidebar .list-group-item:hover {
+    background: rgba(245, 130, 32, 0.08);
+    color: #163a5f;
+}
+
+body.whmcsbody #order-standard_cart .sidebar .list-group-item.active,
+body.whmcsbody #order-standard_cart .cart-sidebar .list-group-item.active {
+    background: #f58220;
+    border-color: #f58220;
+    color: #fff;
+}
+
+/* Forms */
+body.whmcsbody #order-standard_cart label {
+    color: #3b5067;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+body.whmcsbody #order-standard_cart .form-control,
+body.whmcsbody #order-standard_cart input.field,
+body.whmcsbody #order-standard_cart select.field,
+body.whmcsbody #order-standard_cart textarea.field,
+body.whmcsbody #order-standard_cart .input-group-addon {
+    min-height: 40px;
+    border-color: rgba(17, 43, 77, 0.18);
+    border-radius: 6px;
+    color: #293f56;
+    box-shadow: none;
+}
+
+body.whmcsbody #order-standard_cart .input-group-addon {
+    background: #f4f7fa;
+    color: #51667d;
+    font-weight: 600;
+}
+
+body.whmcsbody #order-standard_cart .form-control:focus,
+body.whmcsbody #order-standard_cart input.field:focus,
+body.whmcsbody #order-standard_cart select.field:focus,
+body.whmcsbody #order-standard_cart textarea.field:focus {
+    border-color: rgba(245, 130, 32, 0.8);
+    box-shadow: 0 0 0 3px rgba(245, 130, 32, 0.14);
+}
+
+body.whmcsbody #order-standard_cart .form-group,
+body.whmcsbody #order-standard_cart .field-container {
+    margin-bottom: 18px;
+}
+
+/* Domain search/register/transfer blocks */
+body.whmcsbody #order-standard_cart .domain-selection-options {
+    margin: 16px 0 20px;
+}
+
+body.whmcsbody #order-standard_cart .domain-selection-options .option {
+    margin-bottom: 9px;
+    padding: 12px 15px;
+    color: #293f56;
+}
+
+body.whmcsbody #order-standard_cart .domain-selection-options .option:hover {
+    border-color: rgba(245, 130, 32, 0.45);
+    background: rgba(245, 130, 32, 0.055);
+}
+
+body.whmcsbody #order-standard_cart .domain-selection-options .option-selected,
+body.whmcsbody #order-standard_cart .domain-selection-options .option.active {
+    border-color: #f58220;
+    background: rgba(245, 130, 32, 0.1);
+}
+
+body.whmcsbody #order-standard_cart .domains-row .form-control,
+body.whmcsbody #order-standard_cart .domains-row .input-group-addon,
+body.whmcsbody #order-standard_cart .domains-row .btn {
+    min-height: 42px;
+}
+
+body.whmcsbody #order-standard_cart .domain-loading-spinner {
+    color: #163a5f;
+}
+
+/* Buttons */
+body.whmcsbody #order-standard_cart .btn {
+    min-height: 38px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border-width: 1px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.35;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;
+}
+
+body.whmcsbody #order-standard_cart .btn-sm {
+    min-height: 34px;
+    padding: 7px 13px;
+    font-size: 12px;
+}
+
+body.whmcsbody #order-standard_cart .btn-primary,
+body.whmcsbody #order-standard_cart .btn-success,
+body.whmcsbody #order-standard_cart #btnCompleteProductConfig,
+body.whmcsbody #order-standard_cart #btnCheckAvailability,
+body.whmcsbody #order-standard_cart #btnCheckout,
+body.whmcsbody #order-standard_cart .checkout .btn-primary {
+    background: #f58220;
+    border-color: #f58220;
+    color: #fff;
+}
+
+body.whmcsbody #order-standard_cart .btn-primary:hover,
+body.whmcsbody #order-standard_cart .btn-success:hover,
+body.whmcsbody #order-standard_cart #btnCompleteProductConfig:hover,
+body.whmcsbody #order-standard_cart #btnCheckAvailability:hover,
+body.whmcsbody #order-standard_cart #btnCheckout:hover {
+    background: #dd741d;
+    border-color: #dd741d;
+    color: #fff;
+}
+
+body.whmcsbody #order-standard_cart .btn-default,
+body.whmcsbody #order-standard_cart .btn-info,
+body.whmcsbody #order-standard_cart .btn-secondary,
+body.whmcsbody #order-standard_cart .generate-password {
+    background: #245c91;
+    border-color: #245c91;
+    color: #fff;
+}
+
+body.whmcsbody #order-standard_cart .btn-default:hover,
+body.whmcsbody #order-standard_cart .btn-info:hover,
+body.whmcsbody #order-standard_cart .btn-secondary:hover,
+body.whmcsbody #order-standard_cart .generate-password:hover {
+    background: #1d4c78;
+    border-color: #1d4c78;
+    color: #fff;
+}
+
+body.whmcsbody #order-standard_cart .btn-danger,
+body.whmcsbody #order-standard_cart .remove-item {
+    background: #c64545;
+    border-color: #c64545;
+    color: #fff;
+}
+
+/* Sub-headings inside checkout/config pages */
+body.whmcsbody #order-standard_cart .sub-heading,
+body.whmcsbody #order-standard_cart .sub-heading-borderless {
+    margin-top: 26px;
+    margin-bottom: 28px;
+    border-top-color: rgba(17, 43, 77, 0.14);
+}
+
+body.whmcsbody #order-standard_cart .sub-heading span,
+body.whmcsbody #order-standard_cart .sub-heading-borderless span {
+    top: -12px;
+    color: #163a5f;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+/* Alerts */
+body.whmcsbody #order-standard_cart .alert {
+    border-radius: 8px;
+    border-width: 1px;
+    font-size: 13px;
+}
+
+body.whmcsbody #order-standard_cart .alert-info {
+    background: #eef6fc;
+    border-color: #c8e4f7;
+    color: #245c91;
+}
+
+body.whmcsbody #order-standard_cart .alert-warning {
+    background: #fff7ed;
+    border-color: #f7d6ad;
+    color: #8a551d;
+}
+
+/* Order summary / cart totals */
+body.whmcsbody #order-standard_cart .summary-container {
+    overflow: hidden;
+    padding: 0;
+}
+
+body.whmcsbody #order-standard_cart .summary-container > div,
+body.whmcsbody #order-standard_cart .summary-container .summary-totals,
+body.whmcsbody #order-standard_cart .summary-container .total-due-today {
+    padding-left: 14px;
+    padding-right: 14px;
+}
+
+body.whmcsbody #order-standard_cart .summary-totals {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(17, 43, 77, 0.12);
+}
+
+body.whmcsbody #order-standard_cart .total-due-today {
+    margin-top: 14px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    border-top: 1px solid rgba(17, 43, 77, 0.12);
+    background: #f7fafc;
+    color: #163a5f;
+}
+
+body.whmcsbody #order-standard_cart .total-due-today .amt {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 22px;
+}
+
+/* View cart rows */
+body.whmcsbody #order-standard_cart .view-cart-items {
+    overflow: hidden;
+    margin-bottom: 18px;
+}
+
+body.whmcsbody #order-standard_cart .view-cart-items-header {
+    padding: 12px 16px;
+    font-weight: 700;
+}
+
+body.whmcsbody #order-standard_cart .item,
+body.whmcsbody #order-standard_cart .view-cart-item {
+    border-color: rgba(17, 43, 77, 0.10);
+}
+
+/* Tables inside cart/order flow */
+body.whmcsbody #order-standard_cart table.table thead th {
+    background: #163a5f;
+    border-color: #163a5f;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .01em;
+}
+
+body.whmcsbody #order-standard_cart table.table tbody td {
+    border-color: rgba(17, 43, 77, 0.09);
+    color: #293f56;
+    vertical-align: middle;
+}
+
+/* Responsive safety */
+@media (max-width: 767px) {
+    body.whmcsbody #order-standard_cart .header-lined h1 {
+        font-size: 22px;
+    }
+
+    body.whmcsbody #order-standard_cart .products .product div.product-desc,
+    body.whmcsbody #order-standard_cart .products .product footer {
+        float: none;
+        width: 100%;
+        text-align: left;
+    }
+
+    body.whmcsbody #order-standard_cart .products .product footer {
+        padding-top: 0;
+    }
+
+    body.whmcsbody #order-standard_cart .btn,
+    body.whmcsbody #order-standard_cart .btn-sm {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+}

@@ -1,0 +1,108 @@
+/* DomainMonger WHMCS v9 - Support Tickets list controls/scroll cleanup v1
+   Page-specific to supportticketslist.tpl. */
+
+body.whmcsbody.whmcs-templatefile-supportticketslist .table-container,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper {
+    background: #ffffff !important;
+    border-radius: 0 0 6px 6px !important;
+}
+
+/* Top DataTables controls: give the text/search breathing room. */
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_info {
+    padding-top: 10px !important;
+    padding-bottom: 8px !important;
+    padding-left: 14px !important;
+    padding-right: 10px !important;
+    color: #344d68 !important;
+    line-height: 32px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_filter {
+    padding-top: 10px !important;
+    padding-bottom: 8px !important;
+    padding-left: 10px !important;
+    padding-right: 14px !important;
+    text-align: right !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_filter label {
+    margin-bottom: 0 !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_filter input,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_filter .form-control {
+    max-width: 190px !important;
+    min-height: 32px !important;
+    margin-top: 0 !important;
+    margin-right: 0 !important;
+    border: 1px solid #cfd9e3 !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+}
+
+/* Remove the horizontal scrollbar without changing table content. */
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 0 !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_scroll,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_scrollHead,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_scrollBody,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_scrollFoot {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_scrollBody {
+    border-bottom: 0 !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_scrollBody::-webkit-scrollbar,
+body.whmcsbody.whmcs-templatefile-supportticketslist .table-container::-webkit-scrollbar {
+    display: none !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList th,
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList td {
+    white-space: normal !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList th:nth-child(1),
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList td:nth-child(1) {
+    width: 22% !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList th:nth-child(2),
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList td:nth-child(2) {
+    width: 40% !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList th:nth-child(3),
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList td:nth-child(3) {
+    width: 16% !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList th:nth-child(4),
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList td:nth-child(4) {
+    width: 22% !important;
+}
+
+/* Bottom controls should stay inside the table width. */
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_length {
+    padding-left: 14px !important;
+    padding-top: 10px !important;
+}
+
+body.whmcsbody.whmcs-templatefile-supportticketslist #tableTicketsList_wrapper .dataTables_paginate {
+    padding-right: 14px !important;
+    padding-top: 10px !important;
+}

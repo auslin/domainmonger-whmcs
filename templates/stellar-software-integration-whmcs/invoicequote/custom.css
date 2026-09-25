@@ -1,0 +1,219 @@
+/* Add custom CSS or overrides here */
+
+:root {
+	
+	--invoicequote-header-background: #f2f2f2;
+	--invoicequote-header-background-gradient-top: #f2f2f2;
+	--invoicequote-header-background-gradient-bottom: #f2f2f2;	
+	
+	--invoicequote-boxes-head-background: #f2f2f2;
+	--invoicequote-boxes-head-background-gradient-top: #f2f2f2;
+	--invoicequote-boxes-head-background-gradient-bottom: #f2f2f2;		
+	
+	--invoicequote-table-head-foreground: #f1f1f1;			
+	
+	--invoicequote-container-background-border-top: #f09546;
+	
+	/* Stellar */
+	
+	--invoicequote-button-background: #f09546;
+	--invoicequote-button-background-gradient-top: #f09546;
+	--invoicequote-button-background-gradient-bottom: #f09546;	
+	--invoicequote-button-background-border: #df7e37;			
+	--invoicequote-button-foreground: #f1f1f1;	
+	--invoicequote-button-foreground-shadow: #000;
+	
+	--invoicequote-button-active-background: #e39155;
+	--invoicequote-button-active-background-gradient-top: #e39155;
+	--invoicequote-button-active-background-gradient-bottom: #e39155;	
+	--invoicequote-button-active-background-border: #df7e37;			
+	--invoicequote-button-active-foreground: #f1f1f1;
+	--invoicequote-button-active-foreground-shadow: #000;
+	
+}
+
+.btn-success,
+.btn-primary {
+	text-transform: uppercase;
+}
+/* DomainMonger Patch 167
+   Invoice / Quote consistency pass.
+   Aligns invoice and quote buttons, box headers, and table headers with the current WHMCS navy/orange system. */
+
+:root {
+    --invoicequote-header-background: #f8fafc;
+    --invoicequote-header-background-gradient-top: #f8fafc;
+    --invoicequote-header-background-gradient-bottom: #f8fafc;
+    --invoicequote-header-background-border: #d7e0ea;
+    --invoicequote-header-foreground: #293f56;
+    --invoicequote-header-foreground-bold: #b94a48;
+
+    --invoicequote-header-right-background: #ffffff;
+    --invoicequote-header-right-background-gradient-top: #ffffff;
+    --invoicequote-header-right-background-gradient-bottom: #ffffff;
+    --invoicequote-header-right-background-border: #d7e0ea;
+    --invoicequote-header-right-foreground: #293f56;
+
+    --invoicequote-boxes-background: #ffffff;
+    --invoicequote-boxes-background-gradient-top: #ffffff;
+    --invoicequote-boxes-background-gradient-bottom: #ffffff;
+    --invoicequote-boxes-background-border: #d7e0ea;
+    --invoicequote-boxes-foreground: #293f56;
+    --invoicequote-boxes-head-background: #163a5f;
+    --invoicequote-boxes-head-background-gradient-top: #163a5f;
+    --invoicequote-boxes-head-background-gradient-bottom: #163a5f;
+    --invoicequote-boxes-head-background-border: #163a5f;
+    --invoicequote-boxes-head-foreground: #ffffff;
+
+    --invoicequote-table-background: #ffffff;
+    --invoicequote-table-background-gradient-top: #ffffff;
+    --invoicequote-table-background-gradient-bottom: #ffffff;
+    --invoicequote-table-background-border: #d7e0ea;
+    --invoicequote-table-foreground: #293f56;
+    --invoicequote-table-head-background: #163a5f;
+    --invoicequote-table-head-background-gradient-top: #163a5f;
+    --invoicequote-table-head-background-gradient-bottom: #163a5f;
+    --invoicequote-table-head-background-border: #163a5f;
+    --invoicequote-table-head-foreground: #ffffff;
+
+    --invoicequote-container-background-border-top: #f58220;
+
+    --invoicequote-button-background: #f58220;
+    --invoicequote-button-background-gradient-top: #f58220;
+    --invoicequote-button-background-gradient-bottom: #f58220;
+    --invoicequote-button-background-border: #f58220;
+    --invoicequote-button-foreground: #ffffff;
+    --invoicequote-button-foreground-shadow: transparent;
+
+    --invoicequote-button-active-background: #dd741d;
+    --invoicequote-button-active-background-gradient-top: #dd741d;
+    --invoicequote-button-active-background-gradient-bottom: #dd741d;
+    --invoicequote-button-active-background-border: #dd741d;
+    --invoicequote-button-active-foreground: #ffffff;
+    --invoicequote-button-active-foreground-shadow: transparent;
+}
+
+.invoicequote-container {
+    border-top-color: #f58220 !important;
+}
+
+.invoicequote-container-inner,
+.invoicequote-header,
+.invoicequote-header .invoicequote-header-right,
+.invoicequote-address,
+.invoicequote-table.card {
+    border-color: #d7e0ea !important;
+    box-shadow: 0 3px 10px rgba(17, 43, 77, 0.08) !important;
+}
+
+.invoicequote-address-heading,
+.invoicequote-table.card .card-title {
+    font-weight: 700 !important;
+    text-shadow: none !important;
+}
+
+.invoicequote-table.card .card-title,
+.invoicequote-table.card .card-header {
+    background: #163a5f !important;
+    background-color: #163a5f !important;
+    background-image: none !important;
+    color: #ffffff !important;
+    border-color: #163a5f !important;
+}
+
+.invoicequote-table.card .card-title *,
+.invoicequote-table.card .card-header * {
+    color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+.invoicequote-table .table,
+.invoicequote-table .table td,
+.invoicequote-table .table th {
+    color: #293f56 !important;
+}
+
+.invoicequote-table .table thead th {
+    background: #163a5f !important;
+    background-color: #163a5f !important;
+    color: #ffffff !important;
+    border-color: #163a5f !important;
+    text-shadow: none !important;
+}
+
+.btn-success,
+.btn-primary {
+    background: #f58220 !important;
+    background-color: #f58220 !important;
+    background-image: none !important;
+    border-color: #f58220 !important;
+    color: #ffffff !important;
+    text-transform: none !important;
+    font-weight: 700 !important;
+    border-radius: 5px !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background: #dd741d !important;
+    background-color: #dd741d !important;
+    background-image: none !important;
+    border-color: #dd741d !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.btn-default,
+.btn-secondary {
+    background: #163a5f !important;
+    background-color: #163a5f !important;
+    background-image: none !important;
+    border-color: #163a5f !important;
+    color: #ffffff !important;
+    text-transform: none !important;
+    font-weight: 700 !important;
+    border-radius: 5px !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-secondary:hover,
+.btn-secondary:focus {
+    background: #214e7a !important;
+    background-color: #214e7a !important;
+    border-color: #214e7a !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+.btn-danger {
+    background: #b94a48 !important;
+    background-color: #b94a48 !important;
+    background-image: none !important;
+    border-color: #b94a48 !important;
+    color: #ffffff !important;
+    text-transform: none !important;
+    font-weight: 700 !important;
+    border-radius: 5px !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+    background: #a33a36 !important;
+    background-color: #a33a36 !important;
+    border-color: #a33a36 !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+}

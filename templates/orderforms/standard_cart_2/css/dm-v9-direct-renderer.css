@@ -1,0 +1,233 @@
+/* DomainMonger Patch 220 - native v9 namespinner endpoint with clean direct renderer. */
+
+#order-standard_cart .dm-v9-direct-page .header-lined {
+    margin-bottom: 18px;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-note {
+    margin-bottom: 18px;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-card,
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-results-card {
+    background: #fff;
+    border: 1px solid #d8e0e8;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-bottom: 22px;
+    overflow: hidden;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-header,
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-results-header {
+    background: #163a5f;
+    color: #fff;
+    padding: 14px 18px;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-results-header {
+    align-items: center;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-header h2,
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-results-header h3 {
+    color: #fff;
+    font-size: 18px;
+    line-height: 1.3;
+    margin: 0;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-body {
+    padding: 20px;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-box .form-control {
+    border-color: #c8d3de;
+    min-height: 46px;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-box .form-control:focus {
+    border-color: #f58220;
+    box-shadow: 0 0 0 0.2rem rgba(245, 130, 32, 0.18);
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-box .btn-primary,
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-add-btn.btn-primary {
+    background: #f58220;
+    border-color: #f58220;
+    color: #fff;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-box .btn-primary:hover,
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-box .btn-primary:focus,
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-add-btn.btn-primary:hover,
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-add-btn.btn-primary:focus {
+    background: #d96f17;
+    border-color: #d96f17;
+    color: #fff;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-add-btn.checkout {
+    background: #163a5f;
+    border-color: #163a5f;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-add-btn.checkout:hover,
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-add-btn.checkout:focus {
+    background: #214e7a;
+    border-color: #214e7a;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-add-btn.btn-danger {
+    background: #b94a48;
+    border-color: #b94a48;
+    color: #fff;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-options {
+    color: #5c6f82;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+    margin-top: 14px;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-options label {
+    font-weight: 400;
+    margin: 0;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-status {
+    margin: 0 0 18px;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-results-count {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-table-wrap {
+    overflow-x: auto;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-results-table {
+    margin: 0;
+    min-width: 680px;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-results-table th {
+    background: #f6f8fa;
+    border-bottom: 1px solid #d8e0e8;
+    color: #163a5f;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-results-table td {
+    vertical-align: middle;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-domain-name {
+    color: #1f2933;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-domain-unavailable {
+    color: #7b8794;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-price,
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-action-cell {
+    white-space: nowrap;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-action-cell {
+    text-align: right;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-empty {
+    color: #7b8794;
+    padding: 22px;
+    text-align: center;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-debug-wrap {
+    border-top: 1px solid #d8e0e8;
+    padding: 14px 18px;
+}
+
+#order-standard_cart .dm-v9-direct-page .dm-v9-direct-raw {
+    background: #f7f7f7;
+    border: 1px solid #ddd;
+    margin: 12px 0 0;
+    max-height: 320px;
+    overflow: auto;
+    padding: 12px;
+    white-space: pre-wrap;
+}
+
+@media (max-width: 767px) {
+    #order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-body {
+        padding: 16px;
+    }
+
+    #order-standard_cart .dm-v9-direct-page .dm-v9-direct-results-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    #order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-box.input-group {
+        display: block;
+    }
+
+    #order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-box .form-control,
+    #order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-box .input-group-btn,
+    #order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-box .input-group-append,
+    #order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-box .btn {
+        display: block;
+        width: 100%;
+    }
+
+    #order-standard_cart .dm-v9-direct-page .dm-v9-direct-search-box .btn {
+        margin-top: 10px;
+    }
+}
+
+
+/* DomainMonger Patch 278 visible label; Patch 277 backed out, normal Patch 221 renderer only. */
+#order-standard_cart .dm-v8x-patch275-label {
+    position: fixed;
+    left: 16px;
+    bottom: 16px;
+    z-index: 2147483647;
+    padding: 8px 10px;
+    border: 2px solid #163a5f;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #163a5f;
+    box-shadow: 0 6px 18px rgba(0,0,0,.18);
+    font: 700 12px/1.2 Arial, Helvetica, sans-serif;
+    text-align: left;
+}
+#order-standard_cart .dm-v8x-patch275-label span {
+    display: block;
+    margin-top: 3px;
+    font-weight: 600;
+    color: #4b5563;
+}
+#order-standard_cart .dm-v9-direct-page #dmResetFilters,
+#order-standard_cart .dm-v9-direct-page #dmResetFilter,
+#order-standard_cart .dm-v9-direct-page #resetFilters,
+#order-standard_cart .dm-v9-direct-page .dm-register-control-reset,
+#order-standard_cart .dm-v9-direct-page .dm-reset-filters,
+#order-standard_cart .dm-v9-direct-page .dm-reset-filter,
+#order-standard_cart .dm-v9-direct-page [data-dm-reset-filters],
+#order-standard_cart .dm-v9-direct-page [data-action="reset-filters"],
+#order-standard_cart .dm-v9-direct-page [data-action="resetfilters"] {
+    display: none !important;
+    visibility: hidden !important;
+}

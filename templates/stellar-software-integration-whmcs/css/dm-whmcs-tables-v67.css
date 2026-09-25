@@ -1,0 +1,494 @@
+/* DomainMonger WHMCS v9 consistency - shared table and sort-arrow pass (Patch 53)
+   Scope: logged-in client/account/support list tables. Excludes cart/order flow and product-detail/module pages. */
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper {
+    color: #293f56;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_info {
+    padding-top: 0;
+    margin-bottom: 10px;
+    color: #51667d;
+    font-size: 13px;
+    line-height: 34px;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_filter {
+    margin: 0 0 10px;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_filter label,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_length label {
+    margin-bottom: 0;
+    color: #51667d;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_filter input,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_length select {
+    min-height: 34px;
+    border: 1px solid rgba(17, 43, 77, 0.18);
+    border-radius: 6px;
+    box-shadow: none;
+    color: #293f56;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_filter input {
+    min-width: 185px;
+    padding: 6px 12px;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_length select {
+    padding: 5px 28px 5px 10px;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable {
+    width: 100% !important;
+    border-collapse: collapse;
+    border: 1px solid rgba(17, 43, 77, 0.14);
+    background: #fff;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list.dataTable thead th {
+    position: relative;
+    vertical-align: middle;
+    padding: 14px 34px 14px 16px !important;
+    background-color: #2f435f !important;
+    background-image: none !important;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    color: #fff !important;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc {
+    background-color: #2f435f !important;
+    background-image: none !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc:after {
+    position: absolute;
+    right: 12px;
+    color: rgba(255, 255, 255, 0.55) !important;
+    font-size: 8px;
+    line-height: 8px;
+    opacity: 1 !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc:before {
+    content: "▲" !important;
+    top: calc(50% - 7px);
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc:after {
+    content: "▼" !important;
+    top: calc(50% + 1px);
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc:after {
+    color: #fff !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc:before {
+    color: rgba(255, 255, 255, 0.32) !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list tbody td,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable tbody td {
+    vertical-align: middle;
+    padding: 14px 16px;
+    border-top: 1px solid rgba(17, 43, 77, 0.12);
+    color: #293f56;
+    font-size: 14px;
+    line-height: 1.35;
+    background: #fff;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list tbody tr:hover td,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable tbody tr:hover td {
+    background: #f8fbfe;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_paginate {
+    padding-top: 10px;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_paginate .paginate_button,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_paginate .page-link {
+    min-width: 34px;
+    margin-left: 4px;
+    padding: 6px 10px;
+    border: 1px solid rgba(17, 43, 77, 0.12) !important;
+    border-radius: 4px;
+    color: #293f56 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_paginate .page-item.active .page-link {
+    color: #fff !important;
+    background: #2f435f !important;
+    border-color: #2f435f !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list .btn,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable .btn {
+    min-height: 30px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+@media (max-width: 767.98px) {
+    body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_filter,
+    body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_length {
+        float: none;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 12px;
+    }
+
+    body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_filter input,
+    body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) .dataTables_wrapper .dataTables_length select {
+        width: 100%;
+        min-width: 0;
+        margin-left: 0;
+    }
+
+    body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) table.table-list tbody td,
+    body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable tbody td {
+        padding: 12px 14px;
+    }
+}
+
+/* Patch 51: normalize sort-arrow spacing.
+   The Patch 50 arrows were absolutely positioned inside each TH, so the visual gap
+   between the label and arrows changed with every column width. This makes the sort
+   indicator render inline directly after the header label with a fixed gap. */
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc {
+    padding-right: 16px !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc:before {
+    display: none !important;
+    content: "" !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting:after {
+    position: static !important;
+    display: inline-block !important;
+    width: auto !important;
+    height: auto !important;
+    margin-left: 7px !important;
+    opacity: 1 !important;
+    content: "↕" !important;
+    color: rgba(255, 255, 255, 0.58) !important;
+    font-size: 10px !important;
+    line-height: 1 !important;
+    vertical-align: 1px !important;
+    transform: none !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc:after {
+    position: static !important;
+    display: inline-block !important;
+    width: auto !important;
+    height: auto !important;
+    margin-left: 7px !important;
+    opacity: 1 !important;
+    content: "▲" !important;
+    color: #fff !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+    vertical-align: 1px !important;
+    transform: none !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc:after {
+    position: static !important;
+    display: inline-block !important;
+    width: auto !important;
+    height: auto !important;
+    margin-left: 7px !important;
+    opacity: 1 !important;
+    content: "▼" !important;
+    color: #fff !important;
+    font-size: 8px !important;
+    line-height: 1 !important;
+    vertical-align: 1px !important;
+    transform: none !important;
+}
+
+
+/* Patch 52: stack sort arrows while keeping the fixed text-to-arrow gap.
+   Patch 51 corrected the spacing, but used single glyph indicators. This restores
+   the stacked up/down visual while keeping the arrows inline next to the label. */
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting:after {
+    content: "▲\A▼" !important;
+    white-space: pre !important;
+    position: static !important;
+    display: inline-block !important;
+    width: 8px !important;
+    height: 12px !important;
+    margin-left: 6px !important;
+    opacity: 1 !important;
+    color: rgba(255, 255, 255, 0.56) !important;
+    font-size: 6px !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: 700 !important;
+    line-height: 6px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    transform: none !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc:after {
+    content: "▲\A▼" !important;
+    white-space: pre !important;
+    position: static !important;
+    display: inline-block !important;
+    width: 8px !important;
+    height: 12px !important;
+    margin-left: 6px !important;
+    opacity: 1 !important;
+    color: #ffffff !important;
+    font-size: 6px !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: 700 !important;
+    line-height: 6px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    transform: none !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc:after {
+    content: "▲\A▼" !important;
+    white-space: pre !important;
+    position: static !important;
+    display: inline-block !important;
+    width: 8px !important;
+    height: 12px !important;
+    margin-left: 6px !important;
+    opacity: 1 !important;
+    color: #ffffff !important;
+    font-size: 6px !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: 700 !important;
+    line-height: 6px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    transform: none !important;
+}
+
+
+/* Patch 53: SVG-based stacked sort arrows.
+   Patch 52 used a multiline text pseudo-element, which some DataTables/browser CSS stacks
+   did not render consistently. This uses a fixed 7x12 SVG so every sortable header gets
+   the same stacked up/down arrows and the same text-to-arrow gap. */
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc:before,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc:before {
+    display: none !important;
+    content: "" !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc:after {
+    content: "" !important;
+    position: static !important;
+    display: inline-block !important;
+    width: 7px !important;
+    height: 12px !important;
+    margin-left: 6px !important;
+    opacity: 1 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+    vertical-align: middle !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: 7px 12px !important;
+    transform: none !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting:after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12'%3E%3Cpath fill='rgba(255,255,255,.62)' d='M3.5 1L6 4H1z'/%3E%3Cpath fill='rgba(255,255,255,.62)' d='M3.5 11L1 8h5z'/%3E%3C/svg%3E") !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_asc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_asc:after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12'%3E%3Cpath fill='white' d='M3.5 1L6 4H1z'/%3E%3Cpath fill='rgba(255,255,255,.42)' d='M3.5 11L1 8h5z'/%3E%3C/svg%3E") !important;
+}
+
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.table-list thead th.sorting_desc:after,
+body.whmcsbody.whmcs-loggedin:not(.whmcs-filename-cart):not(.whmcs-templatefile-products):not(.whmcs-templatefile-configureproduct):not(.whmcs-templatefile-configureproductdomain):not(.whmcs-templatefile-configuredomains):not(.whmcs-templatefile-domainregister):not(.whmcs-templatefile-domaintransfer):not(.whmcs-templatefile-domain-renewals):not(.whmcs-templatefile-viewcart):not(.whmcs-templatefile-checkout):not(.whmcs-templatefile-complete):not(.whmcs-templatefile-clientareaproductdetails) table.dataTable thead th.sorting_desc:after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='12' viewBox='0 0 7 12'%3E%3Cpath fill='rgba(255,255,255,.42)' d='M3.5 1L6 4H1z'/%3E%3Cpath fill='white' d='M3.5 11L1 8h5z'/%3E%3C/svg%3E") !important;
+}
+
+/* Patch 65: Keep domain/zone row text consistent with normal table text.
+   Orange remains an interaction/hover accent, not the default row text color. */
+body.whmcsbody.whmcs-loggedin #tableDomainsList > tbody > tr > td:nth-child(3) > a,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList > tbody > tr > td:nth-child(3) > a {
+    color: #293f56 !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    line-height: 1.45 !important;
+    text-decoration: none !important;
+}
+
+body.whmcsbody.whmcs-loggedin #tableDomainsList > tbody > tr:hover > td:nth-child(3) > a,
+body.whmcsbody.whmcs-loggedin #tableDomainsList > tbody > tr > td:nth-child(3) > a:hover,
+body.whmcsbody.whmcs-loggedin #tableDomainsList > tbody > tr > td:nth-child(3) > a:focus {
+    color: #ff6b1a !important;
+    text-decoration: underline !important;
+    text-underline-offset: 2px !important;
+}
+
+/* Patch 66: Match service-list domain text to the domain/zone list convention.
+   Service product names can stay emphasized; the hosted domain link should read like
+   normal table text by default, with orange reserved for hover/focus. */
+body.whmcsbody.whmcs-loggedin #tableServicesList > tbody > tr > td:nth-child(2) > a,
+body.whmcsbody.whmcs-loggedin table#tableServicesList > tbody > tr > td:nth-child(2) > a,
+body.whmcsbody.whmcs-loggedin table#tableServicesList tbody tr td a[href^="http://"],
+body.whmcsbody.whmcs-loggedin table#tableServicesList tbody tr td a[href^="https://"] {
+    color: #293f56 !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    line-height: 1.45 !important;
+    text-decoration: none !important;
+}
+
+body.whmcsbody.whmcs-loggedin #tableServicesList > tbody > tr:hover > td:nth-child(2) > a,
+body.whmcsbody.whmcs-loggedin #tableServicesList > tbody > tr > td:nth-child(2) > a:hover,
+body.whmcsbody.whmcs-loggedin #tableServicesList > tbody > tr > td:nth-child(2) > a:focus,
+body.whmcsbody.whmcs-loggedin table#tableServicesList tbody tr td a[href^="http://"]:hover,
+body.whmcsbody.whmcs-loggedin table#tableServicesList tbody tr td a[href^="http://"]:focus,
+body.whmcsbody.whmcs-loggedin table#tableServicesList tbody tr td a[href^="https://"]:hover,
+body.whmcsbody.whmcs-loggedin table#tableServicesList tbody tr td a[href^="https://"]:focus {
+    color: #ff6b1a !important;
+    text-decoration: underline !important;
+    text-underline-offset: 2px !important;
+}
+
+/* Patch 67: keep the primary sortable header arrows attached to their labels.
+   Domain on Domains List and Product/Service on Services List can contain wider
+   inner links/wrappers, which can push the pseudo-element arrow away from the label.
+   Force those specific header labels to behave as inline label + compact arrow. */
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th:nth-child(3),
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th:nth-child(3),
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th:nth-child(2),
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th:nth-child(2) {
+    text-align: left !important;
+    white-space: nowrap !important;
+    padding-right: 16px !important;
+}
+
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th:nth-child(3) > a,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th:nth-child(3) > span,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th:nth-child(3) > div,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th:nth-child(3) > a,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th:nth-child(3) > span,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th:nth-child(3) > div,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th:nth-child(2) > a,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th:nth-child(2) > span,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th:nth-child(2) > div,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th:nth-child(2) > a,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th:nth-child(2) > span,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th:nth-child(2) > div {
+    display: inline !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    float: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th:nth-child(3).sorting:after,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th:nth-child(3).sorting_asc:after,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th:nth-child(3).sorting_desc:after,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th:nth-child(3).sorting:after,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th:nth-child(3).sorting_asc:after,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th:nth-child(3).sorting_desc:after,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th:nth-child(2).sorting:after,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th:nth-child(2).sorting_asc:after,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th:nth-child(2).sorting_desc:after,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th:nth-child(2).sorting:after,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th:nth-child(2).sorting_asc:after,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th:nth-child(2).sorting_desc:after {
+    position: static !important;
+    display: inline-block !important;
+    margin-left: 6px !important;
+    vertical-align: middle !important;
+    transform: none !important;
+}

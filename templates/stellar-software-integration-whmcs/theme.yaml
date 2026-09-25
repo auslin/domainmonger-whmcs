@@ -1,0 +1,5 @@
+name: "Stellar Software Integration"
+description: "The WHMCS Integration for Stellar."
+author: "Zomex"
+config:
+  parent: twenty-one

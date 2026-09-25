@@ -1,0 +1,110 @@
+/* Patch 146: normalize Domains/Services DataTables sort-arrow spacing.
+   Scope: manage/clientarea.php?action=domains and action=services only. */
+
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th.sorting,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th.sorting_asc,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th.sorting_desc,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th.sorting,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th.sorting_asc,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th.sorting_desc,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th.sorting,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th.sorting_asc,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th.sorting_desc,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th.sorting,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th.sorting_asc,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th.sorting_desc {
+    position: relative !important;
+    white-space: nowrap !important;
+    background-image: none !important;
+    background-position: initial !important;
+    background-size: initial !important;
+    background-repeat: no-repeat !important;
+    padding-right: 18px !important;
+}
+
+/* Hide split/default sort indicators so every sortable header uses one consistent stack. */
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th.sorting::before,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th.sorting_asc::before,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th.sorting_desc::before,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th.sorting::before,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th.sorting_asc::before,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th.sorting_desc::before,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th.sorting::before,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th.sorting_asc::before,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th.sorting_desc::before,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th.sorting::before,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th.sorting_asc::before,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th.sorting_desc::before,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th .sorting-indicator,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th .sorting-indicator,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th .sorting-indicator,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th .sorting-indicator,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th .dt-column-order,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th .dt-column-order,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th .dt-column-order,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th .dt-column-order {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    content: "" !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: none !important;
+    border: 0 !important;
+}
+
+/* One unified, slightly taller SVG arrow stack with more space between up/down arrows. */
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th.sorting::after,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th.sorting_asc::after,
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th.sorting_desc::after,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th.sorting::after,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th.sorting_asc::after,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th.sorting_desc::after,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th.sorting::after,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th.sorting_asc::after,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th.sorting_desc::after,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th.sorting::after,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th.sorting_asc::after,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th.sorting_desc::after {
+    content: "" !important;
+    position: static !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 8px !important;
+    height: 18px !important;
+    margin-left: 8px !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    transform: none !important;
+    vertical-align: -4px !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    background-size: 8px 18px !important;
+    border: 0 !important;
+    font-size: 0 !important;
+    line-height: 0 !important;
+}
+
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th.sorting::after,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th.sorting::after,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th.sorting::after,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th.sorting::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='18' viewBox='0 0 8 18'%3E%3Cpath fill='rgba(255,255,255,.64)' d='M4 1L7 5H1z'/%3E%3Cpath fill='rgba(255,255,255,.64)' d='M4 17L1 13h6z'/%3E%3C/svg%3E") !important;
+}
+
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th.sorting_asc::after,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th.sorting_asc::after,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th.sorting_asc::after,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th.sorting_asc::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='18' viewBox='0 0 8 18'%3E%3Cpath fill='white' d='M4 1L7 5H1z'/%3E%3Cpath fill='rgba(255,255,255,.42)' d='M4 17L1 13h6z'/%3E%3C/svg%3E") !important;
+}
+
+body.whmcsbody.whmcs-loggedin table#tableDomainsList thead th.sorting_desc::after,
+body.whmcsbody.whmcs-loggedin #tableDomainsList thead th.sorting_desc::after,
+body.whmcsbody.whmcs-loggedin table#tableServicesList thead th.sorting_desc::after,
+body.whmcsbody.whmcs-loggedin #tableServicesList thead th.sorting_desc::after {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='18' viewBox='0 0 8 18'%3E%3Cpath fill='rgba(255,255,255,.42)' d='M4 1L7 5H1z'/%3E%3Cpath fill='white' d='M4 17L1 13h6z'/%3E%3C/svg%3E") !important;
+}

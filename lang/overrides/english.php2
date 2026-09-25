@@ -1,0 +1,17 @@
+<?php
+/**
+ * WHMCS language overrides for v9.0.5 standard_cart checkout account-credit text.
+ *
+ * These keys are referenced by:
+ * /templates/orderforms/standard_cart/checkout.tpl
+ * /templates/orderforms/standard_cart_2/checkout.tpl
+ */
+
+if (!isset($_LANG['cart']) || !is_array($_LANG['cart'])) {
+    $_LANG['cart'] = [];
+}
+
+$_LANG['cart']['availableCreditBalance'] = 'You have :amount in available account credit.';
+$_LANG['cart']['applyCreditAmountNoFurtherPayment'] = 'Apply :amount from your credit balance. No further payment will be required.';
+$_LANG['cart']['applyCreditAmount'] = 'Apply :amount from your credit balance and pay the remaining amount.';
+$_LANG['cart']['applyCreditSkip'] = 'Do not apply credit to this order.';

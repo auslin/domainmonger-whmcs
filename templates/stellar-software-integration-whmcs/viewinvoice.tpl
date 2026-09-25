@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="{$charset}" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{$companyname} - {$pagetitle}</title>
+
+    <link href="{$WEB_ROOT}/templates/twenty-one/css/all.min.css?v={$versionHash}" rel="stylesheet">
+    <link href="{$WEB_ROOT}/templates/twenty-one/css/theme.min.css?v={$versionHash}" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/templates/twenty-one/css/invoice.min.css?v={$versionHash}" rel="stylesheet">
+    <script>var whmcsBaseUrl = "{$WEB_ROOT}";</script>
+    <script src="{$WEB_ROOT}/templates/twenty-one/js/scripts.min.js?v={$versionHash}"></script>
+    <link href="{$WEB_ROOT}/templates/{$template}/invoicequote/layout.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/templates/{$template}/invoicequote/custom.css?v=167" rel="stylesheet">
+    <link rel="shortcut icon" href="{$WEB_ROOT}/templates/{$template}/invoicequote/favicon.ico" />
+    
+</head>
+<body>
+
+    <div class="container-fluid invoice-container invoicequote-container">
+
+        {if $invalidInvoiceIdRequested}
+
+            {include file="$template/includes/panel.tpl" type="danger" headerTitle="{lang key='error'}" bodyContent="{lang key='invoiceserror'}" bodyTextCenter=true}
+
+        {else}
+
+            <div class="row invoice-header invoicequote-header">
+	            
+                <div class="invoicequote-header-left">
+
+                    <div class="invoicequote-logo">
+                        <img src="{$WEB_ROOT}/templates/{$template}/invoicequote/logo.png?v=1484" title="{$companyname}" alt="{$companyname}" />
+                    </div>
+                    
+                    <div class="invoicequote-pagetitle">{$pagetitle}</div>
+                    <div class="invoicequote-date">{lang key='invoicesdatecreated'}: {$date}</div>                    
+                    
+                    {if $status eq "Unpaid" || $status eq "Draft"}
+	                    <div class="invoicequote-date"><strong>{lang key='invoicestotal'}: <span class="unpaid">{$balance}</span></strong></div>
+                    	<div class="invoicequote-date">{lang key='invoicesdatedue'}: <span class="unpaid">{$datedue}</span></div>
+                    {/if}
+
+                </div><!-- .invoicequote-header-left -->
+                
+                <div class="invoicequote-header-right">
+
+                    <div class="invoice-status">
+                        {if $status eq "Draft"}
+                            <span class="draft">{lang key='invoicesdraft'}</span>
+                        {elseif $status eq "Unpaid"}
+                            <span class="unpaid">{lang key='invoicesunpaid'}</span>
+                        {elseif $status eq "Paid"}
+                            <span class="paid">{lang key='invoicespaid'}</span>
+                        {elseif $status eq "Refunded"}
+                            <span class="refunded">{lang key='invoicesrefunded'}</span>
+                        {elseif $status eq "Cancelled"}
+                            <span class="cancelled">{lang key='invoicescancelled'}</span>
+                        {elseif $status eq "Collections"}
+                            <span class="collections">{lang key='invoicescollections'}</span>
+                        {elseif $status eq "Payment Pending"}
+                            <span class="paid">{lang key='invoicesPaymentPending'}</span>
+                        {/if}
+                    </div>
+
+                    {if $status eq "Unpaid" || $status eq "Draft"}
+                        
+	                    <div class="invoicequote-paymentmethod">{lang key='paymentmethod'}</div>
+	                    
+	                    <div class="invoicequote-paymentselect" data-role="paymethod-info">
+	                        {if $status eq "Unpaid" && $allowchangegateway}
+	                            <form method="post" action="{$smarty.server.PHP_SELF}?id={$invoiceid}" class="form-inline">
+	                                {$tokenInput}
+	                                <select name="gateway" class="custom-select" onchange="submit()">
+	                                    {foreach $availableGateways as $gatewayModule => $gatewayName}
+	                                        <option value="{$gatewayModule}"{if $gatewayModule == $selectedGateway} selected="selected"{/if}>{$gatewayName}</option>
+	                                    {/foreach}
+	                                </select>
+	                            </form>
+	                        {else}
+	                            {$paymentmethod}{if $paymethoddisplayname} ({$paymethoddisplayname}){/if}
+	                        {/if}
+	                    </div>    
+	                    
+                        <div class="invoicequote-paymentbutton payment-btn-container d-print-none">
+                            {$paymentbutton}
+                        </div>	                                      
+                        
+                    {/if}
+
+                </div><!-- .invoicequote-header-right -->
+                
+            </div><!-- .invoicequote-header -->
+
+            <div class="invoicequote-container-inner">
+
+            {if $paymentSuccessAwaitingNotification}
+                {include file="$template/includes/panel.tpl" type="success" headerTitle="{lang key='success'}" bodyContent="{lang key='invoicePaymentSuccessAwaitingNotify'}" bodyTextCenter=true}
+            {elseif $paymentSuccess}
+                {include file="$template/includes/panel.tpl" type="success" headerTitle="{lang key='success'}" bodyContent="{lang key='invoicepaymentsuccessconfirmation'}" bodyTextCenter=true}
+            {elseif $paymentInititated}
+                {include file="$template/includes/panel.tpl" type="info" headerTitle="{lang key='success'}" bodyContent="{lang key='invoicePaymentInitiated'}" bodyTextCenter=true}
+            {elseif $pendingReview}
+                {include file="$template/includes/panel.tpl" type="info" headerTitle="{lang key='success'}" bodyContent="{lang key='invoicepaymentpendingreview'}" bodyTextCenter=true}
+            {elseif $paymentFailed}
+                {include file="$template/includes/panel.tpl" type="danger" headerTitle="{lang key='error'}" bodyContent="{lang key='invoicepaymentfailedconfirmation'}" bodyTextCenter=true}
+            {elseif $offlineReview}
+                {include file="$template/includes/panel.tpl" type="info" headerTitle="{lang key='success'}" bodyContent="{lang key='invoiceofflinepaid'}" bodyTextCenter=true}
+            {/if}
+
+            <div class="invoicequote-addresses">
+                
+                <div class="invoicequote-address">
+                    <div class="invoicequote-address-heading">{lang key='invoicesinvoicedto'}</div>
+                    <address class="small-text">
+                        {if $clientsdetails.companyname}{$clientsdetails.companyname}<br />{/if}
+                        {$clientsdetails.firstname} {$clientsdetails.lastname}<br />
+                        {$clientsdetails.address1}, {$clientsdetails.address2}<br />
+                        {$clientsdetails.city}, {$clientsdetails.state}, {$clientsdetails.postcode}<br />
+                        {$clientsdetails.country}
+                        {if $clientsdetails.tax_id}
+                            <br />{$taxIdLabel}: {$clientsdetails.tax_id}
+                        {/if}
+                        {if $customfields}
+                        <br /><br />
+                        {foreach $customfields as $customfield}
+                        {$customfield.fieldname}: {$customfield.value}<br />
+                        {/foreach}
+                        {/if}
+                    </address>
+                </div><!-- .invoicequote-addresses -->
+                
+                <div class="invoicequote-address">
+                    <div class="invoicequote-address-heading">{lang key='invoicespayto'}</div>
+                    <address class="small-text">
+                        {$payto}
+                        {if $taxCode}<br />{$taxIdLabel}: {$taxCode}{/if}
+                    </address>
+                </div><!-- .invoicequote-addresses -->                
+                
+            </div><!-- .invoicequote-addresses -->
+
+            {if $manualapplycredit}
+                <div class="card bg-success">
+                    <div class="card-header">
+                        <h3 class="card-title"><strong>{lang key='invoiceaddcreditapply'}</strong></h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{$smarty.server.PHP_SELF}?id={$invoiceid}">
+                            <input type="hidden" name="applycredit" value="true" />
+                            {lang key='invoiceaddcreditdesc1'} <strong>{$totalcredit}</strong>. {lang key='invoiceaddcreditdesc2'}. {lang key='invoiceaddcreditamount'}:
+                            <div class="row">
+                                <div class="col-8 offset-2 col-sm-4 offset-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" name="creditamount" value="{$creditamount}" class="form-control" />
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-success" id="btnInvoiceAddCreditApply">
+                                                {lang key='invoiceaddcreditapply'}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {/if}
+
+            {if $notes}
+                {include file="$template/includes/panel.tpl" type="info" headerTitle="{lang key='invoicesnotes'}" bodyContent=$notes}
+            {/if}
+
+            <div class="card bg-default invoicequote-table">
+                <div class="card-header">
+                    <h3 class="card-title mb-0 font-size-24"><strong>{lang key='invoicelineitems'}</strong></h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                        <tr>
+                            <td><strong>{lang key='invoicesdescription'}</strong></td>
+                            <td width="20%" class="text-center"><strong>{lang key='invoicesamount'}</strong></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $invoiceitems as $item}
+                            <tr>
+                                <td>{$item.description}{if $item.taxed eq "true"} *{/if}</td>
+                                <td class="text-center">{$item.amount}</td>
+                            </tr>
+                        {/foreach}
+                        <tr>
+                            <td class="total-row text-right"><strong>{lang key='invoicessubtotal'}</strong></td>
+                            <td class="total-row text-center">{$subtotal}</td>
+                        </tr>
+                        {if $taxname}
+                            <tr>
+                                <td class="total-row text-right"><strong>{$taxrate}% {$taxname}</strong></td>
+                                <td class="total-row text-center">{$tax}</td>
+                            </tr>
+                        {/if}
+                        {if $taxname2}
+                            <tr>
+                                <td class="total-row text-right"><strong>{$taxrate2}% {$taxname2}</strong></td>
+                                <td class="total-row text-center">{$tax2}</td>
+                            </tr>
+                        {/if}
+                        <tr>
+                            <td class="total-row text-right"><strong>{lang key='invoicescredit'}</strong></td>
+                            <td class="total-row text-center">{$credit}</td>
+                        </tr>
+                        <tr>
+                            <td class="total-row text-right"><strong>{lang key='invoicestotal'}</strong></td>
+                            <td class="total-row text-center">{$total}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            {if $taxrate}
+                <p>* {lang key='invoicestaxindicator'}</p>
+            {/if}
+
+            <div class="transactions-container small-text">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <td class="text-center"><strong>{lang key='invoicestransdate'}</strong></td>
+                                <td class="text-center"><strong>{lang key='invoicestransgateway'}</strong></td>
+                                <td class="text-center"><strong>{lang key='invoicestransid'}</strong></td>
+                                <td class="text-center"><strong>{lang key='invoicestransamount'}</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach $transactions as $transaction}
+                                <tr>
+                                    <td class="text-center">{$transaction.date}</td>
+                                    <td class="text-center">{$transaction.gateway}</td>
+                                    <td class="text-center">{$transaction.transid}</td>
+                                    <td class="text-center">{$transaction.amount}</td>
+                                </tr>
+                            {foreachelse}
+                                <tr>
+                                    <td class="text-center" colspan="4">{lang key='invoicestransnonefound'}</td>
+                                </tr>
+                            {/foreach}
+                            <tr>
+                                <td class="text-right" colspan="3"><strong>{lang key='invoicesbalance'}</strong></td>
+                                <td class="text-center">{$balance}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="invoicequote-actions d-print-none" style="display:flex; justify-content:flex-end; clear:both; margin:14px 12px 10px 0;">
+                <div class="btn-group-sm" style="display:flex; align-items:center; gap:10px;">
+                    <a href="javascript:window.print()" class="btn btn-default" style="border-radius:4px;"><i class="fas fa-print"></i> {lang key='print'}</a>
+                    <a href="dl.php?type=i&amp;id={$invoiceid}" class="btn btn-default" style="border-radius:4px;"><i class="fas fa-download"></i> {lang key='invoicesdownload'}</a>
+                </div>
+            </div>
+
+        {/if}
+        
+	        <div class="clearfix"></div>
+        
+        </div><!-- .invoicequote-container-inner -->
+
+    </div><!-- .invoice-container -->
+
+    <div class="backtoclientarea"><a href="clientarea.php?action=invoices">{lang key='invoicesbacktoclientarea'}</a></div>
+
+    <div id="fullpage-overlay" class="w-hidden">
+        <div class="outer-wrapper">
+            <div class="inner-wrapper">
+                <img src="{$WEB_ROOT}/assets/img/overlay-spinner.svg" alt="">
+                <br>
+                <span class="msg"></span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

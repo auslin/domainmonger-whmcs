@@ -1,0 +1,445 @@
+:root {
+	
+	/* Defaults */
+	
+	--invoicequote-width: 850px;	
+	--invoicequote-spacing: 30px;	
+	--invoicequote-borderradius: 5px;
+	--invoicequote-logowidth: 350px;	
+	--invoicequote-companycolor: #f09546;
+	--invoicequote-gradient-degrees: 180deg;
+	--invoicequote-backtoclientarea: #212529;		
+	
+	/* Body */
+	
+	--invoicequote-body-background: #c6c6c6;
+	--invoicequote-body-background-gradient-top: #c6c6c6;
+	--invoicequote-body-background-gradient-bottom: #c6c6c6;	
+	
+	/* Container */
+	
+	--invoicequote-container-background: #fff;
+	--invoicequote-container-background-gradient-top: #fff;
+	--invoicequote-container-background-gradient-bottom: #f8f8f8;
+	--invoicequote-container-background-border: #6d6969;
+	--invoicequote-container-background-border-top: #212529;	
+	--invoicequote-container-foreground: #212529;
+	--invoicequote-container-shadow: 0 3px 8px 2px #999999;	
+	
+	/* Header */
+
+	--invoicequote-header-background: #c4eaf3;
+	--invoicequote-header-background-gradient-top: #c4eaf3;
+	--invoicequote-header-background-gradient-bottom: #ddf6fa;	
+	--invoicequote-header-background-border: #dcdcdc;		
+	--invoicequote-header-foreground: #212529;
+	--invoicequote-header-foreground-bold: #c00;	
+	
+	/* Header Right */
+
+	--invoicequote-header-right-width: 350px;
+	--invoicequote-header-right-background: #fff;
+	--invoicequote-header-right-background-gradient-top: #fff;
+	--invoicequote-header-right-background-gradient-bottom: #fff;	
+	--invoicequote-header-right-background-border: #dcdcdc;		
+	--invoicequote-header-right-foreground: #212529;		
+	
+	/* Addresses */
+
+	--invoicequote-addresses-background: #f2f2f2;
+	--invoicequote-addresses-background-gradient-top: #f2f2f2;
+	--invoicequote-addresses-background-gradient-bottom: #f2f2f2;	
+	--invoicequote-addresses-background-border: #dcdcdc;			
+	--invoicequote-addresses-foreground: #212529;
+	--invoicequote-addresses-heading: #212529;
+	
+	/* Boxes */
+
+	--invoicequote-boxes-background: #fff;
+	--invoicequote-boxes-background-gradient-top: #fff;
+	--invoicequote-boxes-background-gradient-bottom: #fff;	
+	--invoicequote-boxes-background-border: #dcdcdc;			
+	--invoicequote-boxes-foreground: #212529;
+	--invoicequote-boxes-head-background: #c4eaf3;
+	--invoicequote-boxes-head-background-gradient-top: #c4eaf3;
+	--invoicequote-boxes-head-background-gradient-bottom: #ddf6fa;	
+	--invoicequote-boxes-head-background-border: #dcdcdc;
+	--invoicequote-boxes-head-foreground: #212529;
+	
+	/* Table */
+
+	--invoicequote-table-background: #f2f2f2;
+	--invoicequote-table-background-gradient-top: #f2f2f2;
+	--invoicequote-table-background-gradient-bottom: #f2f2f2;	
+	--invoicequote-table-background-border: #dcdcdc;			
+	--invoicequote-table-foreground: #212529;
+	--invoicequote-table-head-background: #363636;
+	--invoicequote-table-head-background-gradient-top: #363636;
+	--invoicequote-table-head-background-gradient-bottom: #363636;	
+	--invoicequote-table-head-background-border: #000;
+	--invoicequote-table-head-foreground: #fff;	
+	
+	/* Button */
+
+	--invoicequote-button-background: #28a745;
+	--invoicequote-button-background-gradient-top: #28a745;
+	--invoicequote-button-background-gradient-bottom: #28a745;	
+	--invoicequote-button-background-border: #107026;			
+	--invoicequote-button-foreground: #fff;	
+	--invoicequote-button-foreground-shadow: #000;
+	
+	/* Button Active (used for hover/active states) */
+	
+	--invoicequote-button-active-background: #198632;
+	--invoicequote-button-active-background-gradient-top: #198632;
+	--invoicequote-button-active-background-gradient-bottom: #198632;	
+	--invoicequote-button-active-background-border: #0e6121;			
+	--invoicequote-button-active-foreground: #fff;		
+	--invoicequote-button-active-foreground-shadow: #000;
+	
+}
+
+/* Reset */
+
+.invoicequote-container .mb-3,
+.invoicequote-container .my-3 {
+	margin-bottom: 0 !important;
+}
+
+.invoicequote-container .mx-2 {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.invoicequote-container .row {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+/* Body */
+
+body {
+	background: var(--invoicequote-body-background);
+	background: linear-gradient(var(--invoicequote-gradient-degrees), var(--invoicequote-body-background-gradient-top) 0, var(--invoicequote-body-background-gradient-bottom) 100%);	
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+/* Container */
+
+.invoicequote-container {
+	background: var(--invoicequote-container-background);
+	background: linear-gradient(var(--invoicequote-gradient-degrees), var(--invoicequote-container-background-gradient-top) 0, var(--invoicequote-container-background-gradient-bottom) 100%);	
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	padding: 0;
+	width: 90%;
+	max-width: var(--invoicequote-width);
+	border: var(--invoicequote-container-background-border) 1px solid;
+	border-top: var(--invoicequote-container-background-border-top) 3px solid;
+	border-radius: var(--invoicequote-borderradius);	
+	color: var(--invoicequote-container-foreground);
+	box-shadow: var(--invoicequote-container-shadow);	
+	margin: var(--invoicequote-spacing) auto 0 auto;
+}
+
+.invoicequote-container-inner {
+	padding: var(--invoicequote-spacing);
+}
+
+/* Header */
+
+.invoicequote-header {
+	background: var(--invoicequote-header-background);
+	background: linear-gradient(var(--invoicequote-gradient-degrees), var(--invoicequote-header-background-gradient-top) 0, var(--invoicequote-header-background-gradient-bottom) 100%);	
+	background-repeat: no-repeat;
+	height: 100%;
+	color: var(--invoicequote-header-foreground);
+	border-bottom: var(--invoicequote-header-background-border) 1px solid;
+	padding: var(--invoicequote-spacing) var(--invoicequote-spacing);
+	display: flex;	
+	justify-content: space-between;
+	align-items: center;
+}
+
+.invoicequote-header .invoicequote-header-left .invoicequote-logo {
+	margin-bottom: 10px;
+}
+
+.invoicequote-header .invoicequote-header-left .invoicequote-logo img {
+	width: 100%;
+	max-width: var(--invoicequote-logowidth);
+}
+
+.invoicequote-header .invoicequote-header-left .invoicequote-company {
+	color: var(--invoicequote-companycolor);
+	font-weight: bold;
+	font-size: 2.3em;	
+	margin: 0 0 5px 0;
+}
+
+.invoicequote-header .invoicequote-header-left .invoicequote-pagetitle {
+	font-size: 1.7em;
+	font-weight: bold;
+	margin: 0 0 10px 0;
+}
+
+.invoicequote-header .invoicequote-header-left .invoicequote-date {
+	margin: 0 0 5px 0;
+}
+
+.invoicequote-header .invoicequote-header-left .unpaid {
+	color: var(--invoicequote-header-foreground-bold);
+}
+
+.invoicequote-header .invoicequote-header-right {
+	background: var(--invoicequote-header-right-background);
+	background: linear-gradient(var(--invoicequote-gradient-degrees), var(--invoicequote-header-right-background-gradient-top) 0, var(--invoicequote-header-right-background-gradient-bottom) 100%);	
+	background-repeat: no-repeat;
+	height: 100%;
+	color: var(--invoicequote-header-right-foreground);
+	border: var(--invoicequote-header-right-background-border) 1px solid;
+	border-radius: var(--invoicequote-borderradius);	
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	padding: var(--invoicequote-spacing) 0;
+	align-items: center;
+	width: 100%;
+	max-width: var(--invoicequote-header-right-width);
+}
+
+.invoicequote-header .invoicequote-header-right .invoice-status {
+	margin: 0;
+}
+
+.invoicequote-header .invoicequote-header-right .invoicequote-paymentmethod {
+	font-weight: bold;
+	margin: 10px 0 20px 0;
+}
+
+.invoicequote-header .invoicequote-header-right .invoicequote-paymentbutton,
+.invoicequote-header .invoicequote-header-right .invoicequote-quotebutton {
+	margin: 10px 0 0 0;
+}
+
+/* Addresses */
+
+.invoicequote-addresses {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 0 0 var(--invoicequote-spacing) 0;
+}
+
+.invoicequote-addresses .invoicequote-address {
+	width: 48%;
+	background: var(--invoicequote-addresses-background);
+	background: linear-gradient(var(--invoicequote-gradient-degrees), var(--invoicequote-addresses-background-gradient-top) 0, var(--invoicequote-addresses-background-gradient-bottom) 100%);	
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	border: var(--invoicequote-addresses-background-border) 1px solid;	
+	border-radius: var(--invoicequote-borderradius);	
+	padding: .75rem 1.25rem !important;
+	color: var(--invoicequote-addresses-foreground);
+}
+
+.invoicequote-addresses .invoicequote-address .invoicequote-address-heading {
+	font-weight: bold;
+	text-align: center;
+	font-size: 1.1em;
+	border-bottom: var(--invoicequote-addresses-background-border) 1px solid;
+	padding: 0 0 10px 0;
+	margin: 0 0 10px 0;
+	color: var(--invoicequote-addresses-heading);
+}
+
+/* Boxes */
+
+.card {
+	background: var(--invoicequote-boxes-background) !important;
+	background: linear-gradient(var(--invoicequote-gradient-degrees), var(--invoicequote-boxes-background-gradient-top) 0, var(--invoicequote-boxes-background-gradient-bottom) 100%) !important;	
+	background-repeat: no-repeat;
+	background-attachment: fixed;	
+	border-radius: var(--invoicequote-borderradius) !important;	
+	margin: 0 0 var(--invoicequote-spacing) 0 !important;
+	color: var(--invoicequote-boxes-foreground) !important;
+	border: var(--invoicequote-boxes-background-border) 1px solid !important;
+}
+
+.card .card-header,
+.card .card-title,
+.card .card-title.text-white {
+	background: var(--invoicequote-boxes-head-background) !important;
+	background: linear-gradient(var(--invoicequote-gradient-degrees), var(--invoicequote-boxes-head-background-gradient-top) 0, var(--invoicequote-boxes-head-background-gradient-bottom) 100%) !important;	
+	background-repeat: no-repeat;
+	background-attachment: fixed;	
+	padding: 0;
+	border-radius: var(--invoicequote-borderradius) var(--invoicequote-borderradius) 0 0 !important;	
+	color: var(--invoicequote-boxes-head-foreground) !important;
+}
+
+.card .card-header {
+	border-bottom: none;
+}
+
+.card .card-title {
+	border-bottom: var(--invoicequote-boxes-head-background-border) 1px solid;
+}
+
+.card .card-title,
+.card .card-title.text-white {
+	padding: .75rem 1.25rem;
+	font-size: 1em;
+	margin: 0;
+}
+
+.card .card-body,
+.card .card-text {
+	padding: 20px !important;
+}
+
+/* Table */
+
+.invoicequote-table.card {
+	background: var(--invoicequote-table-background) !important;
+	background: linear-gradient(var(--invoicequote-gradient-degrees), var(--invoicequote-table-background-gradient-top) 0, var(--invoicequote-table-background-gradient-bottom) 100%) !important;	
+	background-repeat: no-repeat;
+	background-attachment: fixed;	
+	border-radius: var(--invoicequote-borderradius) !important;	
+	margin: 0 0 var(--invoicequote-spacing) 0 !important;
+	color: var(--invoicequote-table-foreground) !important;
+	border: var(--invoicequote-table-background-border) 1px solid !important;
+}
+
+.invoicequote-table.card td.total-row {
+	background-color: transparent;	
+}
+
+.invoicequote-table.card .card-body {
+	padding: 0 !important;
+}
+
+.invoicequote-table.card .card-title {
+	background: var(--invoicequote-table-head-background) !important;
+	background: linear-gradient(var(--invoicequote-gradient-degrees), var(--invoicequote-table-head-background-gradient-top) 0, var(--invoicequote-table-head-background-gradient-bottom) 100%) !important;	
+	background-repeat: no-repeat;
+	background-attachment: fixed;	
+	border-radius: var(--invoicequote-borderradius) var(--invoicequote-borderradius) 0 0 !important;	
+	color: var(--invoicequote-table-head-foreground) !important;
+}
+
+.invoicequote-table.card .card-header {
+	border-bottom: none;
+}
+
+.invoicequote-table.card .card-title {
+	border-bottom: var(--invoicequote-table-head-background-border) 1px solid;
+}
+
+.invoicequote-table .table {
+	color: var(--invoicequote-table-foreground) !important;
+	margin-bottom: 0 !important;
+}
+
+.invoicequote-table .table-sm td,
+.invoicequote-table .table-sm th {
+    padding: 0.5rem 1rem;
+}
+
+/* Button */
+
+.btn-success,
+.btn-primary {
+	background: var(--invoicequote-button-background) !important;
+	background: linear-gradient(var(--invoicequote-gradient-degrees), var(--invoicequote-button-background-gradient-top) 0, var(--invoicequote-button-background-gradient-bottom) 100%) !important;	
+	background-repeat: no-repeat;
+	background-attachment: fixed;	
+	border-radius: var(--invoicequote-borderradius) !important;	
+	border: var(--invoicequote-button-background-border) 1px solid !important;	
+	color: var(--invoicequote-button-foreground) !important;
+	font-weight: bold !important;
+	text-shadow: var(--invoicequote-button-foreground-shadow) 1px 1px;
+}
+
+.btn-success:hover,
+.btn-success:active,
+.btn-primary:hover,
+.btn-primary:active {
+	background: var(--invoicequote-button-active-background) !important;
+	background: linear-gradient(var(--invoicequote-gradient-degrees), var(--invoicequote-button-active-background-gradient-top) 0, var(--invoicequote-button-active-background-gradient-bottom) 100%) !important;	
+	background-repeat: no-repeat;
+	background-attachment: fixed;	
+	border-radius: var(--invoicequote-borderradius) !important;	
+	border: var(--invoicequote-button-active-background-border) 1px solid !important;	
+	color: var(--invoicequote-button-active-foreground) !important;
+	font-weight: bold !important;	
+	text-shadow: var(--invoicequote-button-active-foreground-shadow) 1px 1px;
+}
+
+#btnInvoiceAddCreditApply {
+	border-radius: 0 var(--invoicequote-borderradius) var(--invoicequote-borderradius) 0 !important;
+}
+
+/* Back To Clientarea */
+
+.backtoclientarea {
+	padding: 20px 20px 25px 20px;
+	text-align: center;	
+}
+
+.backtoclientarea a,
+.backtoclientarea a:hover,
+.backtoclientarea a:active {
+	color: var(--invoicequote-backtoclientarea);
+	font-weight: bold;	
+}
+
+@media (max-width: 820px) {
+	
+	.invoicequote-header {
+		flex-direction: column;
+	}
+	
+	.invoicequote-header .invoicequote-header-left {
+		margin-bottom: var(--invoicequote-spacing);
+		text-align: center;
+	}
+	
+}
+
+@media (max-width: 600px) {
+	
+	.invoicequote-container {
+		width: 100%;
+		margin: 0 0 5px 0;
+		border-radius: 0;
+		border-left: none;
+		border-right: none;
+	}
+	
+}
+
+@media (max-width: 550px) {
+	
+	.invoicequote-addresses {
+		flex-direction: column;
+	}
+	
+	.invoicequote-addresses .invoicequote-address {
+		width: 100%;
+	}
+	
+	.invoicequote-addresses .invoicequote-address:first-child {
+		margin-bottom: var(--invoicequote-spacing);
+	}
+	
+}
+
+@media (max-width: 500px) {
+	
+	.invoicequote-header .invoicequote-header-right {
+		max-width: none;
+	}
+	
+}

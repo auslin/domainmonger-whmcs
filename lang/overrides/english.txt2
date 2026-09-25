@@ -1,0 +1,58 @@
+<?php
+$_LANG['hometitle'] = "Manage";
+$_LANG['manage'] = "Manage";
+$_LANG['clientareaviewdetails'] = "Manage";
+$_LANG['contact'] = "Contact";
+$_LANG['changenameservers'] = "Save Nameservers";
+$_LANG['dnslogin'] = "Login to DNS Lite";
+$_LANG['navmanagecc'] = "Manage Credit Cards";
+$_LANG['twofactorauth'] = "Two-Factor Auth";
+$_LANG['creditcardnostore'] = "Tick this box if you do NOT want to save your credit card for recurring billing";
+$_LANG['captchaverify'] = "This is required to prevent automated submissions.<br>You will not see this if you are logged in.";
+$_LANG['assignbilling'] = "Assign Billing Contacts";
+$_LANG['domainsuggestionsearch'] = "Domain Suggestion";
+$_LANG['backtoservicedetails'] = "Back";
+
+# Opensrs PRO Module
+$_LANG["domainswhois"] = "Whois Privacy";
+$_LANG["domainswhoisdisable"] = "Disable Whois Privacy";
+$_LANG["domainswhoisdisabled"] = "Disabled";
+$_LANG["domainswhoisenable"] = "Enable Whois Privacy";
+$_LANG["domainswhoisenabled"] = "Enabled";
+$_LANG["domainswhoisstatus"] = "Current Status";
+$_LANG["domainswhoisadd"] = "Buy Whois Privacy feature";
+$_LANG["domainswhoisaddconfirm"] = "Are you sure want to buy the Whois Privacy feature? You will be billed for this.";
+$_LANG["domainswhoiscancel"] = "Remove Whois Privacy feature";
+$_LANG["domainswhoiscancelconfirm"] = "Are you sure want to completely remove the Whois Privacy feature?";
+$_LANG["domainswhoispendingbilling"] = "Pending Billing";
+$_LANG['twofasetup'] = "Two-Factor Authentication Setup Process";
+$_LANG['domaindnsmanagementdesc'] = "Point your domain to a web site by pointing to an IP Address, or forward to another site, or point to a temporary page (known as Parking), and more. These records are also known as sub-domains.<br>When adding a domain forward or redirect, the system will also create an A record (64.99.64.37), pointing at our forwarding server.";
+
+# Opensrs PRO Module DNS Language
+$_LANG['rcdom_regcnsbutton'] = "Add Name Server";
+$_LANG['rcdom_modcnsbutton'] = "Modify DNS Host";
+$_LANG['rcdom_modcnsipbutton'] = "Modify DNS IP";
+$_LANG['rcdom_delcnsbutton'] = "Delete DNS Server/IP";
+$_LANG['rcdom_registeredchildnstitle'] = "Registered Name Servers";
+$_LANG['rcdom_changenshostnametitle'] = "Modify DNS Host Name";
+$_LANG['rcdom_changenshostnamedesc'] = "Here you can modify the DNS Server's Host Name";
+$_LANG['rcdom_changenshostiptitle'] = "Modify DNS Host IP";
+$_LANG['rcdom_changenshostipdesc'] = "Here you can modify the DNS Server's Host IP Address";
+$_LANG['rcdom_deletednsiptitle'] = "Delete DNS Server/IP";
+$_LANG['rcdom_deletednsipdesc'] = "Here you can delete the DNS server. If a DNS Server has more than one IP, then the IP will be removed and not the entire DNS server";
+$_LANG['rcdom_newregisterns'] = "Register a new Name Server";
+
+# Cart Language
+$_LANG['cartdomainsconfig'] = "Domain Configuration";
+$_LANG['domainpricing'] = "Domain Pricing";
+$_LANG['domaincheckerchoosedomain'] = "Choose Domain to use with your service...";
+$_LANG['cart']['availableCreditBalance'] = 'You have :amount in available account credit.';
+$_LANG['cart']['applyCreditAmountNoFurtherPayment'] = 'Apply :amount from your credit balance. No further payment will be required.';
+$_LANG['cart']['applyCreditAmount'] = 'Apply :amount from your credit balance and pay the remaining amount.';
+$_LANG['cart']['applyCreditSkip'] = 'Do not apply credit to this order.';
+
+
+
+# Support Ticket Note
+$_LANG['supportticketnote'] = "Clients should login to send support requests";
+?>

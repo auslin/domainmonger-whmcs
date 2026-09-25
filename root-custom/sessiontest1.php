@@ -1,0 +1,1 @@
+php <?php $path = ini_get('session.save_path'); echo "Session Path: " . $path . "<br>"; if (is_writable($path)) { echo "Status: Writable!"; } else { echo "Status: NOT Writable! Contact your host or fix your php.ini settings."; } ?>

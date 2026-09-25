@@ -1,0 +1,497 @@
+/* DomainMonger WHMCS v9 - ClouDNS visual alignment pass (Patch 57 forced selector scope)
+   Scope: ClouDNS client-area module only. CSS-only, no API or module logic changes.
+   Goal: keep the module's proven workflow/layout while making it feel closer to the cleaned WHMCS client area. */
+
+/* Shared visual tokens to match the cleaned WHMCS client area. */
+body {
+    --dm-navy: #163a5f;
+    --dm-table-navy: #2f435f;
+    --dm-text: #293f56;
+    --dm-muted: #51667d;
+    --dm-border: rgba(17, 43, 77, 0.14);
+    --dm-border-soft: rgba(17, 43, 77, 0.10);
+    --dm-panel-shadow: 0 2px 8px rgba(17, 43, 77, 0.055);
+    --dm-orange: #f58220;
+    --dm-orange-hover: #d8741f;
+    --dm-blue: #163a5f;
+    --dm-blue-hover: #214e7a;
+    --dm-danger: #b94a48;
+    color: var(--dm-text) !important;
+}
+
+/* Local module title row: keep the ClouDNS useful page-name pattern, but make it match site typography. */
+body .cloudns-module-header {
+    margin: 0 0 12px 0 !important;
+    padding: 0 !important;
+}
+
+body .cloudns-module-title,
+body .cloudns-page-title {
+    color: var(--dm-navy) !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+}
+
+body .cloudns-page-status,
+body .cloudns-global-domain-switcher label,
+body .cloudns-muted-note,
+body .cloudns-updated-summary,
+body .cloudns-updated-server-meta {
+    color: var(--dm-muted) !important;
+}
+
+/* Module menu: keep ClouDNS toolbar structure, align it to the site's white menu/card style. */
+body ul#cloudnsSettingsMenu,
+body ul#cloudnsSlaveMenu {
+    border: 1px solid var(--dm-border) !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    box-shadow: var(--dm-panel-shadow) !important;
+    margin: 0 0 14px 0 !important;
+    min-height: 42px !important;
+}
+
+body ul#cloudnsSettingsMenu > li > a,
+body ul#cloudnsSettingsMenu > li > button,
+body ul#cloudnsSlaveMenu > li > a,
+body ul#cloudnsSlaveMenu > li > button {
+    min-height: 42px !important;
+    padding: 0 15px !important;
+    color: var(--dm-text) !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    border-bottom-width: 3px !important;
+}
+
+body ul#cloudnsSettingsMenu > li > a:hover,
+body ul#cloudnsSettingsMenu > li > a:focus,
+body ul#cloudnsSettingsMenu > li > button:hover,
+body ul#cloudnsSettingsMenu > li > button:focus,
+body ul#cloudnsSettingsMenu > li.cloudns-menu-active > a,
+body ul#cloudnsSettingsMenu > li.cloudns-menu-active > button,
+body ul#cloudnsSettingsMenu > li.cloudns-advanced-menu:hover > a,
+body ul#cloudnsSettingsMenu > li.cloudns-advanced-menu:focus-within > a,
+body ul#cloudnsSlaveMenu > li > a:hover,
+body ul#cloudnsSlaveMenu > li > a:focus,
+body ul#cloudnsSlaveMenu > li.cloudns-menu-active > a {
+    background: #fff7ef !important;
+    border-bottom-color: var(--dm-orange) !important;
+    color: #d75b0b !important;
+    text-decoration: none !important;
+}
+
+body .cloudns-advanced-dropdown,
+body #cloudnsMobileSettingsMenu .dropdown-menu {
+    border: 1px solid rgba(17, 43, 77, 0.14) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 8px 22px rgba(17, 43, 77, 0.16) !important;
+}
+
+/* Content panels/cards: match WHMCS cleaned card feel without restructuring templates. */
+body .cloudns-body-panel,
+body .cloudns-zones-panel,
+body .cloudns-import-panel,
+body .cloudns-soa-panel,
+body .cloudns-statistics-panel,
+body .cloudns-dnssec-panel,
+body .cloudns-mailforward-panel,
+body .cloudns-mailforward-mx-panel,
+body .cloudns-export-panel,
+body .cloudns-free-ssl-panel,
+body .cloudns-zone-transfers-panel,
+body .cloudns-parked-panel,
+body .cloudns-updated-panel,
+body .cloudns-form-panel,
+body .cloudns-record-form-panel,
+body .cloudns-forward-form-panel,
+body .newZoneContainer,
+body form#recordsForm.recordsForm:not(.cloudns-record-filter) {
+    border: 1px solid var(--dm-border) !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    box-shadow: var(--dm-panel-shadow) !important;
+    color: var(--dm-text) !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+    padding: 16px !important;
+    margin-bottom: 16px !important;
+}
+
+body .cloudns-body-panel h3,
+body .cloudns-zones-panel h3,
+body .cloudns-import-panel h3,
+body .cloudns-soa-panel h3,
+body .cloudns-statistics-panel h3,
+body .cloudns-dnssec-panel h3,
+body .cloudns-mailforward-panel h3,
+body .cloudns-export-panel h3,
+body .cloudns-free-ssl-panel h3,
+body .cloudns-zone-transfers-panel h3,
+body .cloudns-parked-panel h3,
+body .cloudns-updated-panel h3,
+body .newZoneContainer h3 {
+    color: var(--dm-navy) !important;
+    font-size: 18px !important;
+    margin-bottom: 14px !important;
+}
+
+/* Tables: align ClouDNS data tables with WHMCS list tables. */
+body .cloudns-table-shell,
+body .table-responsive {
+    border-radius: 8px !important;
+    border: 1px solid var(--dm-border) !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+}
+
+body .cloudns-table-shell table,
+body .table-responsive table,
+body #zones-list,
+body #table-records,
+body #table-forwards {
+    border: 0 !important;
+    margin: 0 !important;
+}
+
+body .table > thead > tr > th,
+body .table > tbody > tr > th,
+body #zones-list th,
+body #table-records thead th,
+body #table-forwards thead th,
+body .cloudns-sortable.dataTable thead th {
+    background: var(--dm-table-navy) !important;
+    background-color: var(--dm-table-navy) !important;
+    background-image: none !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.01em !important;
+    line-height: 1.25 !important;
+    padding: 13px 14px !important;
+    text-transform: uppercase !important;
+    vertical-align: middle !important;
+}
+
+body .table > tbody > tr > td,
+body #zones-list td,
+body #table-records tbody td,
+body #table-forwards tbody td {
+    border-color: rgba(17, 43, 77, 0.08) !important;
+    color: var(--dm-text) !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    padding: 10px 12px !important;
+    vertical-align: middle !important;
+}
+
+body .table-hover > tbody > tr:hover > td,
+body .table-hover > tbody > tr:hover > th,
+body #zones-list.table-hover > tbody > tr:hover > td,
+body #table-records.table-hover > tbody > tr:hover > td,
+body #table-forwards.table-hover > tbody > tr:hover > td {
+    background-color: #f7fafc !important;
+}
+
+/* ClouDNS sort arrows: keep stacked arrows, make active/muted colors work on dark table headers. */
+body .cloudns-sortable.dataTable thead th.sorting,
+body .cloudns-sortable.dataTable thead th.sorting_asc,
+body .cloudns-sortable.dataTable thead th.sorting_desc {
+    padding-right: 30px !important;
+}
+
+body .cloudns-sortable.dataTable thead th.sorting::before,
+body .cloudns-sortable.dataTable thead th.sorting::after,
+body .cloudns-sortable.dataTable thead th.sorting_asc::before,
+body .cloudns-sortable.dataTable thead th.sorting_asc::after,
+body .cloudns-sortable.dataTable thead th.sorting_desc::before,
+body .cloudns-sortable.dataTable thead th.sorting_desc::after {
+    right: 11px !important;
+    color: rgba(255, 255, 255, 0.55) !important;
+    font-size: 8px !important;
+    line-height: 8px !important;
+}
+
+body .cloudns-sortable.dataTable thead th.sorting_asc::before,
+body .cloudns-sortable.dataTable thead th.sorting_desc::after {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+body .cloudns-sortable.dataTable thead th.sorting_asc::after,
+body .cloudns-sortable.dataTable thead th.sorting_desc::before,
+body .cloudns-sortable.dataTable thead th.sorting::before,
+body .cloudns-sortable.dataTable thead th.sorting::after {
+    opacity: 0.55 !important;
+}
+
+/* Forms and controls. */
+body input.form-control,
+body select.form-control,
+body textarea.form-control,
+body .newZoneContainer input[type="text"] {
+    border: 1px solid rgba(17, 43, 77, 0.18) !important;
+    border-radius: 6px !important;
+    color: var(--dm-text) !important;
+    font-size: 13px !important;
+    box-shadow: none !important;
+}
+
+body input.form-control:focus,
+body select.form-control:focus,
+body textarea.form-control:focus,
+body .newZoneContainer input[type="text"]:focus {
+    border-color: var(--dm-orange) !important;
+    box-shadow: 0 0 0 2px rgba(255, 107, 26, 0.18) !important;
+    outline: none !important;
+}
+
+/* Button system: match WHMCS primary/secondary/danger taxonomy. */
+body .btn,
+body a.btn,
+body button.btn,
+body input.btn,
+body .cloudns-switch-style-button,
+body .cloudns-domain-switch-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 34px !important;
+    height: 34px !important;
+    padding: 0 14px !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+body .btn-primary,
+body .cloudns-btn-primary,
+body .cloudns-domain-switch-button,
+body .cloudns-add-button,
+body #bulk-action-execute,
+body .cloudns-zone-transfer-button {
+    border-color: var(--dm-orange) !important;
+    background: var(--dm-orange) !important;
+    background-color: var(--dm-orange) !important;
+    background-image: none !important;
+    color: #ffffff !important;
+}
+
+body .btn-primary:hover,
+body .btn-primary:focus,
+body .cloudns-btn-primary:hover,
+body .cloudns-btn-primary:focus,
+body .cloudns-domain-switch-button:hover,
+body .cloudns-domain-switch-button:focus,
+body .cloudns-add-button:hover,
+body .cloudns-add-button:focus,
+body #bulk-action-execute:hover,
+body #bulk-action-execute:focus,
+body .cloudns-zone-transfer-button:hover,
+body .cloudns-zone-transfer-button:focus {
+    border-color: var(--dm-orange-hover) !important;
+    background: var(--dm-orange-hover) !important;
+    color: #ffffff !important;
+}
+
+body .btn-default,
+body .cloudns-btn-secondary,
+body .cloudns-switch-style-button.cloudns-btn-secondary {
+    border-color: var(--dm-blue) !important;
+    background: var(--dm-blue) !important;
+    background-color: var(--dm-blue) !important;
+    background-image: none !important;
+    color: #ffffff !important;
+}
+
+body .btn-default:hover,
+body .btn-default:focus,
+body .cloudns-btn-secondary:hover,
+body .cloudns-btn-secondary:focus,
+body .cloudns-switch-style-button.cloudns-btn-secondary:hover,
+body .cloudns-switch-style-button.cloudns-btn-secondary:focus {
+    border-color: var(--dm-blue-hover) !important;
+    background: var(--dm-blue-hover) !important;
+    color: #ffffff !important;
+}
+
+body .btn-danger,
+body .cloudns-btn-danger,
+body .cloudns-zone-transfer-delete,
+body .zones-options .btn-danger {
+    border-color: var(--dm-danger) !important;
+    background: var(--dm-danger) !important;
+    background-color: var(--dm-danger) !important;
+    background-image: none !important;
+    color: #ffffff !important;
+}
+
+body .btn-danger:hover,
+body .btn-danger:focus,
+body .cloudns-btn-danger:hover,
+body .cloudns-btn-danger:focus,
+body .cloudns-zone-transfer-delete:hover,
+body .cloudns-zone-transfer-delete:focus,
+body .zones-options .btn-danger:hover,
+body .zones-options .btn-danger:focus {
+    border-color: #a94442 !important;
+    background: #a94442 !important;
+    color: #ffffff !important;
+}
+
+/* Notices */
+body .notification,
+body .cloudns-response:not(.cloudns-response-error),
+body .cloudns-mailforward-response:not(.cloudns-mailforward-response-error),
+body .cloudns-free-ssl-response:not(.cloudns-free-ssl-response-error),
+body .cloudns-zone-transfer-response:not(.cloudns-zone-transfer-response-error),
+body .cloudns-zone-transfer-notice,
+body .cloudns-parked-response:not(.cloudns-parked-response-error),
+body .cloudns-export-notice,
+body .cloudns-updated-empty {
+    background: #f5f8ff !important;
+    border: 1px solid #b8c7ff !important;
+    border-radius: 8px !important;
+    color: #30446c !important;
+    padding: 12px 14px !important;
+}
+
+@media only screen and (max-width: 650px) {
+    body .cloudns-body-panel,
+    body .cloudns-zones-panel,
+    body .cloudns-import-panel,
+    body .cloudns-soa-panel,
+    body .cloudns-statistics-panel,
+    body .cloudns-dnssec-panel,
+    body .cloudns-mailforward-panel,
+    body .cloudns-export-panel,
+    body .cloudns-free-ssl-panel,
+    body .cloudns-zone-transfers-panel,
+    body .cloudns-parked-panel,
+    body .cloudns-updated-panel,
+    body .newZoneContainer,
+    body form#recordsForm.recordsForm:not(.cloudns-record-filter) {
+        padding: 12px !important;
+    }
+}
+
+
+/* Patch 57: broader fallback selectors for ClouDNS pages where the module output is not wrapped in .whmcscontainer .moduleoutput. */
+body #cloudnsSettingsMenu,
+body #cloudnsSlaveMenu {
+    border: 1px solid rgba(17, 43, 77, 0.16) !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(17, 43, 77, 0.06) !important;
+}
+
+body #cloudnsSettingsMenu > li > a,
+body #cloudnsSettingsMenu > li > button,
+body #cloudnsSlaveMenu > li > a,
+body #cloudnsSlaveMenu > li > button {
+    min-height: 42px !important;
+    padding: 0 15px !important;
+    color: #293f56 !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+}
+
+body #cloudnsSettingsMenu > li.cloudns-menu-active > a,
+body #cloudnsSettingsMenu > li > a:hover,
+body #cloudnsSettingsMenu > li.cloudns-advanced-menu:hover > a,
+body #cloudnsSlaveMenu > li.cloudns-menu-active > a,
+body #cloudnsSlaveMenu > li > a:hover {
+    background: #fff7ef !important;
+    border-bottom-color: #f58220 !important;
+    color: #d75b0b !important;
+}
+
+body .cloudns-table-shell,
+body .cloudns-body-panel,
+body .cloudns-zones-panel,
+body .cloudns-import-panel,
+body .cloudns-soa-panel,
+body .cloudns-statistics-panel,
+body .cloudns-dnssec-panel,
+body .cloudns-mailforward-panel,
+body .cloudns-mailforward-mx-panel,
+body .cloudns-export-panel,
+body .cloudns-free-ssl-panel,
+body .cloudns-zone-transfers-panel,
+body .cloudns-parked-panel,
+body .cloudns-updated-panel,
+body .cloudns-form-panel,
+body .cloudns-record-form-panel,
+body .cloudns-forward-form-panel,
+body .newZoneContainer,
+body form#recordsForm.recordsForm:not(.cloudns-record-filter) {
+    border: 1px solid rgba(17, 43, 77, 0.14) !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(17, 43, 77, 0.055) !important;
+    padding: 16px !important;
+    margin-bottom: 16px !important;
+}
+
+body #zones-list thead th,
+body #table-records thead th,
+body #table-forwards thead th,
+body table.cloudns-sortable.dataTable thead th,
+body .cloudns-table-shell table thead th {
+    background: #2f435f !important;
+    background-color: #2f435f !important;
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,0.12) !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    padding: 13px 14px !important;
+}
+
+body #zones-list tbody td,
+body #table-records tbody td,
+body #table-forwards tbody td,
+body table.cloudns-sortable.dataTable tbody td {
+    color: #293f56 !important;
+    border-color: rgba(17, 43, 77, 0.08) !important;
+    padding: 10px 12px !important;
+}
+
+body .cloudns-btn-primary,
+body .cloudns-switch-style-button,
+body #table-records .btn-success,
+body .cloudns-zone-search-form .btn-primary,
+body .cloudns-record-filter .btn-primary,
+body .cloudns-mailforward-panel .btn-success,
+body .cloudns-body-panel .btn-success,
+body .newZoneContainer .btn-primary {
+    background: #f58220 !important;
+    border-color: #f58220 !important;
+    color: #ffffff !important;
+}
+
+body .cloudns-btn-secondary,
+body .cloudns-filter-button,
+body .cloudns-body-panel .btn-info,
+body .cloudns-body-panel .btn-default,
+body .cloudns-mailforward-panel .btn-info,
+body .cloudns-zone-search-form .btn-default {
+    background: #163a5f !important;
+    border-color: #163a5f !important;
+    color: #ffffff !important;
+}
+
+body .cloudns-btn-danger,
+body #table-records .btn-danger,
+body #table-forwards .btn-danger,
+body #zones-list .btn-danger {
+    background: #b94a48 !important;
+    border-color: #b94a48 !important;
+    color: #ffffff !important;
+}

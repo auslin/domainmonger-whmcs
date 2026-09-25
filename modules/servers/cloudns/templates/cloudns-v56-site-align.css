@@ -1,0 +1,382 @@
+/* DomainMonger WHMCS v9 - ClouDNS visual alignment pass (Patch 56)
+   Scope: ClouDNS client-area module only. CSS-only, no API or module logic changes.
+   Goal: keep the module's proven workflow/layout while making it feel closer to the cleaned WHMCS client area. */
+
+/* Shared visual tokens to match the cleaned WHMCS client area. */
+.whmcscontainer .moduleoutput {
+    --dm-navy: #163a5f;
+    --dm-table-navy: #2f435f;
+    --dm-text: #293f56;
+    --dm-muted: #51667d;
+    --dm-border: rgba(17, 43, 77, 0.14);
+    --dm-border-soft: rgba(17, 43, 77, 0.10);
+    --dm-panel-shadow: 0 2px 8px rgba(17, 43, 77, 0.055);
+    --dm-orange: #ff6b1a;
+    --dm-orange-hover: #f05f12;
+    --dm-blue: #2f6f9f;
+    --dm-blue-hover: #245c91;
+    --dm-danger: #b94a48;
+    color: var(--dm-text) !important;
+}
+
+/* Local module title row: keep the ClouDNS useful page-name pattern, but make it match site typography. */
+.whmcscontainer .moduleoutput .cloudns-module-header {
+    margin: 0 0 12px 0 !important;
+    padding: 0 !important;
+}
+
+.whmcscontainer .moduleoutput .cloudns-module-title,
+.whmcscontainer .moduleoutput .cloudns-page-title {
+    color: var(--dm-navy) !important;
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    letter-spacing: 0 !important;
+}
+
+.whmcscontainer .moduleoutput .cloudns-page-status,
+.whmcscontainer .moduleoutput .cloudns-global-domain-switcher label,
+.whmcscontainer .moduleoutput .cloudns-muted-note,
+.whmcscontainer .moduleoutput .cloudns-updated-summary,
+.whmcscontainer .moduleoutput .cloudns-updated-server-meta {
+    color: var(--dm-muted) !important;
+}
+
+/* Module menu: keep ClouDNS toolbar structure, align it to the site's white menu/card style. */
+.whmcscontainer .moduleoutput ul#cloudnsSettingsMenu,
+.whmcscontainer .moduleoutput ul#cloudnsSlaveMenu {
+    border: 1px solid var(--dm-border) !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    box-shadow: var(--dm-panel-shadow) !important;
+    margin: 0 0 14px 0 !important;
+    min-height: 42px !important;
+}
+
+.whmcscontainer .moduleoutput ul#cloudnsSettingsMenu > li > a,
+.whmcscontainer .moduleoutput ul#cloudnsSettingsMenu > li > button,
+.whmcscontainer .moduleoutput ul#cloudnsSlaveMenu > li > a,
+.whmcscontainer .moduleoutput ul#cloudnsSlaveMenu > li > button {
+    min-height: 42px !important;
+    padding: 0 15px !important;
+    color: var(--dm-text) !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    border-bottom-width: 3px !important;
+}
+
+.whmcscontainer .moduleoutput ul#cloudnsSettingsMenu > li > a:hover,
+.whmcscontainer .moduleoutput ul#cloudnsSettingsMenu > li > a:focus,
+.whmcscontainer .moduleoutput ul#cloudnsSettingsMenu > li > button:hover,
+.whmcscontainer .moduleoutput ul#cloudnsSettingsMenu > li > button:focus,
+.whmcscontainer .moduleoutput ul#cloudnsSettingsMenu > li.cloudns-menu-active > a,
+.whmcscontainer .moduleoutput ul#cloudnsSettingsMenu > li.cloudns-menu-active > button,
+.whmcscontainer .moduleoutput ul#cloudnsSettingsMenu > li.cloudns-advanced-menu:hover > a,
+.whmcscontainer .moduleoutput ul#cloudnsSettingsMenu > li.cloudns-advanced-menu:focus-within > a,
+.whmcscontainer .moduleoutput ul#cloudnsSlaveMenu > li > a:hover,
+.whmcscontainer .moduleoutput ul#cloudnsSlaveMenu > li > a:focus,
+.whmcscontainer .moduleoutput ul#cloudnsSlaveMenu > li.cloudns-menu-active > a {
+    background: #fff7ef !important;
+    border-bottom-color: var(--dm-orange) !important;
+    color: #d75b0b !important;
+    text-decoration: none !important;
+}
+
+.whmcscontainer .moduleoutput .cloudns-advanced-dropdown,
+.whmcscontainer .moduleoutput #cloudnsMobileSettingsMenu .dropdown-menu {
+    border: 1px solid rgba(17, 43, 77, 0.14) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 8px 22px rgba(17, 43, 77, 0.16) !important;
+}
+
+/* Content panels/cards: match WHMCS cleaned card feel without restructuring templates. */
+.whmcscontainer .moduleoutput .cloudns-body-panel,
+.whmcscontainer .moduleoutput .cloudns-zones-panel,
+.whmcscontainer .moduleoutput .cloudns-import-panel,
+.whmcscontainer .moduleoutput .cloudns-soa-panel,
+.whmcscontainer .moduleoutput .cloudns-statistics-panel,
+.whmcscontainer .moduleoutput .cloudns-dnssec-panel,
+.whmcscontainer .moduleoutput .cloudns-mailforward-panel,
+.whmcscontainer .moduleoutput .cloudns-mailforward-mx-panel,
+.whmcscontainer .moduleoutput .cloudns-export-panel,
+.whmcscontainer .moduleoutput .cloudns-free-ssl-panel,
+.whmcscontainer .moduleoutput .cloudns-zone-transfers-panel,
+.whmcscontainer .moduleoutput .cloudns-parked-panel,
+.whmcscontainer .moduleoutput .cloudns-updated-panel,
+.whmcscontainer .moduleoutput .cloudns-form-panel,
+.whmcscontainer .moduleoutput .cloudns-record-form-panel,
+.whmcscontainer .moduleoutput .cloudns-forward-form-panel,
+.whmcscontainer .moduleoutput .newZoneContainer,
+.whmcscontainer .moduleoutput form#recordsForm.recordsForm:not(.cloudns-record-filter) {
+    border: 1px solid var(--dm-border) !important;
+    border-radius: 8px !important;
+    background: #ffffff !important;
+    box-shadow: var(--dm-panel-shadow) !important;
+    color: var(--dm-text) !important;
+    font-size: 14px !important;
+    line-height: 1.45 !important;
+    padding: 16px !important;
+    margin-bottom: 16px !important;
+}
+
+.whmcscontainer .moduleoutput .cloudns-body-panel h3,
+.whmcscontainer .moduleoutput .cloudns-zones-panel h3,
+.whmcscontainer .moduleoutput .cloudns-import-panel h3,
+.whmcscontainer .moduleoutput .cloudns-soa-panel h3,
+.whmcscontainer .moduleoutput .cloudns-statistics-panel h3,
+.whmcscontainer .moduleoutput .cloudns-dnssec-panel h3,
+.whmcscontainer .moduleoutput .cloudns-mailforward-panel h3,
+.whmcscontainer .moduleoutput .cloudns-export-panel h3,
+.whmcscontainer .moduleoutput .cloudns-free-ssl-panel h3,
+.whmcscontainer .moduleoutput .cloudns-zone-transfers-panel h3,
+.whmcscontainer .moduleoutput .cloudns-parked-panel h3,
+.whmcscontainer .moduleoutput .cloudns-updated-panel h3,
+.whmcscontainer .moduleoutput .newZoneContainer h3 {
+    color: var(--dm-navy) !important;
+    font-size: 18px !important;
+    margin-bottom: 14px !important;
+}
+
+/* Tables: align ClouDNS data tables with WHMCS list tables. */
+.whmcscontainer .moduleoutput .cloudns-table-shell,
+.whmcscontainer .moduleoutput .table-responsive {
+    border-radius: 8px !important;
+    border: 1px solid var(--dm-border) !important;
+    overflow: hidden !important;
+    background: #ffffff !important;
+}
+
+.whmcscontainer .moduleoutput .cloudns-table-shell table,
+.whmcscontainer .moduleoutput .table-responsive table,
+.whmcscontainer .moduleoutput #zones-list,
+.whmcscontainer .moduleoutput #table-records,
+.whmcscontainer .moduleoutput #table-forwards {
+    border: 0 !important;
+    margin: 0 !important;
+}
+
+.whmcscontainer .moduleoutput .table > thead > tr > th,
+.whmcscontainer .moduleoutput .table > tbody > tr > th,
+.whmcscontainer .moduleoutput #zones-list th,
+.whmcscontainer .moduleoutput #table-records thead th,
+.whmcscontainer .moduleoutput #table-forwards thead th,
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th {
+    background: var(--dm-table-navy) !important;
+    background-color: var(--dm-table-navy) !important;
+    background-image: none !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.01em !important;
+    line-height: 1.25 !important;
+    padding: 13px 14px !important;
+    text-transform: uppercase !important;
+    vertical-align: middle !important;
+}
+
+.whmcscontainer .moduleoutput .table > tbody > tr > td,
+.whmcscontainer .moduleoutput #zones-list td,
+.whmcscontainer .moduleoutput #table-records tbody td,
+.whmcscontainer .moduleoutput #table-forwards tbody td {
+    border-color: rgba(17, 43, 77, 0.08) !important;
+    color: var(--dm-text) !important;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    padding: 10px 12px !important;
+    vertical-align: middle !important;
+}
+
+.whmcscontainer .moduleoutput .table-hover > tbody > tr:hover > td,
+.whmcscontainer .moduleoutput .table-hover > tbody > tr:hover > th,
+.whmcscontainer .moduleoutput #zones-list.table-hover > tbody > tr:hover > td,
+.whmcscontainer .moduleoutput #table-records.table-hover > tbody > tr:hover > td,
+.whmcscontainer .moduleoutput #table-forwards.table-hover > tbody > tr:hover > td {
+    background-color: #f7fafc !important;
+}
+
+/* ClouDNS sort arrows: keep stacked arrows, make active/muted colors work on dark table headers. */
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting,
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting_asc,
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting_desc {
+    padding-right: 30px !important;
+}
+
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting::before,
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting::after,
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting_asc::before,
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting_asc::after,
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting_desc::before,
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting_desc::after {
+    right: 11px !important;
+    color: rgba(255, 255, 255, 0.55) !important;
+    font-size: 8px !important;
+    line-height: 8px !important;
+}
+
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting_asc::before,
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting_desc::after {
+    color: #ffffff !important;
+    opacity: 1 !important;
+}
+
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting_asc::after,
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting_desc::before,
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting::before,
+.whmcscontainer .moduleoutput .cloudns-sortable.dataTable thead th.sorting::after {
+    opacity: 0.55 !important;
+}
+
+/* Forms and controls. */
+.whmcscontainer .moduleoutput input.form-control,
+.whmcscontainer .moduleoutput select.form-control,
+.whmcscontainer .moduleoutput textarea.form-control,
+.whmcscontainer .moduleoutput .newZoneContainer input[type="text"] {
+    border: 1px solid rgba(17, 43, 77, 0.18) !important;
+    border-radius: 6px !important;
+    color: var(--dm-text) !important;
+    font-size: 13px !important;
+    box-shadow: none !important;
+}
+
+.whmcscontainer .moduleoutput input.form-control:focus,
+.whmcscontainer .moduleoutput select.form-control:focus,
+.whmcscontainer .moduleoutput textarea.form-control:focus,
+.whmcscontainer .moduleoutput .newZoneContainer input[type="text"]:focus {
+    border-color: var(--dm-orange) !important;
+    box-shadow: 0 0 0 2px rgba(255, 107, 26, 0.18) !important;
+    outline: none !important;
+}
+
+/* Button system: match WHMCS primary/secondary/danger taxonomy. */
+.whmcscontainer .moduleoutput .btn,
+.whmcscontainer .moduleoutput a.btn,
+.whmcscontainer .moduleoutput button.btn,
+.whmcscontainer .moduleoutput input.btn,
+.whmcscontainer .moduleoutput .cloudns-switch-style-button,
+.whmcscontainer .moduleoutput .cloudns-domain-switch-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 34px !important;
+    height: 34px !important;
+    padding: 0 14px !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    text-decoration: none !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+
+.whmcscontainer .moduleoutput .btn-primary,
+.whmcscontainer .moduleoutput .cloudns-btn-primary,
+.whmcscontainer .moduleoutput .cloudns-domain-switch-button,
+.whmcscontainer .moduleoutput .cloudns-add-button,
+.whmcscontainer .moduleoutput #bulk-action-execute,
+.whmcscontainer .moduleoutput .cloudns-zone-transfer-button {
+    border-color: var(--dm-orange) !important;
+    background: var(--dm-orange) !important;
+    background-color: var(--dm-orange) !important;
+    background-image: none !important;
+    color: #ffffff !important;
+}
+
+.whmcscontainer .moduleoutput .btn-primary:hover,
+.whmcscontainer .moduleoutput .btn-primary:focus,
+.whmcscontainer .moduleoutput .cloudns-btn-primary:hover,
+.whmcscontainer .moduleoutput .cloudns-btn-primary:focus,
+.whmcscontainer .moduleoutput .cloudns-domain-switch-button:hover,
+.whmcscontainer .moduleoutput .cloudns-domain-switch-button:focus,
+.whmcscontainer .moduleoutput .cloudns-add-button:hover,
+.whmcscontainer .moduleoutput .cloudns-add-button:focus,
+.whmcscontainer .moduleoutput #bulk-action-execute:hover,
+.whmcscontainer .moduleoutput #bulk-action-execute:focus,
+.whmcscontainer .moduleoutput .cloudns-zone-transfer-button:hover,
+.whmcscontainer .moduleoutput .cloudns-zone-transfer-button:focus {
+    border-color: var(--dm-orange-hover) !important;
+    background: var(--dm-orange-hover) !important;
+    color: #ffffff !important;
+}
+
+.whmcscontainer .moduleoutput .btn-default,
+.whmcscontainer .moduleoutput .cloudns-btn-secondary,
+.whmcscontainer .moduleoutput .cloudns-switch-style-button.cloudns-btn-secondary {
+    border-color: var(--dm-blue) !important;
+    background: var(--dm-blue) !important;
+    background-color: var(--dm-blue) !important;
+    background-image: none !important;
+    color: #ffffff !important;
+}
+
+.whmcscontainer .moduleoutput .btn-default:hover,
+.whmcscontainer .moduleoutput .btn-default:focus,
+.whmcscontainer .moduleoutput .cloudns-btn-secondary:hover,
+.whmcscontainer .moduleoutput .cloudns-btn-secondary:focus,
+.whmcscontainer .moduleoutput .cloudns-switch-style-button.cloudns-btn-secondary:hover,
+.whmcscontainer .moduleoutput .cloudns-switch-style-button.cloudns-btn-secondary:focus {
+    border-color: var(--dm-blue-hover) !important;
+    background: var(--dm-blue-hover) !important;
+    color: #ffffff !important;
+}
+
+.whmcscontainer .moduleoutput .btn-danger,
+.whmcscontainer .moduleoutput .cloudns-btn-danger,
+.whmcscontainer .moduleoutput .cloudns-zone-transfer-delete,
+.whmcscontainer .moduleoutput .zones-options .btn-danger {
+    border-color: var(--dm-danger) !important;
+    background: var(--dm-danger) !important;
+    background-color: var(--dm-danger) !important;
+    background-image: none !important;
+    color: #ffffff !important;
+}
+
+.whmcscontainer .moduleoutput .btn-danger:hover,
+.whmcscontainer .moduleoutput .btn-danger:focus,
+.whmcscontainer .moduleoutput .cloudns-btn-danger:hover,
+.whmcscontainer .moduleoutput .cloudns-btn-danger:focus,
+.whmcscontainer .moduleoutput .cloudns-zone-transfer-delete:hover,
+.whmcscontainer .moduleoutput .cloudns-zone-transfer-delete:focus,
+.whmcscontainer .moduleoutput .zones-options .btn-danger:hover,
+.whmcscontainer .moduleoutput .zones-options .btn-danger:focus {
+    border-color: #a94442 !important;
+    background: #a94442 !important;
+    color: #ffffff !important;
+}
+
+/* Notices */
+.whmcscontainer .moduleoutput .notification,
+.whmcscontainer .moduleoutput .cloudns-response:not(.cloudns-response-error),
+.whmcscontainer .moduleoutput .cloudns-mailforward-response:not(.cloudns-mailforward-response-error),
+.whmcscontainer .moduleoutput .cloudns-free-ssl-response:not(.cloudns-free-ssl-response-error),
+.whmcscontainer .moduleoutput .cloudns-zone-transfer-response:not(.cloudns-zone-transfer-response-error),
+.whmcscontainer .moduleoutput .cloudns-zone-transfer-notice,
+.whmcscontainer .moduleoutput .cloudns-parked-response:not(.cloudns-parked-response-error),
+.whmcscontainer .moduleoutput .cloudns-export-notice,
+.whmcscontainer .moduleoutput .cloudns-updated-empty {
+    background: #f5f8ff !important;
+    border: 1px solid #b8c7ff !important;
+    border-radius: 8px !important;
+    color: #30446c !important;
+    padding: 12px 14px !important;
+}
+
+@media only screen and (max-width: 650px) {
+    .whmcscontainer .moduleoutput .cloudns-body-panel,
+    .whmcscontainer .moduleoutput .cloudns-zones-panel,
+    .whmcscontainer .moduleoutput .cloudns-import-panel,
+    .whmcscontainer .moduleoutput .cloudns-soa-panel,
+    .whmcscontainer .moduleoutput .cloudns-statistics-panel,
+    .whmcscontainer .moduleoutput .cloudns-dnssec-panel,
+    .whmcscontainer .moduleoutput .cloudns-mailforward-panel,
+    .whmcscontainer .moduleoutput .cloudns-export-panel,
+    .whmcscontainer .moduleoutput .cloudns-free-ssl-panel,
+    .whmcscontainer .moduleoutput .cloudns-zone-transfers-panel,
+    .whmcscontainer .moduleoutput .cloudns-parked-panel,
+    .whmcscontainer .moduleoutput .cloudns-updated-panel,
+    .whmcscontainer .moduleoutput .newZoneContainer,
+    .whmcscontainer .moduleoutput form#recordsForm.recordsForm:not(.cloudns-record-filter) {
+        padding: 12px !important;
+    }
+}

@@ -1,0 +1,909 @@
+
+{if $zone eq ''}
+	<script type="text/javascript">
+	{literal}
+		window.location.href="clientarea.php?action=productdetails&id={/literal}{$serviceid}{literal}";
+	{/literal}
+	</script>
+{/if}
+
+<style type="text/css">
+{literal}
+.notification {
+background-color: #dbe3ff;
+border-color: #a2b4ee;
+color: #585b66;
+display:block;
+font-style:normal;
+padding: 10px 10px 10px 36px;
+line-height: 1.5em;
+}
+
+.backToZones {
+text-align: right;
+list-style-type: none;
+}
+{/literal}
+
+/* DM page shell consistency pass
+   Standard page structure: page reference row, menu, then white content panel. */
+.cloudns-module-header {
+	clear: both !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: space-between !important;
+	gap: 16px !important;
+	margin: 0 0 10px 0 !important;
+	padding: 0 !important;
+	box-sizing: border-box !important;
+}
+
+.cloudns-module-title-block {
+	display: flex !important;
+	align-items: center !important;
+	gap: 10px !important;
+	min-height: 34px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+.cloudns-module-title {
+	margin: 0 !important;
+	color: #333333 !important;
+	font-size: 18px !important;
+	font-weight: 700 !important;
+	line-height: 1.25 !important;
+}
+
+.cloudns-header-tools {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: flex-end !important;
+	gap: 10px !important;
+	margin: 0 !important;
+	padding: 0 !important;
+}
+
+ul#cloudnsSettingsMenu {
+	margin: 0 0 10px 0 !important;
+}
+
+#cloudnsMobileSettingsMenu {
+	margin: 0 0 10px 0 !important;
+}
+
+#cloudnsSettingsMenu + .clear,
+#cloudnsMobileSettingsMenu + .clear {
+	height: 0 !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	line-height: 0 !important;
+}
+
+#cloudnsSettingsMenu + .clear + br,
+#cloudnsMobileSettingsMenu + .clear + br {
+	display: none !important;
+}
+
+.cloudns-body-panel,
+.cloudns-zones-panel,
+.cloudns-import-panel,
+.cloudns-soa-panel,
+.cloudns-statistics-panel,
+.cloudns-dnssec-panel,
+.cloudns-mailforward-panel,
+.cloudns-mailforward-mx-panel,
+.cloudns-export-panel,
+.cloudns-free-ssl-panel,
+.cloudns-zone-transfers-panel,
+.cloudns-parked-panel,
+.cloudns-updated-panel,
+.cloudns-form-panel,
+.cloudns-record-form-panel,
+.cloudns-forward-form-panel,
+.newZoneContainer,
+form#recordsForm.recordsForm:not(.cloudns-record-filter) {
+	border: 1px solid #dddddd !important;
+	border-radius: 8px !important;
+	background: #ffffff !important;
+	background-color: #ffffff !important;
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+	color: #333333 !important;
+	box-sizing: border-box !important;
+	margin-top: 0 !important;
+	margin-bottom: 14px !important;
+	padding: 14px !important;
+}
+
+.cloudns-body-panel:first-child,
+.cloudns-zones-panel:first-child,
+.newZoneContainer:first-child {
+	margin-top: 0 !important;
+}
+
+.cloudns-body-panel > :first-child,
+.cloudns-zones-panel > :first-child,
+.cloudns-import-panel > :first-child,
+.cloudns-soa-panel > :first-child,
+.cloudns-statistics-panel > :first-child,
+.cloudns-dnssec-panel > :first-child,
+.cloudns-mailforward-panel > :first-child,
+.cloudns-export-panel > :first-child,
+.cloudns-free-ssl-panel > :first-child,
+.cloudns-zone-transfers-panel > :first-child,
+.cloudns-parked-panel > :first-child,
+.cloudns-updated-panel > :first-child,
+.cloudns-form-panel > :first-child,
+.newZoneContainer > :first-child {
+	margin-top: 0 !important;
+}
+
+.cloudns-body-panel > :last-child,
+.cloudns-zones-panel > :last-child,
+.cloudns-import-panel > :last-child,
+.cloudns-soa-panel > :last-child,
+.cloudns-statistics-panel > :last-child,
+.cloudns-dnssec-panel > :last-child,
+.cloudns-mailforward-panel > :last-child,
+.cloudns-export-panel > :last-child,
+.cloudns-free-ssl-panel > :last-child,
+.cloudns-zone-transfers-panel > :last-child,
+.cloudns-parked-panel > :last-child,
+.cloudns-updated-panel > :last-child,
+.cloudns-form-panel > :last-child,
+.newZoneContainer > :last-child {
+	margin-bottom: 0 !important;
+}
+
+.cloudns-zones-heading-row,
+.cloudns-record-toolbar,
+.cloudns-mailforward-toolbar,
+.cloudns-section-tools,
+.cloudns-export-actions,
+.cloudns-free-ssl-actions,
+.cloudns-zone-transfer-add,
+.cloudns-updated-actions,
+.cloudns-bulk-actions-row,
+.cloudns-mailforward-actions-row,
+.newZoneButtonsContainer {
+	display: flex !important;
+	align-items: center !important;
+	gap: 8px !important;
+	box-sizing: border-box !important;
+}
+
+.cloudns-zones-heading-row,
+.cloudns-record-toolbar,
+.cloudns-mailforward-toolbar,
+.cloudns-section-tools {
+	justify-content: space-between !important;
+	margin: 0 0 12px 0 !important;
+}
+
+.cloudns-statistics-links {
+	margin: 0 0 12px 0 !important;
+}
+
+.notification,
+.cloudns-response,
+.cloudns-zone-transfer-response,
+.cloudns-free-ssl-response,
+.cloudns-export-notice,
+.cloudns-export-error {
+	margin-top: 0 !important;
+	margin-bottom: 14px !important;
+}
+
+@media only screen and (max-width: 870px) {
+	.cloudns-module-header {
+		align-items: flex-start !important;
+		flex-direction: column !important;
+	}
+	.cloudns-header-tools,
+	.cloudns-global-domain-switcher {
+		width: 100% !important;
+		justify-content: flex-start !important;
+	}
+}
+
+@media only screen and (max-width: 650px) {
+	.cloudns-body-panel,
+	.cloudns-zones-panel,
+	.cloudns-import-panel,
+	.cloudns-soa-panel,
+	.cloudns-statistics-panel,
+	.cloudns-dnssec-panel,
+	.cloudns-mailforward-panel,
+	.cloudns-mailforward-mx-panel,
+	.cloudns-export-panel,
+	.cloudns-free-ssl-panel,
+	.cloudns-zone-transfers-panel,
+	.cloudns-parked-panel,
+	.cloudns-updated-panel,
+	.cloudns-form-panel,
+	.newZoneContainer,
+	form#recordsForm.recordsForm:not(.cloudns-record-filter) {
+		padding: 10px !important;
+	}
+	.cloudns-zones-heading-row,
+	.cloudns-record-toolbar,
+	.cloudns-mailforward-toolbar,
+	.cloudns-section-tools,
+	.cloudns-export-actions,
+	.cloudns-free-ssl-actions,
+	.cloudns-zone-transfer-add,
+	.cloudns-updated-actions,
+	.cloudns-bulk-actions-row,
+	.cloudns-mailforward-actions-row,
+	.newZoneButtonsContainer {
+		align-items: stretch !important;
+		flex-direction: column !important;
+	}
+}
+
+
+
+/* DM color/accent consistency pass
+   Orange is the module action/link/focus accent.
+   Blue is reserved for informational notices.
+   Red is reserved for destructive/error states.
+   Zones List domain links keep the approved orange text with a slight darken-on-hover. */
+.cloudns-body-panel,
+.cloudns-zones-panel,
+.cloudns-import-panel,
+.cloudns-soa-panel,
+.cloudns-statistics-panel,
+.cloudns-dnssec-panel,
+.cloudns-mailforward-panel,
+.cloudns-mailforward-mx-panel,
+.cloudns-export-panel,
+.cloudns-free-ssl-panel,
+.cloudns-zone-transfers-panel,
+.cloudns-parked-panel,
+.cloudns-updated-panel,
+.cloudns-form-panel,
+.cloudns-record-form-panel,
+.cloudns-forward-form-panel,
+.newZoneContainer {
+	color: #333333 !important;
+}
+
+.cloudns-body-panel .table > thead > tr > th,
+.cloudns-body-panel .table > tbody > tr > th,
+.cloudns-zones-panel .table > thead > tr > th,
+.cloudns-zones-panel .table > tbody > tr > th,
+.cloudns-import-panel .table > thead > tr > th,
+.cloudns-import-panel .table > tbody > tr > th,
+.cloudns-soa-panel .table > thead > tr > th,
+.cloudns-soa-panel .table > tbody > tr > th,
+.cloudns-statistics-panel .table > thead > tr > th,
+.cloudns-statistics-panel .table > tbody > tr > th,
+.cloudns-dnssec-panel .table > thead > tr > th,
+.cloudns-dnssec-panel .table > tbody > tr > th,
+.cloudns-mailforward-panel .table > thead > tr > th,
+.cloudns-mailforward-panel .table > tbody > tr > th,
+.cloudns-export-panel .table > thead > tr > th,
+.cloudns-export-panel .table > tbody > tr > th,
+.cloudns-free-ssl-panel .table > thead > tr > th,
+.cloudns-free-ssl-panel .table > tbody > tr > th,
+.cloudns-zone-transfers-panel .table > thead > tr > th,
+.cloudns-zone-transfers-panel .table > tbody > tr > th,
+.cloudns-parked-panel .table > thead > tr > th,
+.cloudns-parked-panel .table > tbody > tr > th,
+.cloudns-updated-panel .table > thead > tr > th,
+.cloudns-updated-panel .table > tbody > tr > th,
+#zones-list th {
+	background: #f7f7f7 !important;
+	background-color: #f7f7f7 !important;
+	background-image: none !important;
+	border-color: #dddddd !important;
+	color: #333333 !important;
+}
+
+.cloudns-body-panel .table > tbody > tr > td,
+.cloudns-zones-panel .table > tbody > tr > td,
+.cloudns-import-panel .table > tbody > tr > td,
+.cloudns-soa-panel .table > tbody > tr > td,
+.cloudns-statistics-panel .table > tbody > tr > td,
+.cloudns-dnssec-panel .table > tbody > tr > td,
+.cloudns-mailforward-panel .table > tbody > tr > td,
+.cloudns-export-panel .table > tbody > tr > td,
+.cloudns-free-ssl-panel .table > tbody > tr > td,
+.cloudns-zone-transfers-panel .table > tbody > tr > td,
+.cloudns-parked-panel .table > tbody > tr > td,
+.cloudns-updated-panel .table > tbody > tr > td,
+#zones-list td {
+	background-image: none !important;
+	border-color: #eeeeee !important;
+	color: #333333 !important;
+}
+
+.cloudns-body-panel .table-hover > tbody > tr:hover > td,
+.cloudns-body-panel .table-hover > tbody > tr:hover > th,
+.cloudns-zones-panel .table-hover > tbody > tr:hover > td,
+.cloudns-zones-panel .table-hover > tbody > tr:hover > th,
+.cloudns-statistics-panel .table-hover > tbody > tr:hover > td,
+.cloudns-statistics-panel .table-hover > tbody > tr:hover > th,
+.cloudns-mailforward-panel .table-hover > tbody > tr:hover > td,
+.cloudns-mailforward-panel .table-hover > tbody > tr:hover > th,
+.cloudns-zone-transfers-panel .table-hover > tbody > tr:hover > td,
+.cloudns-zone-transfers-panel .table-hover > tbody > tr:hover > th,
+.cloudns-free-ssl-panel .table-hover > tbody > tr:hover > td,
+.cloudns-free-ssl-panel .table-hover > tbody > tr:hover > th,
+.cloudns-parked-panel .table-hover > tbody > tr:hover > td,
+.cloudns-parked-panel .table-hover > tbody > tr:hover > th,
+#zones-list.table-hover > tbody > tr:hover > td,
+#zones-list.table-hover > tbody > tr:hover > th {
+	background-color: #fff8ec !important;
+	color: #333333 !important;
+}
+
+.cloudns-body-panel a:not(.btn):not(.cloudns-action-icon),
+.cloudns-import-panel a:not(.btn):not(.cloudns-action-icon),
+.cloudns-soa-panel a:not(.btn):not(.cloudns-action-icon),
+.cloudns-statistics-panel a:not(.btn):not(.cloudns-action-icon),
+.cloudns-dnssec-panel a:not(.btn):not(.cloudns-action-icon),
+.cloudns-mailforward-panel a:not(.btn):not(.cloudns-action-icon),
+.cloudns-export-panel a:not(.btn):not(.cloudns-action-icon),
+.cloudns-free-ssl-panel a:not(.btn):not(.cloudns-action-icon),
+.cloudns-zone-transfers-panel a:not(.btn):not(.cloudns-action-icon),
+.cloudns-parked-panel a:not(.btn):not(.cloudns-action-icon),
+.cloudns-updated-panel a:not(.btn):not(.cloudns-action-icon),
+.newZoneContainer a:not(.btn):not(.cloudns-action-icon) {
+	color: #d75b0b !important;
+	text-decoration: underline !important;
+	text-underline-offset: 2px !important;
+}
+
+.cloudns-body-panel a:not(.btn):not(.cloudns-action-icon):hover,
+.cloudns-body-panel a:not(.btn):not(.cloudns-action-icon):focus,
+.cloudns-import-panel a:not(.btn):not(.cloudns-action-icon):hover,
+.cloudns-import-panel a:not(.btn):not(.cloudns-action-icon):focus,
+.cloudns-soa-panel a:not(.btn):not(.cloudns-action-icon):hover,
+.cloudns-soa-panel a:not(.btn):not(.cloudns-action-icon):focus,
+.cloudns-statistics-panel a:not(.btn):not(.cloudns-action-icon):hover,
+.cloudns-statistics-panel a:not(.btn):not(.cloudns-action-icon):focus,
+.cloudns-dnssec-panel a:not(.btn):not(.cloudns-action-icon):hover,
+.cloudns-dnssec-panel a:not(.btn):not(.cloudns-action-icon):focus,
+.cloudns-mailforward-panel a:not(.btn):not(.cloudns-action-icon):hover,
+.cloudns-mailforward-panel a:not(.btn):not(.cloudns-action-icon):focus,
+.cloudns-export-panel a:not(.btn):not(.cloudns-action-icon):hover,
+.cloudns-export-panel a:not(.btn):not(.cloudns-action-icon):focus,
+.cloudns-free-ssl-panel a:not(.btn):not(.cloudns-action-icon):hover,
+.cloudns-free-ssl-panel a:not(.btn):not(.cloudns-action-icon):focus,
+.cloudns-zone-transfers-panel a:not(.btn):not(.cloudns-action-icon):hover,
+.cloudns-zone-transfers-panel a:not(.btn):not(.cloudns-action-icon):focus,
+.cloudns-parked-panel a:not(.btn):not(.cloudns-action-icon):hover,
+.cloudns-parked-panel a:not(.btn):not(.cloudns-action-icon):focus,
+.cloudns-updated-panel a:not(.btn):not(.cloudns-action-icon):hover,
+.cloudns-updated-panel a:not(.btn):not(.cloudns-action-icon):focus,
+.newZoneContainer a:not(.btn):not(.cloudns-action-icon):hover,
+.newZoneContainer a:not(.btn):not(.cloudns-action-icon):focus {
+	color: #a94708 !important;
+	text-decoration: underline !important;
+}
+
+/* Explicitly include the standalone DNS Zones / Zones List page. */
+.cloudns-zones-panel #zones-list a:not(.btn):not(.cloudns-action-icon),
+#zones-list a:not(.btn):not(.cloudns-action-icon) {
+	color: #ef9846 !important;
+	text-decoration: none !important;
+	font-weight: 600 !important;
+}
+
+.cloudns-zones-panel #zones-list a:not(.btn):not(.cloudns-action-icon):hover,
+.cloudns-zones-panel #zones-list a:not(.btn):not(.cloudns-action-icon):focus,
+#zones-list a:not(.btn):not(.cloudns-action-icon):hover,
+#zones-list a:not(.btn):not(.cloudns-action-icon):focus {
+	color: #d8873f !important;
+	text-decoration: underline !important;
+	text-underline-offset: 2px !important;
+}
+
+.cloudns-body-panel input.form-control:focus,
+.cloudns-body-panel select.form-control:focus,
+.cloudns-body-panel textarea.form-control:focus,
+.cloudns-zones-panel input.form-control:focus,
+.cloudns-zones-panel select.form-control:focus,
+.cloudns-zones-panel textarea.form-control:focus,
+.cloudns-import-panel input.form-control:focus,
+.cloudns-import-panel select.form-control:focus,
+.cloudns-import-panel textarea.form-control:focus,
+.cloudns-soa-panel input.form-control:focus,
+.cloudns-soa-panel select.form-control:focus,
+.cloudns-soa-panel textarea.form-control:focus,
+.cloudns-statistics-panel input.form-control:focus,
+.cloudns-statistics-panel select.form-control:focus,
+.cloudns-statistics-panel textarea.form-control:focus,
+.cloudns-dnssec-panel input.form-control:focus,
+.cloudns-dnssec-panel select.form-control:focus,
+.cloudns-dnssec-panel textarea.form-control:focus,
+.cloudns-mailforward-panel input.form-control:focus,
+.cloudns-mailforward-panel select.form-control:focus,
+.cloudns-mailforward-panel textarea.form-control:focus,
+.cloudns-export-panel input.form-control:focus,
+.cloudns-export-panel select.form-control:focus,
+.cloudns-export-panel textarea.form-control:focus,
+.cloudns-free-ssl-panel input.form-control:focus,
+.cloudns-free-ssl-panel select.form-control:focus,
+.cloudns-free-ssl-panel textarea.form-control:focus,
+.cloudns-zone-transfers-panel input.form-control:focus,
+.cloudns-zone-transfers-panel select.form-control:focus,
+.cloudns-zone-transfers-panel textarea.form-control:focus,
+.cloudns-parked-panel input.form-control:focus,
+.cloudns-parked-panel select.form-control:focus,
+.cloudns-parked-panel textarea.form-control:focus,
+.newZoneContainer input.form-control:focus,
+.newZoneContainer select.form-control:focus,
+.newZoneContainer textarea.form-control:focus {
+	border-color: #f7941d !important;
+	box-shadow: 0 0 0 2px rgba(247, 148, 29, 0.18) !important;
+	outline: none !important;
+}
+
+.notification,
+.cloudns-response:not(.cloudns-response-error),
+.cloudns-mailforward-response:not(.cloudns-mailforward-response-error),
+.cloudns-free-ssl-response:not(.cloudns-free-ssl-response-error),
+.cloudns-zone-transfer-response:not(.cloudns-zone-transfer-response-error),
+.cloudns-zone-transfer-notice,
+.cloudns-parked-response:not(.cloudns-parked-response-error),
+.cloudns-export-notice,
+.cloudns-updated-empty {
+	background: #f5f8ff !important;
+	background-color: #f5f8ff !important;
+	background-image: none !important;
+	border: 1px solid #b8c7ff !important;
+	border-radius: 6px !important;
+	color: #30446c !important;
+}
+
+.cloudns-response-error,
+.cloudns-mailforward-response-error,
+.cloudns-free-ssl-response-error,
+.cloudns-zone-transfer-response-error,
+.cloudns-parked-response-error,
+.cloudns-export-error {
+	background: #fff1f1 !important;
+	background-color: #fff1f1 !important;
+	background-image: none !important;
+	border: 1px solid #f0c8c8 !important;
+	border-radius: 6px !important;
+	color: #8f3634 !important;
+}
+
+.cloudns-page-status,
+.cloudns-updated-summary,
+.cloudns-updated-server-meta {
+	color: #333333 !important;
+}
+
+
+
+/* DM typography / forms / tables pass
+   Standardize readable text, labels, fields, table density, and helper text.
+   Includes standalone DNS Zones / Zones List page. */
+.cloudns-module-header,
+.cloudns-body-panel,
+.cloudns-zones-panel,
+.cloudns-import-panel,
+.cloudns-soa-panel,
+.cloudns-statistics-panel,
+.cloudns-dnssec-panel,
+.cloudns-mailforward-panel,
+.cloudns-mailforward-mx-panel,
+.cloudns-export-panel,
+.cloudns-free-ssl-panel,
+.cloudns-zone-transfers-panel,
+.cloudns-parked-panel,
+.cloudns-updated-panel,
+.cloudns-form-panel,
+.cloudns-record-form-panel,
+.cloudns-forward-form-panel,
+.newZoneContainer {
+	font-size: 13px !important;
+	line-height: 1.45 !important;
+	color: #333333 !important;
+}
+
+.cloudns-module-title {
+	font-size: 18px !important;
+	font-weight: 700 !important;
+	line-height: 1.25 !important;
+	letter-spacing: 0 !important;
+}
+
+.cloudns-body-panel h3,
+.cloudns-zones-panel h3,
+.cloudns-import-panel h3,
+.cloudns-soa-panel h3,
+.cloudns-statistics-panel h3,
+.cloudns-dnssec-panel h3,
+.cloudns-mailforward-panel h3,
+.cloudns-export-panel h3,
+.cloudns-free-ssl-panel h3,
+.cloudns-zone-transfers-panel h3,
+.cloudns-parked-panel h3,
+.cloudns-updated-panel h3,
+.newZoneContainer h3 {
+	font-size: 18px !important;
+	font-weight: 700 !important;
+	line-height: 1.3 !important;
+	margin: 0 0 12px 0 !important;
+	color: #333333 !important;
+}
+
+.cloudns-body-panel h4,
+.cloudns-zones-panel h4,
+.cloudns-import-panel h4,
+.cloudns-soa-panel h4,
+.cloudns-statistics-panel h4,
+.cloudns-dnssec-panel h4,
+.cloudns-mailforward-panel h4,
+.cloudns-export-panel h4,
+.cloudns-free-ssl-panel h4,
+.cloudns-zone-transfers-panel h4,
+.cloudns-parked-panel h4,
+.cloudns-updated-panel h4,
+.newZoneContainer h4 {
+	font-size: 16px !important;
+	font-weight: 700 !important;
+	line-height: 1.3 !important;
+	margin: 0 0 12px 0 !important;
+	color: #333333 !important;
+}
+
+.cloudns-body-panel label,
+.cloudns-zones-panel label,
+.cloudns-import-panel label,
+.cloudns-soa-panel label,
+.cloudns-statistics-panel label,
+.cloudns-dnssec-panel label,
+.cloudns-mailforward-panel label,
+.cloudns-export-panel label,
+.cloudns-free-ssl-panel label,
+.cloudns-zone-transfers-panel label,
+.cloudns-parked-panel label,
+.cloudns-updated-panel label,
+.newZoneContainer label,
+#recordsForm label,
+.recordsForm label {
+	display: inline-block;
+	max-width: 100%;
+	margin-bottom: 6px !important;
+	color: #333333 !important;
+	font-size: 13px !important;
+	font-weight: 600 !important;
+	line-height: 1.35 !important;
+}
+
+.cloudns-body-panel .small,
+.cloudns-body-panel small,
+.cloudns-zones-panel .small,
+.cloudns-zones-panel small,
+.cloudns-import-panel .small,
+.cloudns-import-panel small,
+.cloudns-soa-panel .small,
+.cloudns-soa-panel small,
+.cloudns-statistics-panel .small,
+.cloudns-statistics-panel small,
+.cloudns-dnssec-panel .small,
+.cloudns-dnssec-panel small,
+.cloudns-mailforward-panel .small,
+.cloudns-mailforward-panel small,
+.cloudns-export-panel .small,
+.cloudns-export-panel small,
+.cloudns-free-ssl-panel .small,
+.cloudns-free-ssl-panel small,
+.cloudns-zone-transfers-panel .small,
+.cloudns-zone-transfers-panel small,
+.cloudns-parked-panel .small,
+.cloudns-parked-panel small,
+.cloudns-updated-panel .small,
+.cloudns-updated-panel small,
+.newZoneContainer .small,
+.newZoneContainer small {
+	color: #666666 !important;
+	font-size: 12px !important;
+	line-height: 1.4 !important;
+}
+
+.cloudns-body-panel input.form-control,
+.cloudns-body-panel select.form-control,
+.cloudns-zones-panel input.form-control,
+.cloudns-zones-panel select.form-control,
+.cloudns-import-panel input.form-control,
+.cloudns-import-panel select.form-control,
+.cloudns-soa-panel input.form-control,
+.cloudns-soa-panel select.form-control,
+.cloudns-statistics-panel input.form-control,
+.cloudns-statistics-panel select.form-control,
+.cloudns-dnssec-panel input.form-control,
+.cloudns-dnssec-panel select.form-control,
+.cloudns-mailforward-panel input.form-control,
+.cloudns-mailforward-panel select.form-control,
+.cloudns-export-panel input.form-control,
+.cloudns-export-panel select.form-control,
+.cloudns-free-ssl-panel input.form-control,
+.cloudns-free-ssl-panel select.form-control,
+.cloudns-zone-transfers-panel input.form-control,
+.cloudns-zone-transfers-panel select.form-control,
+.cloudns-parked-panel input.form-control,
+.cloudns-parked-panel select.form-control,
+.cloudns-updated-panel input.form-control,
+.cloudns-updated-panel select.form-control,
+.newZoneContainer input.form-control,
+.newZoneContainer select.form-control,
+#recordsForm input.form-control,
+#recordsForm select.form-control,
+.recordsForm input.form-control,
+.recordsForm select.form-control {
+	min-height: 34px !important;
+	height: 34px !important;
+	padding: 6px 10px !important;
+	border: 1px solid #cccccc !important;
+	border-radius: 5px !important;
+	background-color: #ffffff !important;
+	background-image: none !important;
+	color: #333333 !important;
+	font-size: 13px !important;
+	line-height: 1.35 !important;
+	box-sizing: border-box !important;
+	box-shadow: none !important;
+}
+
+.cloudns-body-panel textarea.form-control,
+.cloudns-zones-panel textarea.form-control,
+.cloudns-import-panel textarea.form-control,
+.cloudns-soa-panel textarea.form-control,
+.cloudns-statistics-panel textarea.form-control,
+.cloudns-dnssec-panel textarea.form-control,
+.cloudns-mailforward-panel textarea.form-control,
+.cloudns-export-panel textarea.form-control,
+.cloudns-free-ssl-panel textarea.form-control,
+.cloudns-zone-transfers-panel textarea.form-control,
+.cloudns-parked-panel textarea.form-control,
+.cloudns-updated-panel textarea.form-control,
+.newZoneContainer textarea.form-control,
+#recordsForm textarea.form-control,
+.recordsForm textarea.form-control {
+	min-height: 120px !important;
+	padding: 8px 10px !important;
+	border: 1px solid #cccccc !important;
+	border-radius: 5px !important;
+	background-color: #ffffff !important;
+	background-image: none !important;
+	color: #333333 !important;
+	font-size: 13px !important;
+	line-height: 1.45 !important;
+	box-sizing: border-box !important;
+	box-shadow: none !important;
+}
+
+.cloudns-import-panel textarea.form-control,
+.importForm textarea {
+	min-height: 320px !important;
+}
+
+.cloudns-body-panel input[type="checkbox"],
+.cloudns-zones-panel input[type="checkbox"],
+.cloudns-import-panel input[type="checkbox"],
+.cloudns-soa-panel input[type="checkbox"],
+.cloudns-statistics-panel input[type="checkbox"],
+.cloudns-dnssec-panel input[type="checkbox"],
+.cloudns-mailforward-panel input[type="checkbox"],
+.cloudns-export-panel input[type="checkbox"],
+.cloudns-free-ssl-panel input[type="checkbox"],
+.cloudns-zone-transfers-panel input[type="checkbox"],
+.cloudns-parked-panel input[type="checkbox"],
+.cloudns-updated-panel input[type="checkbox"],
+.newZoneContainer input[type="checkbox"],
+.cloudns-body-panel input[type="radio"],
+.cloudns-zones-panel input[type="radio"],
+.cloudns-import-panel input[type="radio"],
+.cloudns-soa-panel input[type="radio"],
+.cloudns-statistics-panel input[type="radio"],
+.cloudns-dnssec-panel input[type="radio"],
+.cloudns-mailforward-panel input[type="radio"],
+.cloudns-export-panel input[type="radio"],
+.cloudns-free-ssl-panel input[type="radio"],
+.cloudns-zone-transfers-panel input[type="radio"],
+.cloudns-parked-panel input[type="radio"],
+.cloudns-updated-panel input[type="radio"],
+.newZoneContainer input[type="radio"] {
+	margin: 2px 6px 0 0 !important;
+	vertical-align: middle !important;
+}
+
+.cloudns-body-panel table,
+.cloudns-zones-panel table,
+.cloudns-import-panel table,
+.cloudns-soa-panel table,
+.cloudns-statistics-panel table,
+.cloudns-dnssec-panel table,
+.cloudns-mailforward-panel table,
+.cloudns-export-panel table,
+.cloudns-free-ssl-panel table,
+.cloudns-zone-transfers-panel table,
+.cloudns-parked-panel table,
+.cloudns-updated-panel table,
+.newZoneContainer table,
+#zones-list {
+	width: 100% !important;
+	margin: 0 !important;
+	border-collapse: collapse !important;
+	font-size: 13px !important;
+	line-height: 1.4 !important;
+}
+
+.cloudns-body-panel .table > thead > tr > th,
+.cloudns-body-panel .table > tbody > tr > th,
+.cloudns-zones-panel .table > thead > tr > th,
+.cloudns-zones-panel .table > tbody > tr > th,
+.cloudns-import-panel .table > thead > tr > th,
+.cloudns-import-panel .table > tbody > tr > th,
+.cloudns-soa-panel .table > thead > tr > th,
+.cloudns-soa-panel .table > tbody > tr > th,
+.cloudns-statistics-panel .table > thead > tr > th,
+.cloudns-statistics-panel .table > tbody > tr > th,
+.cloudns-dnssec-panel .table > thead > tr > th,
+.cloudns-dnssec-panel .table > tbody > tr > th,
+.cloudns-mailforward-panel .table > thead > tr > th,
+.cloudns-mailforward-panel .table > tbody > tr > th,
+.cloudns-export-panel .table > thead > tr > th,
+.cloudns-export-panel .table > tbody > tr > th,
+.cloudns-free-ssl-panel .table > thead > tr > th,
+.cloudns-free-ssl-panel .table > tbody > tr > th,
+.cloudns-zone-transfers-panel .table > thead > tr > th,
+.cloudns-zone-transfers-panel .table > tbody > tr > th,
+.cloudns-parked-panel .table > thead > tr > th,
+.cloudns-parked-panel .table > tbody > tr > th,
+.cloudns-updated-panel .table > thead > tr > th,
+.cloudns-updated-panel .table > tbody > tr > th,
+#zones-list th {
+	padding: 9px 10px !important;
+	font-size: 13px !important;
+	font-weight: 700 !important;
+	line-height: 1.35 !important;
+	text-align: left !important;
+	vertical-align: middle !important;
+	white-space: nowrap !important;
+}
+
+.cloudns-body-panel .table > tbody > tr > td,
+.cloudns-zones-panel .table > tbody > tr > td,
+.cloudns-import-panel .table > tbody > tr > td,
+.cloudns-soa-panel .table > tbody > tr > td,
+.cloudns-statistics-panel .table > tbody > tr > td,
+.cloudns-dnssec-panel .table > tbody > tr > td,
+.cloudns-mailforward-panel .table > tbody > tr > td,
+.cloudns-export-panel .table > tbody > tr > td,
+.cloudns-free-ssl-panel .table > tbody > tr > td,
+.cloudns-zone-transfers-panel .table > tbody > tr > td,
+.cloudns-parked-panel .table > tbody > tr > td,
+.cloudns-updated-panel .table > tbody > tr > td,
+#zones-list td {
+	padding: 9px 10px !important;
+	font-size: 13px !important;
+	line-height: 1.45 !important;
+	vertical-align: middle !important;
+}
+
+.cloudns-body-panel .text-right,
+.cloudns-zones-panel .text-right,
+.cloudns-mailforward-panel .text-right,
+.cloudns-records-panel .text-right,
+#zones-list .text-right {
+	text-align: right !important;
+}
+
+.cloudns-action-col,
+.action-col,
+.cloudns-sortable .action-col,
+#zones-list .zones-options {
+	white-space: nowrap !important;
+}
+
+.cloudns-action-icon {
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: 26px !important;
+	height: 26px !important;
+	min-width: 26px !important;
+	margin: 0 1px !important;
+	border-radius: 4px !important;
+	font-size: 14px !important;
+	line-height: 1 !important;
+	text-align: center !important;
+	vertical-align: middle !important;
+}
+
+.cloudns-response,
+.cloudns-mailforward-response,
+.cloudns-free-ssl-response,
+.cloudns-zone-transfer-response,
+.cloudns-zone-transfer-notice,
+.cloudns-parked-response,
+.cloudns-export-error,
+.cloudns-updated-empty,
+.notification {
+	font-size: 13px !important;
+	line-height: 1.45 !important;
+	padding: 10px 12px !important;
+}
+
+.cloudns-record-toolbar,
+.cloudns-bulk-actions-row,
+.cloudns-mailforward-actions-row,
+.cloudns-export-actions,
+.cloudns-free-ssl-actions,
+.cloudns-zone-transfer-add,
+.newZoneButtonsContainer {
+	font-size: 13px !important;
+	line-height: 1.35 !important;
+}
+
+.cloudns-record-toolbar label,
+.cloudns-bulk-actions-row label,
+.cloudns-export-actions label,
+.cloudns-free-ssl-actions label,
+.cloudns-zone-transfer-add label,
+.newZoneButtonsContainer label {
+	margin-bottom: 0 !important;
+}
+
+@media only screen and (max-width: 650px) {
+	.cloudns-body-panel .table > thead > tr > th,
+	.cloudns-body-panel .table > tbody > tr > th,
+	.cloudns-zones-panel .table > thead > tr > th,
+	.cloudns-zones-panel .table > tbody > tr > th,
+	.cloudns-mailforward-panel .table > thead > tr > th,
+	.cloudns-mailforward-panel .table > tbody > tr > th,
+	#zones-list th,
+	.cloudns-body-panel .table > tbody > tr > td,
+	.cloudns-zones-panel .table > tbody > tr > td,
+	.cloudns-mailforward-panel .table > tbody > tr > td,
+	#zones-list td {
+		padding: 8px 8px !important;
+		font-size: 12px !important;
+	}
+
+	.cloudns-module-title {
+		font-size: 17px !important;
+	}
+}
+
+</style>
+<!-- DomainMonger Patch 64 ClouDNS global late visual override loader -->
+<script type="text/javascript">
+(function () {
+    var cssHref = '{$WEB_ROOT}/modules/servers/cloudns/templates/cloudns-v65-late-override.css?v=1309';
+    var cssId = 'dm-cloudns-v65-late-override';
+    function loadCloudnsLateOverride() {
+        if (document.getElementById(cssId)) {
+            return;
+        }
+        var link = document.createElement('link');
+        link.id = cssId;
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = cssHref;
+        (document.body || document.getElementsByTagName('body')[0] || document.head).appendChild(link);
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadCloudnsLateOverride);
+    } else {
+        loadCloudnsLateOverride();
+    }
+})();
+</script>
+
+
+
+<br />
+<div class="clear"></div><br />
+
+
+<div class="notification">The DNS zone of {$zone} is not in your account. Please contact the support to resolve the issue.</div><br />
+<div class="clear"></div>

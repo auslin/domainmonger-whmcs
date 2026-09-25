@@ -2099,26 +2099,6 @@ function multibulkupdater_add_billing_guard(int $orderId, array $addResponse): a
     ];
 }
 
-function multibulkupdater_add_cleanup_unexpected_invoice(int $invoiceId): string
-{
-    if ($invoiceId < 1) {
-        return '';
-    }
-
-    try {
-        $delete = localAPI('DeleteInvoice', ['invoiceid' => $invoiceId]);
-    } catch (Throwable $e) {
-        return ' Unexpected Invoice #' . $invoiceId . ' could not be deleted: ' . $e->getMessage();
-    }
-
-    if (is_array($delete) && strtolower((string) ($delete['result'] ?? '')) === 'success') {
-        return ' Unexpected Invoice #' . $invoiceId . ' was deleted.';
-    }
-
-    $message = is_array($delete) ? trim((string) ($delete['message'] ?? $delete['error'] ?? '')) : '';
-    return ' Unexpected Invoice #' . $invoiceId . ' could not be deleted' . ($message !== '' ? ': ' . $message : '.');
-}
-
 function multibulkupdater_add_execute(array $domains, array $preflight, int $years): array
 {
     @set_time_limit(0);
@@ -2215,8 +2195,7 @@ function multibulkupdater_add_execute(array $domains, array $preflight, int $yea
 
             if (!$hasTransaction) {
                 $rollback = multibulkupdater_add_rollback_order($orderId);
-                $invoiceCleanup = multibulkupdater_add_cleanup_unexpected_invoice($invoiceId);
-                $guardMessage .= ' ' . $rollback . $invoiceCleanup;
+                $guardMessage .= ' ' . $rollback;
             }
 
             $results[] = [

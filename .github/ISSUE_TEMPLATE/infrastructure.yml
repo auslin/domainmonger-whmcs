@@ -1,0 +1,52 @@
+name: Infrastructure
+description: Track GitHub, cPanel, deployment, staging, backup, or development-workflow work.
+title: "[Infrastructure] "
+body:
+  - type: dropdown
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - GitHub
+        - cPanel / hosting
+        - Staging
+        - Deployment automation
+        - Backup / restore
+        - Development workflow
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective
+    validations:
+      required: true
+  - type: textarea
+    id: requirements
+    attributes:
+      label: Requirements / constraints
+      description: Include source-of-truth, production-safety, credentials, path, or environment constraints.
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: Implementation plan
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation
+      description: How will we prove the infrastructure is working safely?
+    validations:
+      required: true
+  - type: textarea
+    id: rollback
+    attributes:
+      label: Rollback / recovery
+      description: Restore point, backup, or reversal procedure.

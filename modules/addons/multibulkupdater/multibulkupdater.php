@@ -23,8 +23,8 @@ function multibulkupdater_config(): array
 {
     return [
         'name' => 'Bulk Domain Manager',
-        'description' => 'Manage domain settings, renewals, WHOIS/contact information, account moves, and DNSPlus zone copies for multiple domains.',
-        'version' => '4.2',
+        'description' => 'Manage domain settings, renewals, WHOIS/contact information, account moves, existing-domain imports, and DNSPlus zone copies for multiple domains.',
+        'version' => '4.3',
         'author' => 'DomainMonger',
         'language' => 'english',
         'fields' => [
@@ -166,6 +166,10 @@ function multibulkupdater_output(array $vars): void
         multibulkupdater_move_output($vars);
         return;
     }
+    if ($page === 'add') {
+        multibulkupdater_add_output($vars);
+        return;
+    }
 
     $step = (string) ($_POST['mbu_step'] ?? 'start');
     $errors = [];
@@ -180,6 +184,12 @@ function multibulkupdater_output(array $vars): void
         $_POST['mbu_page'] = 'move';
         $_POST['mbu_step'] = 'start';
         multibulkupdater_move_output($vars);
+        return;
+    }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && (string) ($_POST['bulk_action'] ?? '') === 'add_domains') {
+        $_POST['mbu_page'] = 'add';
+        $_POST['mbu_step'] = 'start';
+        multibulkupdater_add_output($vars);
         return;
     }
 
@@ -199,7 +209,7 @@ function multibulkupdater_output(array $vars): void
     echo multibulkupdater_styles();
     echo '<div class="mbu-wrap">';
     echo '<div class="mbu-header"><div><h2>Bulk Domain Manager</h2>';
-    echo '<p>Manage nameservers, renewals, registrar locks, WHOIS privacy, EPP/Auth codes, WHOIS contacts, account moves, and DNSPlus zone copies for multiple domains.</p></div></div>';
+    echo '<p>Manage nameservers, renewals, registrar locks, WHOIS privacy, EPP/Auth codes, WHOIS contacts, account moves, existing-domain imports, and DNSPlus zone copies for multiple domains.</p></div></div>';
     echo multibulkupdater_action_switcher($moduleLink, $rawDomains, $action);
 
     if ($cleanupFailures) {
@@ -273,7 +283,7 @@ function multibulkupdater_action_switcher(string $moduleLink, string $rawDomains
         $html .= '<option value="' . multibulkupdater_escape($value) . '"' . $selected . '>' . multibulkupdater_escape($label) . '</option>';
     }
     $html .= '</select></form>';
-    $html .= '<script>(function(){var f=document.getElementById("mbu-action-switcher"),s=document.getElementById("mbu-nav-action"),h=document.getElementById("mbu-action-switcher-domains");if(!f||!s){return;}s.addEventListener("change",function(){var d=document.getElementById("mbu-domains")||document.getElementById("mbu-whois-domains")||document.getElementById("mbu-move-domains");if(h&&d){h.value=d.value;}f.submit();});}());</script>';
+    $html .= '<script>(function(){var f=document.getElementById("mbu-action-switcher"),s=document.getElementById("mbu-nav-action"),h=document.getElementById("mbu-action-switcher-domains");if(!f||!s){return;}s.addEventListener("change",function(){var d=document.getElementById("mbu-domains")||document.getElementById("mbu-whois-domains")||document.getElementById("mbu-move-domains")||document.getElementById("mbu-add-domains");if(h&&d){h.value=d.value;}f.submit();});}());</script>';
     return $html;
 }
 
@@ -1490,6 +1500,805 @@ function multibulkupdater_whois_execute(array $preflight, array $contact, array 
 }
 
 
+
+function multibulkupdater_add_output(array $vars): void
+{
+    @set_time_limit(0);
+    $moduleLink = (string) ($vars['modulelink'] ?? 'addonmodules.php?module=multibulkupdater');
+    $defaultRegPeriod = multibulkupdater_default_registration_period($vars);
+    $step = (string) ($_POST['mbu_step'] ?? 'start');
+    $errors = [];
+    $storedDomains = (string) ($_SESSION['multibulkupdater_add_domains'] ?? '');
+    $rawDomains = isset($_POST['domains']) ? (string) $_POST['domains'] : $storedDomains;
+    $domains = multibulkupdater_parse_domains($rawDomains);
+    $destination = trim((string) ($_POST['add_destination'] ?? ''));
+    $registrar = strtolower(trim((string) ($_POST['add_registrar'] ?? '')));
+    $registrars = multibulkupdater_add_registrars();
+    $presetGroups = multibulkupdater_move_preset_groups();
+    $whmcsPresets = is_array($presetGroups['whmcs'] ?? null) ? $presetGroups['whmcs'] : [];
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        check_token('WHMCS.admin.default');
+        $_SESSION['multibulkupdater_add_domains'] = $rawDomains;
+    }
+
+    echo multibulkupdater_styles();
+    echo '<div class="mbu-wrap">';
+    echo '<div class="mbu-header"><div><h2>Bulk Domain Manager</h2>';
+    echo '<p>Add existing registrar domains to a WHMCS account, assign the registrar, then run the existing Sync Domain workflow.</p></div></div>';
+    echo multibulkupdater_action_switcher($moduleLink, $rawDomains, 'add_domains');
+
+    if ($step === 'add_confirm') {
+        $years = multibulkupdater_add_registration_period($_POST, $defaultRegPeriod, $errors);
+        if (!$domains) {
+            $errors[] = 'Enter at least one domain.';
+        }
+        if ($destination === '') {
+            $errors[] = 'Enter or select a destination WHMCS account.';
+        }
+        if ($registrar === '') {
+            $errors[] = 'Select a registrar.';
+        } elseif (!array_key_exists($registrar, $registrars)) {
+            $errors[] = 'Select an active registrar.';
+        }
+
+        if ($errors) {
+            foreach ($errors as $error) {
+                echo multibulkupdater_alert('danger', multibulkupdater_escape($error));
+            }
+            echo multibulkupdater_add_start_form($moduleLink, $rawDomains, $whmcsPresets, $registrars, $_POST, $defaultRegPeriod);
+        } else {
+            $preflight = multibulkupdater_add_preflight($domains, $destination, $registrar);
+            if (empty($preflight['ok'])) {
+                echo multibulkupdater_alert('danger', multibulkupdater_escape((string) ($preflight['message'] ?? 'The domain import preflight failed.')));
+                if (!empty($preflight['rows'])) {
+                    echo multibulkupdater_add_preflight_table((array) $preflight['rows']);
+                }
+                echo multibulkupdater_add_start_form($moduleLink, $rawDomains, $whmcsPresets, $registrars, $_POST, $defaultRegPeriod);
+            } else {
+                if (!empty($preflight['message'])) {
+                    echo multibulkupdater_alert('warning', multibulkupdater_escape((string) $preflight['message']));
+                }
+                echo multibulkupdater_add_confirm_form($moduleLink, $rawDomains, $destination, $registrar, $years, $preflight);
+            }
+        }
+    } elseif ($step === 'add_execute') {
+        $years = multibulkupdater_add_registration_period($_POST, $defaultRegPeriod, $errors);
+        if (!$domains) {
+            $errors[] = 'No domains were submitted.';
+        }
+        if ($destination === '') {
+            $errors[] = 'No destination WHMCS account was submitted.';
+        }
+        if ($registrar === '') {
+            $errors[] = 'No registrar was submitted.';
+        } elseif (!array_key_exists($registrar, $registrars)) {
+            $errors[] = 'The selected registrar is not active.';
+        }
+
+        if ($errors) {
+            foreach ($errors as $error) {
+                echo multibulkupdater_alert('danger', multibulkupdater_escape($error));
+            }
+            echo multibulkupdater_add_start_form($moduleLink, $rawDomains, $whmcsPresets, $registrars, $_POST, $defaultRegPeriod);
+        } else {
+            // Re-run destination, registrar, payment-method, and duplicate checks immediately before execution.
+            $preflight = multibulkupdater_add_preflight($domains, $destination, $registrar);
+            if (empty($preflight['ok'])) {
+                echo multibulkupdater_alert('danger', multibulkupdater_escape((string) ($preflight['message'] ?? 'The domain import preflight failed.')));
+                if (!empty($preflight['rows'])) {
+                    echo multibulkupdater_add_preflight_table((array) $preflight['rows']);
+                }
+                echo multibulkupdater_add_start_form($moduleLink, $rawDomains, $whmcsPresets, $registrars, $_POST, $defaultRegPeriod);
+            } else {
+                $results = multibulkupdater_add_execute($domains, $preflight, $years);
+                echo multibulkupdater_add_results($moduleLink . '&mbu_page=add', $results);
+            }
+        }
+    } else {
+        echo multibulkupdater_add_start_form($moduleLink, $rawDomains, $whmcsPresets, $registrars, [], $defaultRegPeriod);
+    }
+
+    echo multibulkupdater_submit_script();
+    echo '</div>';
+}
+
+function multibulkupdater_add_registrars(): array
+{
+    $registrars = [];
+
+    try {
+        $rows = Capsule::table('tblregistrars')
+            ->select('registrar')
+            ->distinct()
+            ->orderBy('registrar')
+            ->get();
+
+        foreach ($rows as $row) {
+            $module = strtolower(trim((string) ($row->registrar ?? '')));
+            if ($module !== '') {
+                $registrars[$module] = multibulkupdater_add_registrar_label($module);
+            }
+        }
+    } catch (Throwable $e) {
+        // Fall through to the Local API fallback below.
+    }
+
+    if (!$registrars) {
+        try {
+            $response = localAPI('GetRegistrars', []);
+            $source = is_array($response) ? ($response['registrars'] ?? []) : [];
+            $collect = static function ($value) use (&$collect, &$registrars): void {
+                if (is_string($value)) {
+                    $module = strtolower(trim($value));
+                    if ($module !== '' && preg_match('/^[a-z][a-z0-9]*$/', $module)) {
+                        $registrars[$module] = multibulkupdater_add_registrar_label($module);
+                    }
+                    return;
+                }
+                if (!is_array($value)) {
+                    return;
+                }
+                if (!empty($value['module']) && is_string($value['module'])) {
+                    $module = strtolower(trim($value['module']));
+                    if ($module !== '') {
+                        $registrars[$module] = multibulkupdater_add_registrar_label($module);
+                    }
+                    return;
+                }
+                foreach ($value as $nested) {
+                    $collect($nested);
+                }
+            };
+            $collect($source);
+        } catch (Throwable $e) {
+            // The empty list is handled by the form/preflight.
+        }
+    }
+
+    $root = defined('ROOTDIR') ? ROOTDIR : dirname(__DIR__, 3);
+    foreach (array_keys($registrars) as $module) {
+        if (!preg_match('/^[a-z][a-z0-9]*$/', $module)
+            || !is_file($root . '/modules/registrars/' . $module . '/' . $module . '.php')
+        ) {
+            unset($registrars[$module]);
+        }
+    }
+
+    asort($registrars, SORT_NATURAL | SORT_FLAG_CASE);
+    return $registrars;
+}
+
+function multibulkupdater_add_registrar_label(string $module): string
+{
+    $labels = [
+        'netearthone' => 'NetEarthOne',
+        'netearthonercm' => 'NetEarthOne RCM',
+        'resellerclub' => 'ResellerClub',
+        'resellerclubrcm' => 'ResellerClub RCM',
+    ];
+
+    if (isset($labels[$module])) {
+        return $labels[$module];
+    }
+
+    return ucwords(str_replace(['_', '-'], ' ', $module));
+}
+
+function multibulkupdater_add_registration_period(array $source, int $defaultRegPeriod, array &$errors): int
+{
+    $raw = trim((string) ($source['add_regperiod'] ?? $defaultRegPeriod));
+    if ($raw === '' || !ctype_digit($raw)) {
+        $errors[] = 'Select a valid Registration Period.';
+        return $defaultRegPeriod;
+    }
+
+    $years = (int) $raw;
+    if ($years < 1 || $years > 10) {
+        $errors[] = 'Registration Period must be between 1 and 10 years.';
+        return $defaultRegPeriod;
+    }
+
+    return $years;
+}
+
+function multibulkupdater_add_payment_method(int $clientId): array
+{
+    $defaultGateway = '';
+    try {
+        $client = Capsule::table('tblclients')->where('id', $clientId)->first();
+        $defaultGateway = strtolower(trim((string) ($client->defaultgateway ?? '')));
+    } catch (Throwable $e) {
+        return ['ok' => false, 'module' => '', 'message' => 'WHMCS client payment-method lookup failed: ' . $e->getMessage()];
+    }
+
+    try {
+        $response = localAPI('GetPaymentMethods', []);
+    } catch (Throwable $e) {
+        return ['ok' => false, 'module' => '', 'message' => 'WHMCS payment-method lookup failed: ' . $e->getMessage()];
+    }
+
+    $items = is_array($response) ? ($response['paymentmethods']['paymentmethod'] ?? []) : [];
+    if (is_array($items) && isset($items['module'])) {
+        $items = [$items];
+    }
+
+    $modules = [];
+    foreach ((array) $items as $item) {
+        if (!is_array($item)) {
+            continue;
+        }
+        $module = strtolower(trim((string) ($item['module'] ?? '')));
+        if ($module !== '') {
+            $modules[$module] = $module;
+        }
+    }
+
+    if ($defaultGateway !== '' && isset($modules[$defaultGateway])) {
+        return ['ok' => true, 'module' => $defaultGateway, 'message' => ''];
+    }
+
+    if ($modules) {
+        $module = (string) reset($modules);
+        return ['ok' => true, 'module' => $module, 'message' => ''];
+    }
+
+    return ['ok' => false, 'module' => '', 'message' => 'No active WHMCS payment method is available for the internal no-invoice domain order.'];
+}
+
+function multibulkupdater_add_preflight(array $domains, string $destination, string $registrar): array
+{
+    $target = multibulkupdater_move_whmcs_client($destination);
+    if (empty($target['ok'])) {
+        return ['ok' => false, 'destination' => [], 'registrar' => $registrar, 'paymentmethod' => '', 'rows' => [], 'message' => (string) ($target['message'] ?? 'Destination WHMCS account was not found.')];
+    }
+
+    if (strcasecmp((string) ($target['status'] ?? ''), 'Closed') === 0) {
+        return ['ok' => false, 'destination' => $target, 'registrar' => $registrar, 'paymentmethod' => '', 'rows' => [], 'message' => 'The destination WHMCS account is Closed and cannot receive a new domain order.'];
+    }
+
+    $registrars = multibulkupdater_add_registrars();
+    if (!isset($registrars[$registrar])) {
+        return ['ok' => false, 'destination' => $target, 'registrar' => $registrar, 'paymentmethod' => '', 'rows' => [], 'message' => 'The selected registrar is not active in WHMCS.'];
+    }
+
+    $payment = multibulkupdater_add_payment_method((int) $target['id']);
+    if (empty($payment['ok'])) {
+        return ['ok' => false, 'destination' => $target, 'registrar' => $registrar, 'paymentmethod' => '', 'rows' => [], 'message' => (string) ($payment['message'] ?? 'WHMCS payment-method lookup failed.')];
+    }
+
+    $rows = [];
+    $readyCount = 0;
+    $existingCount = 0;
+
+    foreach ($domains as $domainName) {
+        $domainName = strtolower(rtrim(trim((string) $domainName), '.'));
+        if ($domainName === '' || !multibulkupdater_valid_hostname($domainName)) {
+            $rows[] = [
+                'domain' => $domainName,
+                'ok' => false,
+                'existing' => false,
+                'destination_label' => (string) $target['label'],
+                'registrar_label' => (string) $registrars[$registrar],
+                'message' => 'Invalid domain name.',
+            ];
+            continue;
+        }
+
+        try {
+            $existing = Capsule::table('tbldomains')->where('domain', $domainName)->first();
+        } catch (Throwable $e) {
+            $rows[] = [
+                'domain' => $domainName,
+                'ok' => false,
+                'existing' => false,
+                'destination_label' => (string) $target['label'],
+                'registrar_label' => (string) $registrars[$registrar],
+                'message' => 'WHMCS database lookup failed: ' . $e->getMessage(),
+            ];
+            continue;
+        }
+
+        if ($existing) {
+            $ownerId = (int) ($existing->userid ?? 0);
+            $ownerLabel = $ownerId > 0 ? multibulkupdater_move_whmcs_client_label($ownerId) : 'Unknown account';
+            $rows[] = [
+                'domain' => $domainName,
+                'ok' => false,
+                'existing' => true,
+                'destination_label' => (string) $target['label'],
+                'registrar_label' => (string) $registrars[$registrar],
+                'message' => 'Already exists in WHMCS as Domain #' . (int) ($existing->id ?? 0) . ' under ' . $ownerLabel . '. It will be skipped.',
+            ];
+            $existingCount++;
+            continue;
+        }
+
+        $rows[] = [
+            'domain' => $domainName,
+            'ok' => true,
+            'existing' => false,
+            'destination_label' => (string) $target['label'],
+            'registrar_label' => (string) $registrars[$registrar],
+            'message' => 'Ready to add and sync.',
+        ];
+        $readyCount++;
+    }
+
+    if ($readyCount < 1) {
+        return [
+            'ok' => false,
+            'destination' => $target,
+            'registrar' => $registrar,
+            'registrar_label' => (string) $registrars[$registrar],
+            'paymentmethod' => (string) $payment['module'],
+            'rows' => $rows,
+            'message' => 'No submitted domains are eligible to be added.',
+        ];
+    }
+
+    $message = $existingCount > 0
+        ? $existingCount . ' domain' . ($existingCount === 1 ? '' : 's') . ' already exist in WHMCS and will be skipped.'
+        : '';
+
+    return [
+        'ok' => true,
+        'destination' => $target,
+        'registrar' => $registrar,
+        'registrar_label' => (string) $registrars[$registrar],
+        'paymentmethod' => (string) $payment['module'],
+        'rows' => $rows,
+        'ready_count' => $readyCount,
+        'existing_count' => $existingCount,
+        'message' => $message,
+    ];
+}
+
+function multibulkupdater_add_start_form(string $moduleLink, string $rawDomains, array $presets, array $registrars, array $source, int $defaultRegPeriod = 1): string
+{
+    $destination = trim((string) ($source['add_destination'] ?? ''));
+    $selectedRegistrar = strtolower(trim((string) ($source['add_registrar'] ?? '')));
+    $periodRaw = trim((string) ($source['add_regperiod'] ?? $defaultRegPeriod));
+    $years = ctype_digit($periodRaw) ? max(1, min(10, (int) $periodRaw)) : $defaultRegPeriod;
+
+    $html = '<form method="post" action="' . multibulkupdater_escape($moduleLink) . '" class="mbu-card" id="mbu-add-form">';
+    $html .= '<input type="hidden" name="token" value="' . multibulkupdater_escape(generate_token('plain')) . '">';
+    $html .= '<input type="hidden" name="mbu_page" value="add">';
+    $html .= '<input type="hidden" name="mbu_step" id="mbu-add-step" value="start">';
+    $html .= '<div class="mbu-card-title">Add Existing Domains</div><div class="mbu-card-body">';
+    $html .= '<label for="mbu-add-domains">Domains</label>';
+    $html .= '<textarea id="mbu-add-domains" name="domains" rows="10" placeholder="example.com&#10;example.net">' . multibulkupdater_escape($rawDomains) . '</textarea>';
+    $html .= '<div class="mbu-help">Enter domains that already exist at the selected registrar but are not yet in WHMCS. Existing WHMCS domains are detected and skipped.</div>';
+
+    $html .= '<div class="mbu-fields"><h4>WHMCS Destination</h4>';
+    $html .= '<div class="mbu-move-presets"><span class="mbu-preset-label">Apply preset:</span>';
+    if ($presets) {
+        foreach ($presets as $key => $preset) {
+            $presetDestination = (string) ($preset['destination'] ?? '');
+            $name = (string) ($preset['name'] ?? $key);
+            $html .= '<button type="button" class="btn mbu-add-preset" data-destination="' . multibulkupdater_escape($presetDestination) . '">' . multibulkupdater_escape($name) . '</button>';
+        }
+    } else {
+        $html .= '<span class="mbu-help-inline">No saved WHMCS account presets yet. WHMCS presets from Move Domains will appear here.</span>';
+    }
+    $html .= '</div>';
+    $html .= '<div class="mbu-grid mbu-move-grid"><div><label for="mbu-add-destination">Destination Account <span class="mbu-required" aria-label="required">*</span></label>';
+    $html .= '<input id="mbu-add-destination" type="text" name="add_destination" value="' . multibulkupdater_escape($destination) . '" autocomplete="off" placeholder="Client ID or account email"></div>';
+    $html .= '<div><label for="mbu-add-registrar">Registrar <span class="mbu-required" aria-label="required">*</span></label><select id="mbu-add-registrar" name="add_registrar">';
+    $html .= '<option value="">Select registrar…</option>';
+    foreach ($registrars as $module => $label) {
+        $html .= '<option value="' . multibulkupdater_escape((string) $module) . '"' . ($selectedRegistrar === (string) $module ? ' selected' : '') . '>' . multibulkupdater_escape((string) $label) . '</option>';
+    }
+    $html .= '</select></div></div>';
+    $html .= '<div class="mbu-help">Enter the destination Client ID or account email. The account is resolved and shown for review before anything is added.</div>';
+    if (!$registrars) {
+        $html .= multibulkupdater_alert('danger', 'No active WHMCS registrar modules were found.');
+    }
+    $html .= '</div>';
+
+    $html .= '<div class="mbu-fields"><h4>WHMCS Domain Settings</h4>';
+    $html .= '<div class="mbu-grid"><div><label for="mbu-add-regperiod">Registration Period</label><select id="mbu-add-regperiod" name="add_regperiod">';
+    for ($year = 1; $year <= 10; $year++) {
+        $html .= '<option value="' . $year . '"' . ($years === $year ? ' selected' : '') . '>' . $year . ' Year' . ($year === 1 ? '' : 's') . '</option>';
+    }
+    $html .= '</select></div></div>';
+    $html .= '<div class="mbu-help">BDM creates a WHMCS-native internal domain order with no invoice and no client email, accepts it without sending a registrar registration request, assigns the selected registrar, then runs Sync Domain.</div>';
+    $html .= '</div>';
+
+    $html .= '<div class="mbu-actions"><button type="submit" data-mbu-step="add_confirm" class="btn btn-primary mbu-submit-button" data-processing-text="Checking Domains…"><span class="mbu-button-spinner" aria-hidden="true"></span><span class="mbu-button-label">Review Domain Import</span></button></div>';
+    $html .= '</div></form>';
+    $html .= multibulkupdater_add_script();
+    return $html;
+}
+
+function multibulkupdater_add_script(): string
+{
+    return <<<'HTML'
+<script>
+(function () {
+    'use strict';
+    const form = document.getElementById('mbu-add-form');
+    const destination = document.getElementById('mbu-add-destination');
+    const step = document.getElementById('mbu-add-step');
+    if (!form || !destination || !step) {
+        return;
+    }
+    const presets = form.querySelectorAll('.mbu-add-preset');
+    function clearPreset() {
+        presets.forEach(function (button) { button.classList.remove('mbu-preset-active'); });
+    }
+    presets.forEach(function (button) {
+        button.addEventListener('click', function () {
+            destination.value = button.dataset.destination || '';
+            clearPreset();
+            button.classList.add('mbu-preset-active');
+        });
+    });
+    destination.addEventListener('input', clearPreset);
+    form.addEventListener('submit', function (event) {
+        const submitter = event.submitter;
+        if (submitter && submitter.dataset && submitter.dataset.mbuStep) {
+            step.value = submitter.dataset.mbuStep;
+        }
+    });
+}());
+</script>
+HTML;
+}
+
+function multibulkupdater_add_preflight_table(array $rows): string
+{
+    $html = '<div class="mbu-card mbu-preflight-card"><div class="mbu-card-title">Domain Import Preflight</div><div class="mbu-card-body"><div class="table-responsive"><table class="datatable table table-striped"><thead><tr>';
+    $html .= '<th>Domain</th><th>Destination Account</th><th>Registrar</th><th>Details</th><th>Status</th></tr></thead><tbody>';
+    foreach ($rows as $row) {
+        $ready = !empty($row['ok']);
+        $existing = !empty($row['existing']);
+        $status = $ready
+            ? '<span class="mbu-status-success">Ready</span>'
+            : ($existing ? '<span class="mbu-status-neutral">Already Exists</span>' : '<span class="mbu-status-failed">Blocked</span>');
+        $html .= '<tr><td>' . multibulkupdater_escape((string) ($row['domain'] ?? '')) . '</td>';
+        $html .= '<td>' . multibulkupdater_escape((string) ($row['destination_label'] ?? '—')) . '</td>';
+        $html .= '<td>' . multibulkupdater_escape((string) ($row['registrar_label'] ?? '—')) . '</td>';
+        $html .= '<td>' . multibulkupdater_escape((string) ($row['message'] ?? '')) . '</td>';
+        $html .= '<td>' . $status . '</td></tr>';
+    }
+    $html .= '</tbody></table></div></div></div>';
+    return $html;
+}
+
+function multibulkupdater_add_confirm_form(string $moduleLink, string $rawDomains, string $destination, string $registrar, int $years, array $preflight): string
+{
+    $target = (array) ($preflight['destination'] ?? []);
+    $html = '<form method="post" action="' . multibulkupdater_escape($moduleLink) . '" class="mbu-card">';
+    $html .= '<input type="hidden" name="token" value="' . multibulkupdater_escape(generate_token('plain')) . '">';
+    $html .= '<input type="hidden" name="mbu_page" value="add"><input type="hidden" name="mbu_step" value="add_execute">';
+    $html .= '<input type="hidden" name="add_destination" value="' . multibulkupdater_escape($destination) . '">';
+    $html .= '<input type="hidden" name="add_registrar" value="' . multibulkupdater_escape($registrar) . '">';
+    $html .= '<input type="hidden" name="add_regperiod" value="' . (int) $years . '">';
+    $html .= '<textarea name="domains" class="mbu-hidden">' . multibulkupdater_escape($rawDomains) . '</textarea>';
+    $html .= '<div class="mbu-card-title">Confirm Domain Import</div><div class="mbu-card-body">';
+    $html .= multibulkupdater_alert('warning', 'This imports existing domains into WHMCS. It will not send a registration or transfer request to the registrar. WHMCS creates and accepts an internal no-invoice/no-email domain order, assigns the selected registrar, then BDM runs Sync Domain.');
+    $html .= '<div class="mbu-summary"><strong>Destination:</strong> ' . multibulkupdater_escape((string) ($target['label'] ?? $destination));
+    $html .= '<br><strong>Registrar:</strong> ' . multibulkupdater_escape((string) ($preflight['registrar_label'] ?? $registrar));
+    $html .= '<br><strong>Registration Period:</strong> ' . (int) $years . ' Year' . ($years === 1 ? '' : 's');
+    $html .= '<br><strong>Eligible to Add:</strong> ' . (int) ($preflight['ready_count'] ?? 0);
+    if (!empty($preflight['existing_count'])) {
+        $html .= ' &nbsp; <strong>Already in WHMCS:</strong> ' . (int) $preflight['existing_count'] . ' (skipped)';
+    }
+    $html .= '</div>';
+    $html .= multibulkupdater_add_preflight_table((array) ($preflight['rows'] ?? []));
+    $html .= '<div class="mbu-actions"><a class="btn btn-default" href="' . multibulkupdater_escape($moduleLink . '&mbu_page=add') . '">Cancel</a>';
+    $html .= '<button type="submit" class="btn btn-primary mbu-submit-button" data-processing-text="Adding Domains…"><span class="mbu-button-spinner" aria-hidden="true"></span><span class="mbu-button-label">Add &amp; Sync Domains</span></button></div>';
+    $html .= '</div></form>';
+    return $html;
+}
+
+function multibulkupdater_add_domain_id(array $response, string $domainName, int $clientId): int
+{
+    $raw = trim((string) ($response['domainids'] ?? ''));
+    if ($raw !== '') {
+        foreach (preg_split('/[^0-9]+/', $raw) ?: [] as $part) {
+            if ($part !== '' && ctype_digit($part) && (int) $part > 0) {
+                return (int) $part;
+            }
+        }
+    }
+
+    try {
+        $domain = Capsule::table('tbldomains')
+            ->where('userid', $clientId)
+            ->where('domain', $domainName)
+            ->orderByDesc('id')
+            ->first();
+        return $domain ? (int) ($domain->id ?? 0) : 0;
+    } catch (Throwable $e) {
+        return 0;
+    }
+}
+
+function multibulkupdater_add_rollback_order(int $orderId): string
+{
+    if ($orderId < 1) {
+        return 'No WHMCS order was available to roll back.';
+    }
+
+    try {
+        $cancel = localAPI('CancelOrder', ['orderid' => $orderId, 'noemail' => true]);
+    } catch (Throwable $e) {
+        return 'Order #' . $orderId . ' could not be cancelled for rollback: ' . $e->getMessage();
+    }
+
+    if (!is_array($cancel) || strtolower((string) ($cancel['result'] ?? '')) !== 'success') {
+        $message = is_array($cancel) ? trim((string) ($cancel['message'] ?? $cancel['error'] ?? '')) : '';
+        return 'Order #' . $orderId . ' could not be cancelled for rollback' . ($message !== '' ? ': ' . $message : '.');
+    }
+
+    try {
+        $delete = localAPI('DeleteOrder', ['orderid' => $orderId]);
+    } catch (Throwable $e) {
+        return 'Order #' . $orderId . ' was cancelled but could not be deleted: ' . $e->getMessage();
+    }
+
+    if (is_array($delete) && strtolower((string) ($delete['result'] ?? '')) === 'success') {
+        return 'The incomplete WHMCS order was rolled back.';
+    }
+
+    $message = is_array($delete) ? trim((string) ($delete['message'] ?? $delete['error'] ?? '')) : '';
+    return 'Order #' . $orderId . ' was cancelled but could not be deleted' . ($message !== '' ? ': ' . $message : '.');
+}
+
+function multibulkupdater_add_execute(array $domains, array $preflight, int $years): array
+{
+    @set_time_limit(0);
+    $results = [];
+    $destination = (array) ($preflight['destination'] ?? []);
+    $clientId = (int) ($destination['id'] ?? 0);
+    $registrar = strtolower(trim((string) ($preflight['registrar'] ?? '')));
+    $paymentMethod = trim((string) ($preflight['paymentmethod'] ?? ''));
+    $years = max(1, min(10, $years));
+
+    foreach ($domains as $domainName) {
+        $domainName = strtolower(rtrim(trim((string) $domainName), '.'));
+
+        try {
+            $existing = Capsule::table('tbldomains')->where('domain', $domainName)->first();
+        } catch (Throwable $e) {
+            $results[] = [
+                'domain' => $domainName,
+                'success' => false,
+                'skipped' => false,
+                'message' => 'WHMCS database lookup failed: ' . $e->getMessage(),
+                'domain_id' => 0,
+                'client_id' => $clientId,
+                'registrar' => $registrar,
+            ];
+            continue;
+        }
+
+        if ($existing) {
+            $results[] = [
+                'domain' => $domainName,
+                'success' => false,
+                'skipped' => true,
+                'message' => 'Already exists in WHMCS as Domain #' . (int) ($existing->id ?? 0) . '; no duplicate was created.',
+                'domain_id' => (int) ($existing->id ?? 0),
+                'client_id' => (int) ($existing->userid ?? 0),
+                'registrar' => (string) ($existing->registrar ?? ''),
+            ];
+            continue;
+        }
+
+        try {
+            $add = localAPI('AddOrder', [
+                'clientid' => $clientId,
+                'paymentmethod' => $paymentMethod,
+                'domain' => [$domainName],
+                'domaintype' => ['register'],
+                'regperiod' => [$years],
+                'noinvoice' => true,
+                'noinvoiceemail' => true,
+                'noemail' => true,
+            ]);
+        } catch (Throwable $e) {
+            $add = ['result' => 'error', 'message' => $e->getMessage()];
+        }
+
+        if (!is_array($add) || strtolower((string) ($add['result'] ?? '')) !== 'success') {
+            $message = is_array($add)
+                ? trim((string) ($add['message'] ?? $add['error'] ?? 'WHMCS could not create the domain order.'))
+                : 'WHMCS returned an invalid AddOrder response.';
+            $results[] = [
+                'domain' => $domainName,
+                'success' => false,
+                'skipped' => false,
+                'message' => $message !== '' ? $message : 'WHMCS could not create the domain order.',
+                'domain_id' => 0,
+                'client_id' => $clientId,
+                'registrar' => $registrar,
+            ];
+            continue;
+        }
+
+        $orderId = (int) ($add['orderid'] ?? 0);
+        $domainId = multibulkupdater_add_domain_id($add, $domainName, $clientId);
+        if ($orderId < 1 || $domainId < 1) {
+            $rollback = $orderId > 0 ? multibulkupdater_add_rollback_order($orderId) : 'No order ID was returned for rollback.';
+            $results[] = [
+                'domain' => $domainName,
+                'success' => false,
+                'skipped' => false,
+                'message' => 'WHMCS created an incomplete domain order but did not return a usable Domain ID. ' . $rollback,
+                'domain_id' => $domainId,
+                'client_id' => $clientId,
+                'registrar' => $registrar,
+            ];
+            continue;
+        }
+
+        try {
+            $accept = localAPI('AcceptOrder', [
+                'orderid' => $orderId,
+                'registrar' => $registrar,
+                'sendregistrar' => false,
+                'autosetup' => false,
+                'sendemail' => false,
+            ]);
+        } catch (Throwable $e) {
+            $accept = ['result' => 'error', 'message' => $e->getMessage()];
+        }
+
+        if (!is_array($accept) || strtolower((string) ($accept['result'] ?? '')) !== 'success') {
+            $acceptMessage = is_array($accept)
+                ? trim((string) ($accept['message'] ?? $accept['error'] ?? 'WHMCS could not accept the internal domain order.'))
+                : 'WHMCS returned an invalid AcceptOrder response.';
+            $rollback = multibulkupdater_add_rollback_order($orderId);
+            $results[] = [
+                'domain' => $domainName,
+                'success' => false,
+                'skipped' => false,
+                'message' => ($acceptMessage !== '' ? $acceptMessage : 'WHMCS could not accept the internal domain order.') . ' ' . $rollback,
+                'domain_id' => 0,
+                'client_id' => $clientId,
+                'registrar' => $registrar,
+            ];
+            continue;
+        }
+
+        $updateWarning = '';
+        try {
+            $update = localAPI('UpdateClientDomain', [
+                'domainid' => $domainId,
+                'registrar' => $registrar,
+                'regperiod' => $years,
+                'status' => 'Active',
+            ]);
+        } catch (Throwable $e) {
+            $update = ['result' => 'error', 'message' => $e->getMessage()];
+        }
+
+        if (!is_array($update) || strtolower((string) ($update['result'] ?? '')) !== 'success') {
+            $updateWarning = is_array($update)
+                ? trim((string) ($update['message'] ?? $update['error'] ?? 'WHMCS post-import domain update returned an error.'))
+                : 'WHMCS returned an invalid post-import domain update response.';
+        }
+
+        try {
+            $domain = Capsule::table('tbldomains')->where('id', $domainId)->first();
+        } catch (Throwable $e) {
+            $domain = null;
+            $updateWarning = trim($updateWarning . ' Final WHMCS domain verification failed: ' . $e->getMessage());
+        }
+
+        $verified = $domain
+            && (int) ($domain->userid ?? 0) === $clientId
+            && strcasecmp((string) ($domain->registrar ?? ''), $registrar) === 0;
+
+        if (!$verified) {
+            $results[] = [
+                'domain' => $domainName,
+                'success' => false,
+                'skipped' => false,
+                'message' => 'The WHMCS domain record was created, but its destination account or registrar could not be verified. Order #' . $orderId . ' / Domain #' . $domainId . ' requires review.' . ($updateWarning !== '' ? ' ' . $updateWarning : ''),
+                'domain_id' => $domainId,
+                'client_id' => $clientId,
+                'registrar' => $registrar,
+                'order_id' => $orderId,
+            ];
+            continue;
+        }
+
+        $message = 'Added as Domain #' . $domainId . ' via internal Order #' . $orderId . '. Registrar registration was not sent. Sync queued.';
+        if ($updateWarning !== '') {
+            $message .= ' Post-import note: ' . $updateWarning;
+        }
+
+        $results[] = [
+            'domain' => $domainName,
+            'success' => true,
+            'skipped' => false,
+            'message' => $message,
+            'domain_id' => $domainId,
+            'client_id' => $clientId,
+            'registrar' => $registrar,
+            'order_id' => $orderId,
+        ];
+    }
+
+    $successCount = count(array_filter($results, static fn(array $row): bool => !empty($row['success'])));
+    $skippedCount = count(array_filter($results, static fn(array $row): bool => !empty($row['skipped'])));
+    $failureCount = count($results) - $successCount - $skippedCount;
+    if (function_exists('logActivity')) {
+        logActivity(
+            'Bulk Domain Manager: Add Existing Domains completed for ' . count($results) . ' domain(s): '
+            . $successCount . ' added, ' . $skippedCount . ' skipped, ' . $failureCount . ' failed. '
+            . 'Destination client #' . $clientId . ', registrar ' . $registrar . '. Successful additions queued for Sync Domain.'
+        );
+    }
+
+    return $results;
+}
+
+function multibulkupdater_add_results(string $moduleLink, array $results): string
+{
+    $addedCount = count(array_filter($results, static fn(array $row): bool => !empty($row['success'])));
+    $skippedCount = count(array_filter($results, static fn(array $row): bool => !empty($row['skipped'])));
+    $failureCount = count($results) - $addedCount - $skippedCount;
+    $syncItems = [];
+
+    $html = '<div class="mbu-card"><div class="mbu-card-title">Add Existing Domains Results</div><div class="mbu-card-body">';
+    $html .= '<div class="mbu-result-summary"><span class="mbu-success">' . $addedCount . ' added</span>';
+    $html .= '<span>' . $skippedCount . ' skipped</span>';
+    $html .= '<span class="mbu-failure">' . $failureCount . ' failed</span>';
+    if ($addedCount > 0) {
+        $html .= '<span id="mbu-renew-sync-summary" class="mbu-status-neutral">Sync pending</span>';
+    }
+    $html .= '</div>';
+    $html .= '<div class="table-responsive"><table class="datatable table table-striped"><thead><tr>';
+    $html .= '<th>Domain</th><th>Added</th><th>Registrar</th><th>Sync</th><th>Details</th></tr></thead><tbody>';
+
+    foreach ($results as $row) {
+        $success = !empty($row['success']);
+        $skipped = !empty($row['skipped']);
+        $domainId = (int) ($row['domain_id'] ?? 0);
+        $clientId = (int) ($row['client_id'] ?? 0);
+        $syncId = 'mbu-renew-sync-' . $domainId;
+        $detailId = 'mbu-renew-detail-' . $domainId;
+
+        if ($success && $domainId > 0 && $clientId > 0) {
+            $syncItems[] = ['id' => $domainId, 'clientId' => $clientId];
+        }
+
+        $html .= '<tr><td>' . multibulkupdater_escape((string) ($row['domain'] ?? '')) . '</td>';
+        if ($success) {
+            $html .= '<td><span class="mbu-status-success">Complete</span></td>';
+        } elseif ($skipped) {
+            $html .= '<td><span class="mbu-status-neutral">Skipped</span></td>';
+        } else {
+            $html .= '<td><span class="mbu-status-failed">Failed</span></td>';
+        }
+        $html .= '<td>' . multibulkupdater_escape(multibulkupdater_add_registrar_label((string) ($row['registrar'] ?? ''))) . '</td>';
+        if ($success && $domainId > 0 && $clientId > 0) {
+            $html .= '<td><span id="' . multibulkupdater_escape($syncId) . '" class="mbu-status-neutral">Pending</span></td>';
+        } else {
+            $html .= '<td><span class="mbu-status-neutral">Not Run</span></td>';
+        }
+        $html .= '<td id="' . multibulkupdater_escape($detailId) . '">' . multibulkupdater_escape((string) ($row['message'] ?? '')) . '</td></tr>';
+    }
+
+    $html .= '</tbody></table></div>';
+    $html .= '<div class="mbu-actions"><a class="btn btn-primary" href="' . multibulkupdater_escape($moduleLink) . '">Add More Domains</a></div>';
+    $html .= '</div></div>';
+
+    if ($syncItems) {
+        $json = json_encode($syncItems, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        if ($json !== false) {
+            $html .= multibulkupdater_renew_sync_script($json);
+        }
+    }
+
+    return $html;
+}
+
 function multibulkupdater_move_output(array $vars): void
 {
     @set_time_limit(0);
@@ -2442,6 +3251,7 @@ function multibulkupdater_actions(): array
         'update_epp' => 'Update EPP/Auth Code',
         'update_whois' => 'Update WHOIS',
         'move_domains' => 'Move Domains',
+        'add_domains' => 'Add Existing Domains',
         'copy_dnsplus_zone' => 'Copy DNSPlus Zone',
     ];
 }

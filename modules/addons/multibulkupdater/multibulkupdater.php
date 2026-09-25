@@ -1844,7 +1844,7 @@ function multibulkupdater_add_preflight(array $domains, string $destination, str
     }
 
     $message = $existingCount > 0
-        ? $existingCount . ' domain' . ($existingCount === 1 ? '' : 's') . ' already exist in WHMCS and will be skipped.'
+        ? $existingCount . ' domain' . ($existingCount === 1 ? '' : 's') . ' already ' . ($existingCount === 1 ? 'exists' : 'exist') . ' in WHMCS and will be skipped.'
         : '';
 
     return [

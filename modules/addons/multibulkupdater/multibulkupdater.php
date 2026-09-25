@@ -1902,7 +1902,7 @@ function multibulkupdater_add_start_form(string $moduleLink, string $rawDomains,
         $html .= '<option value="' . $year . '"' . ($years === $year ? ' selected' : '') . '>' . $year . ' Year' . ($year === 1 ? '' : 's') . '</option>';
     }
     $html .= '</select></div></div>';
-    $html .= '<div class="mbu-help">BDM creates a WHMCS-native internal domain order with no invoice and no client email, accepts it without sending a registrar registration request, assigns the selected registrar, then runs Sync Domain.</div>';
+    $html .= '<div class="mbu-help">BDM creates a WHMCS-native internal domain order with no invoice, no payment/charge attempt, and no client email. It accepts the order without sending a registrar registration/transfer request or auto-setup, assigns the selected registrar, then runs Sync Domain.</div>';
     $html .= '</div>';
 
     $html .= '<div class="mbu-actions"><button type="submit" data-mbu-step="add_confirm" class="btn btn-primary mbu-submit-button" data-processing-text="Checking Domains…"><span class="mbu-button-spinner" aria-hidden="true"></span><span class="mbu-button-label">Review Domain Import</span></button></div>';
@@ -1977,7 +1977,7 @@ function multibulkupdater_add_confirm_form(string $moduleLink, string $rawDomain
     $html .= '<input type="hidden" name="add_regperiod" value="' . (int) $years . '">';
     $html .= '<textarea name="domains" class="mbu-hidden">' . multibulkupdater_escape($rawDomains) . '</textarea>';
     $html .= '<div class="mbu-card-title">Confirm Domain Import</div><div class="mbu-card-body">';
-    $html .= multibulkupdater_alert('warning', 'This imports existing domains into WHMCS. It will not send a registration or transfer request to the registrar. WHMCS creates and accepts an internal no-invoice/no-email domain order, assigns the selected registrar, then BDM runs Sync Domain.');
+    $html .= multibulkupdater_alert('warning', 'This imports existing domains into WHMCS with no invoice, no payment/charge attempt, no client email, no registrar registration/transfer request, and no auto-setup. WHMCS creates and accepts an internal domain order only so the domain record is created natively, then BDM runs Sync Domain.');
     $html .= '<div class="mbu-summary"><strong>Destination:</strong> ' . multibulkupdater_escape((string) ($target['label'] ?? $destination));
     $html .= '<br><strong>Registrar:</strong> ' . multibulkupdater_escape((string) ($preflight['registrar_label'] ?? $registrar));
     $html .= '<br><strong>Registration Period:</strong> ' . (int) $years . ' Year' . ($years === 1 ? '' : 's');
@@ -2045,6 +2045,78 @@ function multibulkupdater_add_rollback_order(int $orderId): string
 
     $message = is_array($delete) ? trim((string) ($delete['message'] ?? $delete['error'] ?? '')) : '';
     return 'Order #' . $orderId . ' was cancelled but could not be deleted' . ($message !== '' ? ': ' . $message : '.');
+}
+
+
+function multibulkupdater_add_billing_guard(int $orderId, array $addResponse): array
+{
+    $invoiceId = (int) ($addResponse['invoiceid'] ?? 0);
+
+    try {
+        $order = Capsule::table('tblorders')->where('id', $orderId)->first();
+        if ($order && (int) ($order->invoiceid ?? 0) > 0) {
+            $invoiceId = (int) $order->invoiceid;
+        }
+    } catch (Throwable $e) {
+        return [
+            'ok' => false,
+            'invoice_id' => $invoiceId,
+            'has_transaction' => false,
+            'message' => 'The no-billing safety check could not verify the order: ' . $e->getMessage(),
+        ];
+    }
+
+    if ($invoiceId < 1) {
+        return ['ok' => true, 'invoice_id' => 0, 'has_transaction' => false, 'message' => ''];
+    }
+
+    $hasTransaction = false;
+    try {
+        $hasTransaction = Capsule::table('tblaccounts')->where('invoiceid', $invoiceId)->exists();
+    } catch (Throwable $e) {
+        return [
+            'ok' => false,
+            'invoice_id' => $invoiceId,
+            'has_transaction' => false,
+            'message' => 'WHMCS unexpectedly created Invoice #' . $invoiceId . ', and BDM could not verify whether any payment transaction exists: ' . $e->getMessage(),
+        ];
+    }
+
+    if ($hasTransaction) {
+        return [
+            'ok' => false,
+            'invoice_id' => $invoiceId,
+            'has_transaction' => true,
+            'message' => 'WHMCS unexpectedly created Invoice #' . $invoiceId . ' and a payment transaction is attached. BDM stopped before accepting the order. Manual review is required; no automatic deletion/refund was attempted.',
+        ];
+    }
+
+    return [
+        'ok' => false,
+        'invoice_id' => $invoiceId,
+        'has_transaction' => false,
+        'message' => 'WHMCS unexpectedly created Invoice #' . $invoiceId . ' even though noinvoice=true was requested. BDM stopped before accepting the order.',
+    ];
+}
+
+function multibulkupdater_add_cleanup_unexpected_invoice(int $invoiceId): string
+{
+    if ($invoiceId < 1) {
+        return '';
+    }
+
+    try {
+        $delete = localAPI('DeleteInvoice', ['invoiceid' => $invoiceId]);
+    } catch (Throwable $e) {
+        return ' Unexpected Invoice #' . $invoiceId . ' could not be deleted: ' . $e->getMessage();
+    }
+
+    if (is_array($delete) && strtolower((string) ($delete['result'] ?? '')) === 'success') {
+        return ' Unexpected Invoice #' . $invoiceId . ' was deleted.';
+    }
+
+    $message = is_array($delete) ? trim((string) ($delete['message'] ?? $delete['error'] ?? '')) : '';
+    return ' Unexpected Invoice #' . $invoiceId . ' could not be deleted' . ($message !== '' ? ': ' . $message : '.');
 }
 
 function multibulkupdater_add_execute(array $domains, array $preflight, int $years): array
@@ -2135,6 +2207,32 @@ function multibulkupdater_add_execute(array $domains, array $preflight, int $yea
             continue;
         }
 
+        $billingGuard = multibulkupdater_add_billing_guard($orderId, $add);
+        if (empty($billingGuard['ok'])) {
+            $guardMessage = (string) ($billingGuard['message'] ?? 'The no-billing safety check failed.');
+            $invoiceId = (int) ($billingGuard['invoice_id'] ?? 0);
+            $hasTransaction = !empty($billingGuard['has_transaction']);
+
+            if (!$hasTransaction) {
+                $rollback = multibulkupdater_add_rollback_order($orderId);
+                $invoiceCleanup = multibulkupdater_add_cleanup_unexpected_invoice($invoiceId);
+                $guardMessage .= ' ' . $rollback . $invoiceCleanup;
+            }
+
+            $results[] = [
+                'domain' => $domainName,
+                'success' => false,
+                'skipped' => false,
+                'message' => trim($guardMessage),
+                'domain_id' => $hasTransaction ? $domainId : 0,
+                'client_id' => $clientId,
+                'registrar' => $registrar,
+                'order_id' => $orderId,
+                'invoice_id' => $invoiceId,
+            ];
+            continue;
+        }
+
         try {
             $accept = localAPI('AcceptOrder', [
                 'orderid' => $orderId,
@@ -2207,7 +2305,7 @@ function multibulkupdater_add_execute(array $domains, array $preflight, int $yea
             continue;
         }
 
-        $message = 'Added as Domain #' . $domainId . ' via internal Order #' . $orderId . '. Registrar registration was not sent. Sync queued.';
+        $message = 'Added as Domain #' . $domainId . ' via internal Order #' . $orderId . '. No invoice or payment charge was created; registrar registration was not sent. Sync queued.';
         if ($updateWarning !== '') {
             $message .= ' Post-import note: ' . $updateWarning;
         }

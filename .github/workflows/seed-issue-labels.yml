@@ -3,9 +3,10 @@ name: Seed Issue Labels
 on:
   push:
     branches:
-      - chore/github-issues-setup
+      - main
     paths:
       - .github/workflows/seed-issue-labels.yml
+  workflow_dispatch:
 
 permissions:
   contents: read

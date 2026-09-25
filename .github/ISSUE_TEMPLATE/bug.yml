@@ -1,0 +1,64 @@
+name: Bug
+description: Report a reproducible DomainMonger WHMCS problem or regression.
+title: "[Bug] "
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Bulk Domain Manager (BDM)
+        - RegistrarDNS
+        - DNSPlus / DNSLite
+        - Expiring Domains Tracker
+        - WHMCS Admin
+        - WHMCS Client Area
+        - Orders / Billing / Payments
+        - WordPress / WHMCS Integration
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: page
+    attributes:
+      label: Page / route
+      description: Full WHMCS route or page name when known.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is wrong?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Screenshots, diagnostic URLs, affected domain IDs, logs, or exact error text.
+  - type: textarea
+    id: safety
+    attributes:
+      label: Safety / rollback notes
+      description: Note the last confirmed-good state, failed patches, or cleanup required.

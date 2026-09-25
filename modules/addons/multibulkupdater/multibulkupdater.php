@@ -1837,6 +1837,8 @@ function multibulkupdater_add_preflight(array $domains, string $destination, str
             'registrar_label' => (string) $registrars[$registrar],
             'paymentmethod' => (string) $payment['module'],
             'rows' => $rows,
+            'ready_count' => $readyCount,
+            'existing_count' => $existingCount,
             'message' => 'No submitted domains are eligible to be added.',
         ];
     }

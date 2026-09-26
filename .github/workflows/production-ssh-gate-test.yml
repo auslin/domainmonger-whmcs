@@ -1,0 +1,64 @@
+name: WHMCS Production SSH Gate Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-production-ssh:
+    name: Verify restricted WHMCS production SSH gate
+    runs-on: ubuntu-24.04
+    environment: production
+
+    steps:
+      - name: Configure pinned SSH identity
+        shell: bash
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SSH_PRIVATE_KEY_B64: ${{ secrets.SSH_PRIVATE_KEY_B64 }}
+          SSH_HOST_KEY: ${{ secrets.SSH_HOST_KEY }}
+        run: |
+          set -euo pipefail
+
+          install -d -m 700 ~/.ssh
+          printf '%s' "$SSH_PRIVATE_KEY_B64" | base64 --decode > ~/.ssh/domainmonger-whmcs-production
+          chmod 600 ~/.ssh/domainmonger-whmcs-production
+          printf '[%s]:2222 %s\n' "$SERVER_IP" "$SSH_HOST_KEY" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Confirm forced-command gate blocks general shell commands
+        shell: bash
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+        run: |
+          set -euo pipefail
+
+          set +e
+          OUTPUT="$(
+            ssh \
+              -p 2222 \
+              -i ~/.ssh/domainmonger-whmcs-production \
+              -o IdentitiesOnly=yes \
+              -o StrictHostKeyChecking=yes \
+              -o BatchMode=yes \
+              "dmwhmcsdeploy@$SERVER_IP" \
+              test-access 2>&1
+          )"
+          RC=$?
+          set -e
+
+          printf '%s\n' "$OUTPUT"
+
+          if [[ "$RC" -eq 0 ]]; then
+            echo "Security check failed: unrestricted command unexpectedly succeeded." >&2
+            exit 1
+          fi
+
+          grep -Fq "Access denied: this key may only deploy an approved WHMCS commit." <<< "$OUTPUT" || {
+            echo "SSH authentication/gate test failed: expected forced-command denial was not received." >&2
+            exit 1
+          }
+
+          echo "Restricted WHMCS production SSH authentication and forced-command gate verified."

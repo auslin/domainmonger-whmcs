@@ -1,6 +1,9 @@
 name: WHMCS Staging Deployment
 
 on:
+  push:
+    branches:
+      - 'release/**'
   workflow_dispatch:
     inputs:
       confirmation:
@@ -18,7 +21,7 @@ concurrency:
 jobs:
   deploy:
     name: Deploy managed WHMCS code to staging
-    if: github.event.inputs.confirmation == 'DEPLOY-STAGING'
+    if: github.event_name == 'push' || github.event.inputs.confirmation == 'DEPLOY-STAGING'
     runs-on: ubuntu-24.04
     environment: staging
 

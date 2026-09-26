@@ -43,10 +43,145 @@ jobs:
           test -f scripts/ftps-overlay.py
           mkdir -p .deploy/manage
 
-          git ls-files \
-            | grep -E '^(autoauth|ds|includes|modules|order|templates|username)/|^lang/overrides/english\.php$' \
-            | grep -v '^templates/stellar-software-integration-whmcs/integration/' \
-            > .deploy/managed-files.txt
+          if [[ "$GITHUB_REF_NAME" == "release/wizardpanel-3.1-whmcs-v9" ]]; then
+            git ls-files \
+              | grep -E '^(autoauth|ds|includes|modules|order|templates|username)/|^lang/overrides/english\.php
+
+          while IFS= read -r rel; do
+            [[ -n "$rel" ]] || continue
+            mkdir -p ".deploy/manage/$(dirname "$rel")"
+            cp -p "$rel" ".deploy/manage/$rel"
+          done < .deploy/managed-files.txt
+
+          while IFS= read -r rel; do
+            [[ -n "$rel" ]] || continue
+            name="${rel#root-custom/}"
+            mkdir -p ".deploy/manage/$(dirname "$name")"
+            cp -p "$rel" ".deploy/manage/$name"
+          done < <(git ls-files 'root-custom/*')
+
+          test -f .deploy/manage/lang/overrides/english.php
+          test -d .deploy/manage/templates
+          test -d .deploy/manage/includes
+
+          if [[ "$GITHUB_REF_NAME" == "release/wizardpanel-3.1-whmcs-v9" ]]; then
+            integration_dir=".deploy/manage/templates/stellar-software-integration-whmcs/integration"
+
+            grep -Fq 'WHMCS Version Support: V9' \
+              .deploy/manage/templates/stellar-software-integration-whmcs/template-info-whmcs.txt
+
+            for file in \
+              integration-head.html \
+              integration-header.html \
+              integration-content-top.html \
+              integration-content-bottom.html \
+              integration-footer.html
+            do
+              target="$integration_dir/$file"
+              test -f "$target"
+              sed -i \
+                's#https://domainmonger\.com#https://staging.domainmonger.com#g' \
+                "$target"
+              grep -Fq 'https://staging.domainmonger.com' "$target"
+              if grep -Fq 'https://domainmonger.com' "$target"; then
+                echo "Production hostname remained in staged integration fragment: $file" >&2
+                exit 1
+              fi
+            done
+
+            integration_status="included for coordinated WizardPanel 3.1 / WHMCS v9 release"
+          else
+            integration_status="excluded"
+          fi
+
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Branch/ref: $GITHUB_REF_NAME"
+          echo "Commit: $GITHUB_SHA"
+          echo "Managed payload files: $(find .deploy/manage -type f | wc -l)"
+          echo "WHMCS integration fragments: $integration_status"
+          echo "Mode: non-destructive FTPS overlay"
+
+      - name: Overlay managed WHMCS payload onto staging
+        shell: bash
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          python3 scripts/ftps-overlay.py \
+            ./.deploy/manage/ \
+            ./ \
+            --delete-exact ./.domainmonger-whmcs-github-state.json
+
+      - name: Record deployed commit
+        shell: bash
+        run: |
+          echo "WHMCS staging deployment completed."
+          echo "Commit: $GITHUB_SHA"
+          if [[ "$GITHUB_REF_NAME" == "release/wizardpanel-3.1-whmcs-v9" ]]; then
+            echo "Integration fragments were included for the coordinated WizardPanel 3.1 / WHMCS v9 staging release."
+            echo "Integration fragment host: https://staging.domainmonger.com"
+          else
+            echo "Integration fragments were intentionally not deployed."
+          fi
+          echo "Deployment mode: non-destructive overlay; no application files deleted."
+ \
+              > .deploy/managed-files.txt
+          else
+            git ls-files \
+              | grep -E '^(autoauth|ds|includes|modules|order|templates|username)/|^lang/overrides/english\.php
+
+          while IFS= read -r rel; do
+            [[ -n "$rel" ]] || continue
+            mkdir -p ".deploy/manage/$(dirname "$rel")"
+            cp -p "$rel" ".deploy/manage/$rel"
+          done < .deploy/managed-files.txt
+
+          while IFS= read -r rel; do
+            [[ -n "$rel" ]] || continue
+            name="${rel#root-custom/}"
+            mkdir -p ".deploy/manage/$(dirname "$name")"
+            cp -p "$rel" ".deploy/manage/$name"
+          done < <(git ls-files 'root-custom/*')
+
+          test -f .deploy/manage/lang/overrides/english.php
+          test -d .deploy/manage/templates
+          test -d .deploy/manage/includes
+
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Branch/ref: $GITHUB_REF_NAME"
+          echo "Commit: $GITHUB_SHA"
+          echo "Managed payload files: $(find .deploy/manage -type f | wc -l)"
+          echo "WHMCS integration fragments: excluded"
+          echo "Mode: non-destructive FTPS overlay"
+
+      - name: Overlay managed WHMCS payload onto staging
+        shell: bash
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          python3 scripts/ftps-overlay.py \
+            ./.deploy/manage/ \
+            ./ \
+            --delete-exact ./.domainmonger-whmcs-github-state.json
+
+      - name: Record deployed commit
+        shell: bash
+        run: |
+          echo "WHMCS staging deployment completed."
+          echo "Commit: $GITHUB_SHA"
+          echo "Integration fragments were intentionally not deployed."
+          echo "Deployment mode: non-destructive overlay; no application files deleted."
+ \
+              | grep -v '^templates/stellar-software-integration-whmcs/integration/' \
+              > .deploy/managed-files.txt
+          fi
 
           while IFS= read -r rel; do
             [[ -n "$rel" ]] || continue

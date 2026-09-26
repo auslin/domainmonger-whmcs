@@ -29,13 +29,32 @@ add_hook('ClientAreaPrimarySidebar', 50, function (MenuItem $primarySidebar): vo
         }
     }
 
-    if (!$billing instanceof MenuItem || $billing->getChild('Payment Methods') instanceof MenuItem) {
+    if (!$billing instanceof MenuItem) {
         return;
     }
 
-    $billing->addChild('Payment Methods', [
+    foreach ($billing->getChildren() as $child) {
+        if (!$child instanceof MenuItem) {
+            continue;
+        }
+
+        $name = strtolower(trim((string) $child->getName()));
+        $label = strtolower(trim(strip_tags((string) $child->getLabel())));
+        $uri = strtolower(trim((string) $child->getUri()));
+
+        if ($name === 'payment methods' || $label === 'payment methods' || strpos($uri, '/account/paymentmethods') !== false) {
+            return;
+        }
+    }
+
+    $paymentMethods = $billing->addChild('Payment Methods', [
         'label' => 'Payment Methods',
         'uri' => 'index.php?rp=/account/paymentmethods',
         'order' => 25,
     ]);
+
+    $requestUri = strtolower((string) ($_SERVER['REQUEST_URI'] ?? ''));
+    if (strpos($requestUri, '/account/paymentmethods') !== false && method_exists($paymentMethods, 'setCurrent')) {
+        $paymentMethods->setCurrent(true);
+    }
 });

@@ -1,0 +1,86 @@
+name: WHMCS Staging Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Type DEPLOY-STAGING to deploy this branch to WHMCS staging'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: domainmonger-whmcs-staging
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy managed WHMCS code to staging
+    if: github.event.inputs.confirmation == 'DEPLOY-STAGING'
+    runs-on: ubuntu-24.04
+    environment: staging
+
+    steps:
+      - name: Check out exact selected commit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Build isolated WHMCS deployment payload
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          mkdir -p .deploy/manage
+
+          git ls-files \
+            | grep -E '^(autoauth|ds|includes|modules|order|templates|username)/|^lang/overrides/english\.php$' \
+            | grep -v '^templates/stellar-software-integration-whmcs/integration/' \
+            > .deploy/managed-files.txt
+
+          while IFS= read -r rel; do
+            [[ -n "$rel" ]] || continue
+            mkdir -p ".deploy/manage/$(dirname "$rel")"
+            cp -p "$rel" ".deploy/manage/$rel"
+          done < .deploy/managed-files.txt
+
+          while IFS= read -r rel; do
+            [[ -n "$rel" ]] || continue
+            name="${rel#root-custom/}"
+            cp -p "$rel" ".deploy/manage/$name"
+          done < <(git ls-files 'root-custom/*')
+
+          test -f .deploy/manage/lang/overrides/english.php
+          test -d .deploy/manage/templates
+          test -d .deploy/manage/includes
+
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Branch/ref: $GITHUB_REF_NAME"
+          echo "Commit: $GITHUB_SHA"
+          echo "Managed payload files: $(find .deploy/manage -type f | wc -l)"
+          echo "WHMCS integration fragments: excluded"
+
+      - name: Deploy managed WHMCS payload to staging
+        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
+        with:
+          server: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          protocol: ftps
+          local-dir: ./.deploy/manage/
+          server-dir: ./
+          state-name: .domainmonger-whmcs-github-state.json
+          exclude: |
+            **/.DS_Store
+            **/.directory
+            **/error_log
+
+      - name: Record deployed commit
+        shell: bash
+        run: |
+          echo "WHMCS staging deployment completed."
+          echo "Commit: $GITHUB_SHA"
+          echo "Integration fragments were intentionally not deployed."

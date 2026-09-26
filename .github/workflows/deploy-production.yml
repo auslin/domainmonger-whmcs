@@ -13,7 +13,9 @@ on:
         type: string
 
 permissions:
+  actions: read
   contents: read
+  pull-requests: read
 
 concurrency:
   group: domainmonger-whmcs-production
@@ -91,6 +93,102 @@ jobs:
           echo "validated_sha=$REQUESTED_SHA" >> "$GITHUB_OUTPUT"
           echo "Validated WHMCS production commit: $REQUESTED_SHA"
           echo "WHMCS integration fragments: excluded"
+
+      - name: Require merged PR and exact main staging proof
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          REQUESTED_SHA: ${{ steps.validate.outputs.validated_sha }}
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY'
+          import json
+          import os
+          import sys
+          import urllib.parse
+          import urllib.request
+
+          repo = os.environ["GITHUB_REPOSITORY"]
+          sha = os.environ["REQUESTED_SHA"]
+          token = os.environ["GITHUB_TOKEN"]
+          api = "https://api.github.com"
+
+          def get_json(path):
+              req = urllib.request.Request(
+                  api + path,
+                  headers={
+                      "Accept": "application/vnd.github+json",
+                      "Authorization": f"Bearer {token}",
+                      "X-GitHub-Api-Version": "2022-11-28",
+                      "User-Agent": "domainmonger-production-promotion-check",
+                  },
+              )
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  return json.load(response)
+
+          pulls = get_json(f"/repos/{repo}/commits/{sha}/pulls")
+          merged = [
+              pr for pr in pulls
+              if pr.get("merged_at")
+              and (pr.get("base") or {}).get("ref") == "main"
+          ]
+
+          if not merged:
+              print(
+                  "Production deployment refused: current main commit is not associated "
+                  "with a merged pull request into main.",
+                  file=sys.stderr,
+              )
+              sys.exit(1)
+
+          staging_run = None
+          for page in range(1, 11):
+              query = urllib.parse.urlencode({
+                  "event": "workflow_dispatch",
+                  "status": "success",
+                  "per_page": 100,
+                  "page": page,
+              })
+              payload = get_json(
+                  f"/repos/{repo}/actions/workflows/deploy-staging.yml/runs?{query}"
+              )
+              runs = payload.get("workflow_runs", [])
+              for run in runs:
+                  if (
+                      run.get("head_sha") == sha
+                      and run.get("head_branch") == "main"
+                      and run.get("conclusion") == "success"
+                  ):
+                      staging_run = run
+                      break
+              if staging_run or not runs:
+                  break
+
+          if not staging_run:
+              print(
+                  "Production deployment refused: no successful WordPress staging deployment "
+                  "was found for this exact current main commit."
+                  if repo.endswith("domainmonger-wordpress")
+                  else
+                  "Production deployment refused: no successful WHMCS staging deployment "
+                  "was found for this exact current main commit.",
+                  file=sys.stderr,
+              )
+              print(
+                  "After merging the PR, run the staging deployment again from main and "
+                  "verify that exact commit before production.",
+                  file=sys.stderr,
+              )
+              sys.exit(1)
+
+          pr_numbers = ", ".join(f"#{pr['number']}" for pr in merged)
+          print(f"Merged PR proof: {pr_numbers}")
+          print(
+              "Exact main staging proof: "
+              f"{staging_run.get('html_url', 'successful staging workflow run')}"
+          )
+          PY
 
   deploy-production:
     name: Deploy approved WHMCS commit to production

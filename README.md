@@ -27,3 +27,7 @@ production source before cleanup.
 
 Cleanup should be performed separately in controlled, testable changes after
 the baseline has been committed.
+
+## Deployment
+
+Use the project deployment workflow in [DEPLOYMENT.md](DEPLOYMENT.md). Production verification includes a required cache purge and post-purge public response check so stale LiteSpeed/server/CDN output is not mistaken for a failed deployment.

@@ -243,3 +243,7 @@ if (!isset($_LANG['sitejetBuilder']) || !is_array($_LANG['sitejetBuilder'])) {
 $_LANG['sitejetBuilder']['dashboardPanelTitle'] = 'Sitejet Builder';
 $_LANG['sitejetBuilder']['chooseWebsite'] = 'Choose a website to manage:';
 
+// DomainMonger My Details section headings.
+$_LANG['clientareaaccountdetails'] = 'Account Details';
+$_LANG['clientareaaddress'] = 'Address';
+

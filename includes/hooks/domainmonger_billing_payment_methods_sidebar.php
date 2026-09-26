@@ -58,3 +58,47 @@ add_hook('ClientAreaPrimarySidebar', 50, function (MenuItem $primarySidebar): vo
         $paymentMethods->setCurrent(true);
     }
 });
+
+
+if (!function_exists('domainmonger_issue18_log_sidebar_tree')) {
+    function domainmonger_issue18_log_sidebar_tree(string $hookName, MenuItem $menu): void
+    {
+        $requestUri = (string) ($_SERVER['REQUEST_URI'] ?? '');
+        if (stripos($requestUri, 'addfunds') === false && stripos($requestUri, '/account/paymentmethods') === false) {
+            return;
+        }
+
+        $lines = ['HOOK=' . $hookName . ' URI=' . $requestUri];
+        foreach ($menu->getChildren() as $child) {
+            if (!$child instanceof MenuItem) {
+                continue;
+            }
+
+            $lines[] = 'TOP name=' . $child->getName()
+                . ' label=' . trim(strip_tags((string) $child->getLabel()))
+                . ' uri=' . (string) $child->getUri()
+                . ' order=' . (string) $child->getOrder();
+
+            foreach ($child->getChildren() as $grandchild) {
+                if (!$grandchild instanceof MenuItem) {
+                    continue;
+                }
+
+                $lines[] = '  CHILD name=' . $grandchild->getName()
+                    . ' label=' . trim(strip_tags((string) $grandchild->getLabel()))
+                    . ' uri=' . (string) $grandchild->getUri()
+                    . ' order=' . (string) $grandchild->getOrder();
+            }
+        }
+
+        @file_put_contents('/tmp/domainmonger_issue18_sidebar.log', implode(PHP_EOL, $lines) . PHP_EOL . "---" . PHP_EOL, FILE_APPEND);
+    }
+}
+
+add_hook('ClientAreaPrimarySidebar', 999, function (MenuItem $primarySidebar): void {
+    domainmonger_issue18_log_sidebar_tree('ClientAreaPrimarySidebar', $primarySidebar);
+});
+
+add_hook('ClientAreaSecondarySidebar', 999, function (MenuItem $secondarySidebar): void {
+    domainmonger_issue18_log_sidebar_tree('ClientAreaSecondarySidebar', $secondarySidebar);
+});

@@ -53,6 +53,12 @@ jobs:
           ref: main
           fetch-depth: 1
 
+      - name: Validate repository source before deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/validate-repo.sh
+
       - name: Validate exact staging-tested commit
         id: validate
         shell: bash

@@ -1,0 +1,211 @@
+name: WHMCS Production Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      validated_commit:
+        description: '40-character SHA of the exact WHMCS commit validated on staging'
+        required: true
+        type: string
+      confirmation:
+        description: 'Type DEPLOY-WHMCS-PRODUCTION'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: domainmonger-whmcs-production
+  cancel-in-progress: false
+
+jobs:
+  validate-request:
+    name: Validate WHMCS production request
+    runs-on: ubuntu-24.04
+    outputs:
+      validated_sha: ${{ steps.validate.outputs.validated_sha }}
+
+    steps:
+      - name: Require main branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "$GITHUB_REF" != "refs/heads/main" ]]; then
+            echo "Production deployment must be started from main." >&2
+            exit 1
+          fi
+
+      - name: Require explicit production confirmation
+        shell: bash
+        env:
+          CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          set -euo pipefail
+          if [[ "$CONFIRMATION" != "DEPLOY-WHMCS-PRODUCTION" ]]; then
+            echo "Production deployment refused: confirmation text did not match." >&2
+            exit 1
+          fi
+
+      - name: Check out main
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Validate exact staging-tested commit
+        id: validate
+        shell: bash
+        env:
+          REQUESTED_SHA: ${{ inputs.validated_commit }}
+        run: |
+          set -euo pipefail
+
+          if [[ ! "$REQUESTED_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "Production deployment refused: validated_commit must be a full 40-character lowercase commit SHA." >&2
+            exit 1
+          fi
+
+          git fetch --no-tags origin main
+          ORIGIN_MAIN="$(git rev-parse origin/main)"
+          CHECKED_OUT="$(git rev-parse HEAD)"
+
+          if [[ "$REQUESTED_SHA" != "$ORIGIN_MAIN" ]]; then
+            echo "Production deployment refused: requested commit is not current origin/main." >&2
+            echo "Requested:   $REQUESTED_SHA" >&2
+            echo "origin/main: $ORIGIN_MAIN" >&2
+            exit 1
+          fi
+
+          if [[ "$REQUESTED_SHA" != "$CHECKED_OUT" ]]; then
+            echo "Production deployment refused: checked-out commit does not match requested commit." >&2
+            exit 1
+          fi
+
+          echo "validated_sha=$REQUESTED_SHA" >> "$GITHUB_OUTPUT"
+          echo "Validated WHMCS production commit: $REQUESTED_SHA"
+          echo "WHMCS integration fragments: excluded"
+
+  deploy-production:
+    name: Deploy approved WHMCS commit to production
+    needs: validate-request
+    runs-on: ubuntu-24.04
+    environment: production
+
+    steps:
+      - name: Configure pinned restricted SSH identity
+        shell: bash
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SSH_PRIVATE_KEY_B64: ${{ secrets.SSH_PRIVATE_KEY_B64 }}
+          SSH_HOST_KEY: ${{ secrets.SSH_HOST_KEY }}
+        run: |
+          set -euo pipefail
+
+          install -d -m 700 ~/.ssh
+          printf '%s' "$SSH_PRIVATE_KEY_B64" | base64 --decode > ~/.ssh/domainmonger-whmcs-production
+          chmod 600 ~/.ssh/domainmonger-whmcs-production
+          printf '[%s]:2222 %s\n' "$SERVER_IP" "$SSH_HOST_KEY" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Verify restricted SSH gate before deployment
+        shell: bash
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+        run: |
+          set -euo pipefail
+
+          set +e
+          OUTPUT="$(
+            ssh \
+              -p 2222 \
+              -i ~/.ssh/domainmonger-whmcs-production \
+              -o IdentitiesOnly=yes \
+              -o StrictHostKeyChecking=yes \
+              -o BatchMode=yes \
+              "dmwhmcsdeploy@$SERVER_IP" \
+              test-access 2>&1
+          )"
+          RC=$?
+          set -e
+
+          printf '%s\n' "$OUTPUT"
+
+          if [[ "$RC" -eq 0 ]]; then
+            echo "Security check failed: unrestricted command unexpectedly succeeded." >&2
+            exit 1
+          fi
+
+          grep -Fq "Access denied: this key may only deploy an approved WHMCS commit." <<< "$OUTPUT" || {
+            echo "Production deployment refused: restricted WHMCS SSH gate verification failed." >&2
+            exit 1
+          }
+
+          echo "Restricted WHMCS production SSH gate verified."
+
+      - name: Deploy exact approved WHMCS commit
+        shell: bash
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          VALIDATED_SHA: ${{ needs.validate-request.outputs.validated_sha }}
+        run: |
+          set -euo pipefail
+
+          ssh \
+            -p 2222 \
+            -i ~/.ssh/domainmonger-whmcs-production \
+            -o IdentitiesOnly=yes \
+            -o StrictHostKeyChecking=yes \
+            -o BatchMode=yes \
+            "dmwhmcsdeploy@$SERVER_IP" \
+            "deploy-whmcs $VALIDATED_SHA" \
+            | tee production-deploy-output.txt
+
+          grep -Fq "Production deployment completed from" production-deploy-output.txt || {
+            echo "WHMCS production deployment did not return the expected completion marker." >&2
+            exit 1
+          }
+
+          grep -Fq "Rollback bundle retained at:" production-deploy-output.txt || {
+            echo "WHMCS production deployment did not return the expected rollback-bundle marker." >&2
+            exit 1
+          }
+
+          grep -Fq "Integration fragments: excluded" production-deploy-output.txt || {
+            echo "WHMCS production deployment did not confirm integration-fragment exclusion." >&2
+            exit 1
+          }
+
+      - name: Basic public WHMCS reachability check
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl \
+            --fail \
+            --silent \
+            --show-error \
+            --location \
+            --retry 3 \
+            --max-time 30 \
+            --output /dev/null \
+            https://domainmonger.com/manage/
+
+          echo "Production WHMCS endpoint is reachable after deployment."
+          echo "Affected-route UI/workflow verification is still required before the release is considered fully verified."
+
+      - name: Deployment summary
+        shell: bash
+        env:
+          VALIDATED_SHA: ${{ needs.validate-request.outputs.validated_sha }}
+        run: |
+          {
+            echo "### DomainMonger WHMCS production deployment"
+            echo
+            echo "- Commit: \`$VALIDATED_SHA\`"
+            echo "- Integration fragments: excluded"
+            echo "- Server-side rollback bundle: created and retained"
+            echo "- SHA-256 manifests: created by guarded server deployment"
+            echo "- WHMCS compiled templates: cleared by guarded server deployment"
+            echo "- Public /manage/ reachability: checked"
+            echo "- Final affected-route visual/workflow verification: still required"
+          } >> "$GITHUB_STEP_SUMMARY"

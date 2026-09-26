@@ -34,6 +34,25 @@ WordPress and WHMCS remain separate projects even though they share the same hos
 12. Verify the public response reflects the newly deployed code/assets.
 13. Record the production verification in the related Issue/PR.
 
+## WordPress theme / WHMCS integration production gate
+
+The WHMCS integration consumes frontend output/assets from the WordPress WizardPanel/Stellar stack. Those two repositories therefore form one release pair whenever shared frontend output changes.
+
+**Production is blocked if shared staging shows any unresolved integration regression.**
+
+For a linked WizardPanel/Stellar update:
+
+1. Use the exact WordPress version already deployed to shared staging as the integration source.
+2. Regenerate and commit the matching WHMCS integration fragments.
+3. Deploy the matching integration to WHMCS staging.
+4. Validate affected `/manage/` pages together with the staged WordPress site, including shared header/footer/assets and an order/domain-registration route when relevant.
+5. If buttons, icons, CSS, JavaScript, menus, layout, or any shared presentation is broken on staging, keep both production deployments blocked.
+6. Resolve the linked staging issue and retest before either project is promoted.
+7. Once both sides pass, deploy the WordPress version and its matching WHMCS integration together in the same coordinated production window.
+8. Purge applicable caches and verify live `/manage/` responses reference the intended matching WordPress assets.
+
+Never knowingly deploy one side of a mismatched theme/integration pair to production with a plan to repair the other side afterward.
+
 ## Required cache invalidation after deployment
 
 A successful file copy is **not** sufficient production verification.

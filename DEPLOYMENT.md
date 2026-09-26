@@ -66,3 +66,53 @@ The WHMCS deployment workflow therefore treats **cache purge + public post-purge
 4. Re-request the affected public routes.
 5. Verify the rollback response and workflow behavior.
 6. Record the rollback in the related GitHub Issue/PR.
+
+## DomainMonger source-of-truth rules
+
+- GitHub `main` is authoritative for maintained WHMCS custom code.
+- Production and staging are deployed/runtime copies, not development baselines.
+- Do not use local PC project files, old ZIPs, or deployed runtime files as the source for new development unless explicitly approved.
+- If deployed runtime code exists that is not represented in GitHub, reconcile it into GitHub before further work.
+- Production promotion must come from GitHub `main`, not from the staging filesystem.
+
+## Staging safety rules
+
+- Staging WHMCS database: `register_whmcs_stg`.
+- WHMCS email sending remains disabled on staging.
+- No cron entry may target `staging.domainmonger.com` or `/home/register/staging/`.
+- Do not enable production payment processors merely to expose a staging UI element.
+- Offline `mailin` may be used for controlled WHMCS metadata/tests where a payment-method identifier is required.
+- Registrar/provider actions on staging are only for explicit controlled tests.
+- Do not commit license keys, database credentials, API keys, encryption hashes, or other secrets.
+
+## Protected project paths
+
+### Language overrides
+
+Never overwrite or rebuild `lang/overrides/english.php`.
+
+When adding language keys:
+1. start from the latest GitHub version;
+2. confirm the key is not already present;
+3. merge only the required key(s);
+4. preserve every existing override;
+5. merge in place on staging/production rather than replacing the whole file.
+
+### Stellar integration folder
+
+Do not modify `stellar-software-integration-whmcs/integration` unless that integration content is explicitly part of the requested change.
+
+## Scope and regression rules
+
+- Prefer page-specific hooks/templates for page-specific changes.
+- Avoid broad rewrites of stable code.
+- Preserve the custom v8x Register Domain namespinner unless explicitly changing it.
+- Do not reintroduce the old 17-result cap, sticky/reset experiments, or reset filters.
+- RegistrarDNS changes must preserve the RecordID-first and synthetic-ID fail-closed invariants tracked in Issue #8.
+- Failed changes are cleaned up in the next fix from the last confirmed-good baseline or restore point.
+
+## Retired environment
+
+`domainmonger.info` and the old `domaininfo` cPanel/database environment are historical references only.
+
+They must not be used as staging targets, deployment targets, code sources, or fallbacks for current work.

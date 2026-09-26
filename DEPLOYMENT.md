@@ -201,3 +201,19 @@ Do not modify `stellar-software-integration-whmcs/integration` unless that integ
 `domainmonger.info` and the old `domaininfo` cPanel/database environment are historical references only.
 
 They must not be used as staging targets, deployment targets, code sources, or fallbacks for current work.
+
+
+## Coordinated WordPress + WHMCS integration releases
+
+For any WizardPanel/Stellar WordPress theme update that also changes or regenerates the WHMCS integration, the **WordPress project is the controlling/umbrella project**.
+
+Rules:
+
+- The umbrella issue, release checklist, coordinated staging record, and production approval live in `auslin/domainmonger-wordpress`.
+- This WHMCS repository remains the authoritative source for WHMCS code and uses its own linked branch/PR.
+- Use the same coordinated release branch name as the WordPress repository.
+- Do not run the WHMCS side as an independent release when it is part of a WordPress theme/integration update.
+- The five integration fragments must correspond to the exact staged WizardPanel/Stellar version.
+- WordPress staging runs first; the linked WHMCS integration staging run follows.
+- Both sides must pass the same coordinated staging validation before either PR is merged for production promotion.
+- Production deployment remains separately gated and requires explicit user approval.

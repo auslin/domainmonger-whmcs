@@ -1,0 +1,32 @@
+name: WHMCS Staging FTPS Connection Test
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-staging-ftps:
+    name: Verify WHMCS staging FTPS access
+    runs-on: ubuntu-24.04
+    environment: staging
+
+    steps:
+      - name: Create harmless connection-test marker
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p .deploy-test
+          printf 'DomainMonger WHMCS staging FTPS test\nCommit: %s\nRun: %s\n' \
+            "$GITHUB_SHA" "$GITHUB_RUN_ID" > .deploy-test/github-ftps-test.txt
+
+      - name: Upload marker to isolated staging test folder
+        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
+        with:
+          server: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          protocol: ftps
+          local-dir: ./.deploy-test/
+          server-dir: ./github-deploy-test/

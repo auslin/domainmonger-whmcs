@@ -34,6 +34,7 @@ jobs:
         run: |
           set -euo pipefail
 
+          test -f scripts/ftps-overlay.py
           mkdir -p .deploy/manage
 
           git ls-files \
@@ -50,6 +51,7 @@ jobs:
           while IFS= read -r rel; do
             [[ -n "$rel" ]] || continue
             name="${rel#root-custom/}"
+            mkdir -p ".deploy/manage/$(dirname "$name")"
             cp -p "$rel" ".deploy/manage/$name"
           done < <(git ls-files 'root-custom/*')
 
@@ -62,21 +64,21 @@ jobs:
           echo "Commit: $GITHUB_SHA"
           echo "Managed payload files: $(find .deploy/manage -type f | wc -l)"
           echo "WHMCS integration fragments: excluded"
+          echo "Mode: non-destructive FTPS overlay"
 
-      - name: Deploy managed WHMCS payload to staging
-        uses: SamKirkland/FTP-Deploy-Action@110f9186c050f71550953127052e77650219c287 # v4.4.0
-        with:
-          server: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWORD }}
-          protocol: ftps
-          local-dir: ./.deploy/manage/
-          server-dir: ./
-          state-name: .domainmonger-whmcs-github-state.json
-          exclude: |
-            **/.DS_Store
-            **/.directory
-            **/error_log
+      - name: Overlay managed WHMCS payload onto staging
+        shell: bash
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          python3 scripts/ftps-overlay.py \
+            ./.deploy/manage/ \
+            ./ \
+            --delete-exact ./.domainmonger-whmcs-github-state.json
 
       - name: Record deployed commit
         shell: bash
@@ -84,3 +86,4 @@ jobs:
           echo "WHMCS staging deployment completed."
           echo "Commit: $GITHUB_SHA"
           echo "Integration fragments were intentionally not deployed."
+          echo "Deployment mode: non-destructive overlay; no application files deleted."

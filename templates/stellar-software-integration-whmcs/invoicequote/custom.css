@@ -217,3 +217,15 @@
     color: #ffffff !important;
     text-decoration: none !important;
 }
+
+/* DomainMonger Patch 198
+   Invoice Print / Download action spacing for standalone invoice layout. */
+.invoicequote-container .btn-group.d-print-none {
+    display: inline-flex !important;
+    gap: 8px !important;
+}
+
+.invoicequote-container .btn-group.d-print-none > .btn {
+    border-radius: 5px !important;
+    margin-left: 0 !important;
+}

@@ -18,7 +18,7 @@
     <script>var whmcsBaseUrl = "{$WEB_ROOT}";</script>
     <script src="{$WEB_ROOT}/templates/twenty-one/js/scripts.min.js?v={$versionHash}"></script>
     <link href="{$WEB_ROOT}/templates/{$template}/invoicequote/layout.min.css" rel="stylesheet">
-    <link href="{$WEB_ROOT}/templates/{$template}/invoicequote/custom.css?v=167" rel="stylesheet">
+    <link href="{$WEB_ROOT}/templates/{$template}/invoicequote/custom.css?v=168" rel="stylesheet">
     <link rel="shortcut icon" href="{$WEB_ROOT}/templates/{$template}/invoicequote/favicon.ico" />
 
 </head>

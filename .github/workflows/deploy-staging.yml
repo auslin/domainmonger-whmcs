@@ -3,6 +3,7 @@ name: WHMCS Staging Deployment
 on:
   push:
     branches:
+      - main
       - 'release/**'
   workflow_dispatch:
     inputs:
@@ -46,7 +47,7 @@ jobs:
           test -f scripts/ftps-overlay.py
           mkdir -p .deploy/manage
 
-          if [[ "$GITHUB_REF_NAME" == "release/wizardpanel-3.1-whmcs-v9" ]]; then
+          if [[ "$GITHUB_REF_NAME" == "main" || "$GITHUB_REF_NAME" == release/* ]]; then
             git ls-files \
               | grep -E '^(autoauth|ds|includes|modules|order|templates|username)/|^lang/overrides/english\.php$' \
               > .deploy/managed-files.txt
@@ -74,7 +75,7 @@ jobs:
           test -d .deploy/manage/templates
           test -d .deploy/manage/includes
 
-          if [[ "$GITHUB_REF_NAME" == "release/wizardpanel-3.1-whmcs-v9" ]]; then
+          if [[ "$GITHUB_REF_NAME" == "main" || "$GITHUB_REF_NAME" == release/* ]]; then
             info=".deploy/manage/templates/stellar-software-integration-whmcs/template-info-whmcs.txt"
             integration_dir=".deploy/manage/templates/stellar-software-integration-whmcs/integration"
 
@@ -100,7 +101,7 @@ jobs:
               fi
             done
 
-            integration_status="included for coordinated WizardPanel 3.1 / WHMCS v9 release"
+            integration_status="included for canonical main/release staging"
           else
             integration_status="excluded"
           fi
@@ -131,8 +132,8 @@ jobs:
         run: |
           echo "WHMCS staging deployment completed."
           echo "Commit: $GITHUB_SHA"
-          if [[ "$GITHUB_REF_NAME" == "release/wizardpanel-3.1-whmcs-v9" ]]; then
-            echo "Integration fragments were included for the coordinated WizardPanel 3.1 / WHMCS v9 staging release."
+          if [[ "$GITHUB_REF_NAME" == "main" || "$GITHUB_REF_NAME" == release/* ]]; then
+            echo "Integration fragments were included for canonical main/release staging."
             echo "Integration fragment runtime host: https://staging.domainmonger.com"
           else
             echo "Integration fragments were intentionally not deployed."

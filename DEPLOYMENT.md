@@ -64,7 +64,7 @@ The normal staging path is GitHub Actions:
 4. Run the workflow.
 5. Validate the affected staging WHMCS routes and workflows.
 
-The staging workflow deploys only the maintained WHMCS payload through staging-only FTPS credentials restricted to the staging `/manage/` tree. It does not have production credentials.
+The staging workflow deploys only the maintained WHMCS payload through staging-only FTPS credentials restricted to the staging `/manage/` tree. It uses the repo-owned `scripts/ftps-overlay.py` uploader, which uploads/replaces files without deleting remote application files. It does not have production credentials.
 
 The normal staging workflow intentionally excludes `templates/stellar-software-integration-whmcs/integration/`.
 

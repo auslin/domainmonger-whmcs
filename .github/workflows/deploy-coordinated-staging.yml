@@ -1,0 +1,133 @@
+name: Coordinated WizardPanel 3.1 + WHMCS v9 Staging
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'Type DEPLOY-WIZARDPANEL-WHMCS-STAGING'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: domainmonger-whmcs-coordinated-staging
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy coordinated WHMCS integration release to staging
+    if: >
+      github.ref == 'refs/heads/release/wizardpanel-3.1-whmcs-v9' &&
+      github.event.inputs.confirmation == 'DEPLOY-WIZARDPANEL-WHMCS-STAGING'
+    runs-on: ubuntu-24.04
+    environment: staging
+
+    steps:
+      - name: Check out exact release commit
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 1
+
+      - name: Validate release source
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/validate-repo.sh
+
+          test -f templates/stellar-software-integration-whmcs/template-info-whmcs.txt
+          grep -Fq 'WHMCS Version Support: V9'             templates/stellar-software-integration-whmcs/template-info-whmcs.txt
+
+          for file in             integration-head.html             integration-header.html             integration-content-top.html             integration-content-bottom.html             integration-footer.html
+          do
+            test -f "templates/stellar-software-integration-whmcs/integration/$file"
+          done
+
+          if grep -R -Fq 'https://staging.domainmonger.com'             templates/stellar-software-integration-whmcs/integration/
+          then
+            echo "Release source must remain production-host canonical; staging URL found in Git." >&2
+            exit 1
+          fi
+
+          echo "Release source validated."
+          echo "Commit: $GITHUB_SHA"
+
+      - name: Build coordinated staging payload
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          test -f scripts/ftps-overlay.py
+          mkdir -p .deploy/manage
+
+          git ls-files             | grep -E '^(autoauth|ds|includes|modules|order|templates|username)/|^lang/overrides/english\.php$'             > .deploy/managed-files.txt
+
+          while IFS= read -r rel; do
+            [[ -n "$rel" ]] || continue
+            mkdir -p ".deploy/manage/$(dirname "$rel")"
+            cp -p "$rel" ".deploy/manage/$rel"
+          done < .deploy/managed-files.txt
+
+          while IFS= read -r rel; do
+            [[ -n "$rel" ]] || continue
+            name="${rel#root-custom/}"
+            mkdir -p ".deploy/manage/$(dirname "$name")"
+            cp -p "$rel" ".deploy/manage/$name"
+          done < <(git ls-files 'root-custom/*')
+
+          integration_dir=".deploy/manage/templates/stellar-software-integration-whmcs/integration"
+
+          for file in             integration-head.html             integration-header.html             integration-content-top.html             integration-content-bottom.html             integration-footer.html
+          do
+            path="$integration_dir/$file"
+            test -f "$path"
+            sed -i               's#https://domainmonger\.com#https://staging.domainmonger.com#g'               "$path"
+
+            grep -Fq 'https://staging.domainmonger.com' "$path" || {
+              echo "Staging-host rewrite did not appear in $file." >&2
+              exit 1
+            }
+
+            if grep -Fq 'https://domainmonger.com' "$path"; then
+              echo "Production hostname remained in staged integration fragment: $file" >&2
+              exit 1
+            fi
+          done
+
+          test -f .deploy/manage/lang/overrides/english.php
+          test -f .deploy/manage/templates/stellar-software-integration-whmcs/template-info-whmcs.txt
+
+          echo "Managed payload files: $(find .deploy/manage -type f | wc -l)"
+          echo "Five integration fragments: INCLUDED"
+          echo "Integration fragment runtime host: https://staging.domainmonger.com"
+          echo "Mode: non-destructive FTPS overlay"
+
+      - name: Overlay coordinated WHMCS payload onto staging
+        shell: bash
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          set -euo pipefail
+
+          python3 scripts/ftps-overlay.py             ./.deploy/manage/             ./
+
+      - name: Staging deployment summary
+        shell: bash
+        run: |
+          {
+            echo "### Coordinated WizardPanel 3.1 + WHMCS v9 staging deployment"
+            echo
+            echo "- Commit: \`$GITHUB_SHA\`"
+            echo "- WHMCS v9 integration baseline: included"
+            echo "- Five WizardPanel integration fragments: included"
+            echo "- Fragment host rewritten only in staging payload"
+            echo "- Register Domains repaired mainline files: preserved"
+            echo "- Deployment mode: non-destructive overlay"
+            echo "- Production: untouched"
+            echo
+            echo "Fresh browser validation is required before merge."
+          } >> "$GITHUB_STEP_SUMMARY"

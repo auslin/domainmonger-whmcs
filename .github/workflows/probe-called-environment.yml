@@ -1,0 +1,48 @@
+name: WHMCS Called Environment Probe
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    name: Verify called workflow staging environment
+    runs-on: ubuntu-24.04
+    environment: staging
+    steps:
+      - name: Read-only FTPS root check
+        shell: bash
+        env:
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import ftplib
+          import os
+          import ssl
+
+          host = os.environ["SERVER_IP"]
+          user = os.environ["SERVER_USER"]
+          password = os.environ["SERVER_PASSWORD"]
+
+          ctx = ssl.create_default_context()
+          ftp = ftplib.FTP_TLS(context=ctx, timeout=30)
+          ftp.connect(host, 21)
+          ftp.auth()
+          ftp.prot_p()
+          ftp.login(user, password)
+          names = set(ftp.nlst())
+          ftp.quit()
+
+          if "templates" not in names:
+              raise SystemExit("Probe failed: called workflow did not receive WHMCS staging-root credentials.")
+          if "plugins" in names and "wp-content" not in names:
+              raise SystemExit("Probe failed: root resembles WordPress staging rather than WHMCS staging.")
+
+          print("Called workflow received credentials rooted at WHMCS staging.")
+          print("Read-only probe complete; no remote files were changed.")
+          PY

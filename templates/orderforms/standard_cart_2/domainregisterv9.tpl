@@ -2,27 +2,21 @@
 
 <div id="order-standard_cart" class="dm-v9-support-page">
 
-    <div class="row">
+    <div class="row dm-v9-support-layout">
 
-        <div class="pull-md-right col-md-9">
+        <div class="col-md-3 sidebar hidden-xs hidden-sm d-none d-md-block dm-v9-support-sidebar">
+
+            {include file="orderforms/standard_cart_2/sidebar-categories.tpl"}
+
+        </div>
+
+        <div class="col-md-9 dm-v9-support-main">
 
             <div class="header-lined">
-                <h1>
-                    {$LANG.registerdomain}
-                </h1>
+                <h1>Register Domains</h1>
             </div>
 
-        </div>
-
-        <div class="col-md-3 pull-md-left sidebar hidden-xs hidden-sm">
-
-            {include file="orderforms/standard_cart/sidebar-categories.tpl"}
-
-        </div>
-
-        <div class="col-md-9 pull-md-right">
-
-            {include file="orderforms/standard_cart/sidebar-categories-collapsed.tpl"}
+            {include file="orderforms/standard_cart_2/sidebar-categories-collapsed.tpl"}
 
             <p>{$LANG.orderForm.findNewDomain}</p>
 
@@ -36,7 +30,7 @@
                                 <div class="input-group input-group-lg input-group-box">
                                     <input type="text" name="domain" class="form-control" placeholder="{$LANG.findyourdomain}" value="{$lookupTerm}" id="inputDomain" data-toggle="tooltip" data-placement="left" data-trigger="manual" title="{lang key='orderForm.domainOrKeyword'}" />
                                     <span class="input-group-btn">
-                                        <button type="submit" id="btnCheckAvailability" class="btn btn-primary domain-check-availability{$captcha->getButtonClass($captchaForm)}">{$LANG.search}</button>
+                                        <button type="submit" id="btnCheckAvailability" class="btn btn-primary domain-check-availability{$captcha->getButtonClass($captchaForm)}">{lang key='search' defaultValue='Search'}</button>
                                     </span>
                                 </div>
                             </div>
@@ -64,48 +58,22 @@
                 </div>
             </div>
 
-            <div class="dm-v9-support-raw-card" id="dmV9SupportRawCard">
-                <div class="dm-v9-support-raw-heading">
-                    <div>
-                        <h3>Raw v9 namespinner endpoint output</h3>
-                        <p>This panel calls <code>/domain/check</code> with <code>type=suggestions</code> using the same search phrase so WHMCS support can compare returned data against the native rendered rows below.</p>
-                    </div>
-                    <button type="button" class="btn btn-default btn-sm" id="dmV9SupportRawRefresh">Refresh Raw Output</button>
-                </div>
-                <div class="dm-v9-support-raw-body">
-                    <div id="dmV9SupportRawStatus" class="dm-v9-support-raw-status">Run a search to view the raw v9 endpoint output.</div>
-                    <div class="dm-v9-support-raw-table-wrap" id="dmV9SupportRawTableWrap" style="display:none;">
-                        <table class="table table-striped dm-v9-support-raw-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Returned Name</th>
-                                    <th>Raw Fields Present</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dmV9SupportRawRows"></tbody>
-                        </table>
-                    </div>
-                    <button type="button" class="btn btn-link dm-v9-support-json-toggle" id="dmV9SupportToggleJson" style="display:none;">Show Raw JSON</button>
-                    <pre id="dmV9SupportRawJson" class="dm-v9-support-raw-json" style="display:none;"></pre>
-                </div>
-            </div>
-
-            <div id="DomainSearchResults" class="hidden">
+            <div id="DomainSearchResults" class="w-hidden">
 
                 <div id="searchDomainInfo" class="domain-checker-result-headline">
                     <p id="primaryLookupSearching" class="domain-lookup-loader domain-lookup-primary-loader domain-searching"><i class="fas fa-spinner fa-spin"></i> {lang key='orderForm.searching'}...</p>
-                    <div id="primaryLookupResult" class="domain-lookup-result hidden">
+                    <div id="primaryLookupResult" class="domain-lookup-result w-hidden">
                         <p class="domain-invalid domain-checker-invalid">{lang key='orderForm.domainLetterOrNumber'}<span class="domain-length-restrictions">{lang key='orderForm.domainLengthRequirements'}</span></p>
                         <p class="domain-unavailable domain-checker-unavailable">{lang key='orderForm.domainIsUnavailable'}</p>
                         <p class="domain-available domain-checker-available">{$LANG.domainavailable1} <strong></strong> {$LANG.domainavailable2}</p>
-                        <a class="domain-contact-support btn btn-primary">{$LANG.domainContactUs}</a>
+                        <a class="domain-contact-support btn btn-primary" style="display:none">{lang key='domainContactUs' defaultValue='Contact Support'}</a>
                         <p class="domain-price">
                             <span class="price"></span>
                             <button class="btn btn-primary btn-add-to-cart" data-whois="0" data-domain="">
-                                <span class="to-add">{$LANG.addtocart}</span>
+                                <span class="to-add">Add to Cart</span>
+                                <span class="loading w-hidden"><i class="fas fa-spinner fa-spin"></i> {lang key='loading'}</span>
                                 <span class="added"><i class="glyphicon glyphicon-shopping-cart"></i> {lang key='checkout'}</span>
-                                <span class="unavailable">{$LANG.domaincheckertaken}</span>
+                                <span class="unavailable">Unavailable</span>
                             </button>
                         </p>
                         <p class="domain-error domain-checker-unavailable"></p>
@@ -126,19 +94,20 @@
                                             <i class="fas fa-spinner fa-spin"></i>
                                         </span>
                                         <div class="domain-lookup-result">
-                                            <button type="button" class="btn unavailable hidden" disabled="disabled">
+                                            <button type="button" class="btn unavailable w-hidden" disabled="disabled">
                                                 {lang key='domainunavailable'}
                                             </button>
-                                            <button type="button" class="btn invalid hidden" disabled="disabled">
+                                            <button type="button" class="btn invalid w-hidden" disabled="disabled">
                                                 {lang key='domainunavailable'}
                                             </button>
-                                            <span class="available price hidden">{$data.register}</span>
-                                            <button type="button" class="btn hidden btn-add-to-cart" data-whois="0" data-domain="">
+                                            <span class="available price w-hidden">{$data.register}</span>
+                                            <button type="button" class="btn w-hidden btn-add-to-cart" data-whois="0" data-domain="">
                                                 <span class="to-add">{lang key='orderForm.add'}</span>
+                                                <span class="loading w-hidden"><i class="fas fa-spinner fa-spin"></i> {lang key='loading'}</span>
                                                 <span class="added"><i class="glyphicon glyphicon-shopping-cart"></i> {lang key='checkout'}</span>
-                                                <span class="unavailable">{$LANG.domaincheckertaken}</span>
+                                                <span class="unavailable">Unavailable</span>
                                             </button>
-                                            <button type="button" class="btn btn-primary domain-contact-support hidden">
+                                            <button type="button" class="btn btn-primary domain-contact-support w-hidden" style="display:none">
                                                 {lang key='domainChecker.contactSupport'}
                                             </button>
                                         </div>
@@ -149,37 +118,38 @@
                     </div>
                 {/if}
 
-                <div class="suggested-domains{if !$showSuggestionsContainer} hidden{/if}">
+                <div class="suggested-domains{if !$showSuggestionsContainer} w-hidden{/if}">
                     <div class="panel-heading">
                         {lang key='orderForm.suggestedDomains'}
                     </div>
                     <div id="suggestionsLoader" class="panel-body domain-lookup-loader domain-lookup-suggestions-loader">
                         <i class="fas fa-spinner fa-spin"></i> {lang key='orderForm.generatingSuggestions'}
                     </div>
-                    <ul id="domainSuggestions" class="domain-lookup-result list-group hidden">
-                        <li class="domain-suggestion list-group-item hidden">
+                    <div id="domainSuggestions" class="domain-lookup-result list-group w-hidden">
+                        <div class="domain-suggestion list-group-item w-hidden">
                             <span class="domain"></span><span class="extension"></span>
-                            <span class="promo hidden">
-                                <span class="sales-group-hot hidden">{lang key='domainCheckerSalesGroup.hot'}</span>
-                                <span class="sales-group-new hidden">{lang key='domainCheckerSalesGroup.new'}</span>
-                                <span class="sales-group-sale hidden">{lang key='domainCheckerSalesGroup.sale'}</span>
+                            <span class="promo w-hidden">
+                                <span class="sales-group-hot w-hidden">{lang key='domainCheckerSalesGroup.hot'}</span>
+                                <span class="sales-group-new w-hidden">{lang key='domainCheckerSalesGroup.new'}</span>
+                                <span class="sales-group-sale w-hidden">{lang key='domainCheckerSalesGroup.sale'}</span>
                             </span>
                             <div class="actions">
                                 <span class="price"></span>
                                 <button type="button" class="btn btn-add-to-cart" data-whois="1" data-domain="">
-                                    <span class="to-add">{$LANG.addtocart}</span>
+                                    <span class="to-add">Add to Cart</span>
+                                    <span class="loading w-hidden"><i class="fas fa-spinner fa-spin"></i> {lang key='loading'}</span>
                                     <span class="added"><i class="glyphicon glyphicon-shopping-cart"></i> {lang key='checkout'}</span>
-                                    <span class="unavailable">{$LANG.domaincheckertaken}</span>
+                                    <span class="unavailable">Unavailable</span>
                                 </button>
-                                <button type="button" class="btn btn-primary domain-contact-support hidden">
+                                <button type="button" class="btn btn-primary domain-contact-support w-hidden" style="display:none">
                                     {lang key='domainChecker.contactSupport'}
                                 </button>
                             </div>
-                        </li>
-                    </ul>
-                    <div class="panel-footer more-suggestions hidden text-center">
+                        </div>
+                    </div>
+                    <div class="panel-footer more-suggestions w-hidden text-center">
                         <a id="moreSuggestions" href="#" onclick="loadMoreSuggestions();return false;">{lang key='domainsmoresuggestions'}</a>
-                        <span id="noMoreSuggestions" class="no-more small hidden">{lang key='domaincheckernomoresuggestions'}</span>
+                        <span id="noMoreSuggestions" class="no-more small w-hidden">{lang key='domaincheckernomoresuggestions'}</span>
                     </div>
                     <div class="text-center text-muted domain-suggestions-warning">
                         <p>{lang key='domainssuggestionswarnings'}</p>
@@ -219,7 +189,7 @@
                     </div>
                 {/if}
 
-                <h4>{lang key='pricing.browseExtByCategory'}</h4>
+                <h4>Browse extensions by category</h4>
 
                 <div class="tld-filters">
                     {foreach $categoriesWithCounts as $category => $count}
@@ -231,7 +201,7 @@
                     <div class="col-sm-4 no-bg">{lang key='orderdomain'}</div>
                     <div class="col-sm-8">
                         <div class="row">
-                            <div class="col-xs-4">{lang key='pricing.register'}</div>
+                            <div class="col-xs-4">Register</div>
                             <div class="col-xs-4">{lang key='pricing.transfer'}</div>
                             <div class="col-xs-4">{lang key='pricing.renewal'}</div>
                         </div>
@@ -242,7 +212,7 @@
                         <div class="col-sm-4 two-row-center">
                             <strong>.{$tld}</strong>
                             {if $price.group}
-                                <span class="tld-sale-group tld-sale-group-{$price.group}">{$price.group}!</span>
+                                <span class="tld-sale-group tld-sale-group-{$price.group}">{if $price.group eq 'sale'}SALE{else}{$price.group|upper}{/if}</span>
                             {/if}
                         </div>
                         <div class="col-sm-8">
@@ -291,15 +261,15 @@
 
                         <div class="clearfix">
                             <i class="fas fa-server fa-4x"></i>
-                            <h3>{lang key='orderForm.addHosting'}</h3>
+                            <h3>Add Web Hosting</h3>
                             <p class="font-bold text-warning">{lang key='orderForm.chooseFromRange'}</p>
                         </div>
 
-                        <p>{lang key='orderForm.packagesForBudget'}</p>
-
                         <a href="cart.php" class="btn btn-warning">
-                            {lang key='orderForm.exploreNow'}
+                            Hosting Packages
                         </a>
+
+                        <p>{lang key='orderForm.packagesForBudget'}</p>
                     </div>
                 </div>
                 {if $domainTransferEnabled}
@@ -308,7 +278,7 @@
 
                             <div class="clearfix">
                                 <i class="fas fa-globe fa-4x"></i>
-                                <h3>{lang key='orderForm.transferToUs'}</h3>
+                                <h3>Transfer Your Domains to Us</h3>
                                 <p class="font-bold text-primary">{lang key='orderForm.transferExtend'}*</p>
                             </div>
 

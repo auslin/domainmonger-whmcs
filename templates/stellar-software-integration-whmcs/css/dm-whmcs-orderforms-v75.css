@@ -815,3 +815,14 @@ body.whmcsbody .domain-pricing .tld-sale-group {
         justify-content: center;
     }
 }
+
+/* Cart recurring cycle readability: stock WHMCS uses #777 italic, too faint on DomainMonger navy. */
+body.whmcsbody #order-standard_cart .order-summary .recurring-charges {
+    color: #ffffff;
+    font-style: normal;
+    font-weight: 600;
+}
+
+body.whmcsbody #order-standard_cart .order-summary .recurring-charges .cost {
+    font-weight: 700;
+}

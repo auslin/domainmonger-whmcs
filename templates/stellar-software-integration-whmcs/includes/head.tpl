@@ -22,7 +22,7 @@
 {assetExists file="custom.css"}
 <link href="{$__assetPath__}" rel="stylesheet">
 {/assetExists}
-<link href="{$WEB_ROOT}/templates/{$template}/css/dm-whmcs-controls-v171.css?v=196" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/{$template}/css/dm-whmcs-controls-v171.css?v=197" rel="stylesheet">
 
 <script>
     var csrfToken = '{$token}',

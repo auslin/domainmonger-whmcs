@@ -560,7 +560,7 @@
 
 	    <section id="main-body">
 	        <div class="{if !$skipMainBodyContainer}container{/if}">
-	            <div class="row">
+	            <div class="{if !$inShoppingCart && ($primarySidebar->hasChildren() || $secondarySidebar->hasChildren())}row{/if}">
 	
 	            {if !$inShoppingCart && ($primarySidebar->hasChildren() || $secondarySidebar->hasChildren())}
 	                <div class="col-lg-4 col-xl-3">

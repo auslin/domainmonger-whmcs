@@ -8,7 +8,12 @@
 
     <link href="{$WEB_ROOT}/templates/twenty-one/css/all.min.css?v={$versionHash}" rel="stylesheet">
     <link href="{$WEB_ROOT}/templates/twenty-one/css/theme.min.css?v={$versionHash}" rel="stylesheet">
-    <link href="{$WEB_ROOT}/assets/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/fonts/css/fontawesome.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/fonts/css/fontawesome-solid.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/fonts/css/fontawesome-regular.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/fonts/css/fontawesome-light.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/fonts/css/fontawesome-brands.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/fonts/css/fontawesome-duotone.min.css" rel="stylesheet">
     <link href="{$WEB_ROOT}/templates/twenty-one/css/invoice.min.css?v={$versionHash}" rel="stylesheet">
     <script src="{$WEB_ROOT}/templates/twenty-one/js/scripts.min.js?v={$versionHash}"></script>
     <link href="{$WEB_ROOT}/templates/{$template}/invoicequote/layout.min.css" rel="stylesheet">

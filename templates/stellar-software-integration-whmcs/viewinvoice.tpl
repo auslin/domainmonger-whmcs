@@ -8,14 +8,19 @@
 
     <link href="{$WEB_ROOT}/templates/twenty-one/css/all.min.css?v={$versionHash}" rel="stylesheet">
     <link href="{$WEB_ROOT}/templates/twenty-one/css/theme.min.css?v={$versionHash}" rel="stylesheet">
-    <link href="{$WEB_ROOT}/assets/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/fonts/css/fontawesome.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/fonts/css/fontawesome-solid.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/fonts/css/fontawesome-regular.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/fonts/css/fontawesome-light.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/fonts/css/fontawesome-brands.min.css" rel="stylesheet">
+    <link href="{$WEB_ROOT}/assets/fonts/css/fontawesome-duotone.min.css" rel="stylesheet">
     <link href="{$WEB_ROOT}/templates/twenty-one/css/invoice.min.css?v={$versionHash}" rel="stylesheet">
     <script>var whmcsBaseUrl = "{$WEB_ROOT}";</script>
     <script src="{$WEB_ROOT}/templates/twenty-one/js/scripts.min.js?v={$versionHash}"></script>
     <link href="{$WEB_ROOT}/templates/{$template}/invoicequote/layout.min.css" rel="stylesheet">
-    <link href="{$WEB_ROOT}/templates/{$template}/invoicequote/custom.css?v=167" rel="stylesheet">
+    <link href="{$WEB_ROOT}/templates/{$template}/invoicequote/custom.css?v=168" rel="stylesheet">
     <link rel="shortcut icon" href="{$WEB_ROOT}/templates/{$template}/invoicequote/favicon.ico" />
-    
+
 </head>
 <body>
 
@@ -28,23 +33,22 @@
         {else}
 
             <div class="row invoice-header invoicequote-header">
-	            
-                <div class="invoicequote-header-left">
 
+                <div class="invoicequote-header-left">
                     <div class="invoicequote-logo">
                         <img src="{$WEB_ROOT}/templates/{$template}/invoicequote/logo.png?v=1484" title="{$companyname}" alt="{$companyname}" />
                     </div>
-                    
+
                     <div class="invoicequote-pagetitle">{$pagetitle}</div>
-                    <div class="invoicequote-date">{lang key='invoicesdatecreated'}: {$date}</div>                    
-                    
+                    <div class="invoicequote-date">{lang key='invoicesdatecreated'}: {$date}</div>
+
                     {if $status eq "Unpaid" || $status eq "Draft"}
 	                    <div class="invoicequote-date"><strong>{lang key='invoicestotal'}: <span class="unpaid">{$balance}</span></strong></div>
                     	<div class="invoicequote-date">{lang key='invoicesdatedue'}: <span class="unpaid">{$datedue}</span></div>
                     {/if}
 
                 </div><!-- .invoicequote-header-left -->
-                
+
                 <div class="invoicequote-header-right">
 
                     <div class="invoice-status">
@@ -66,9 +70,9 @@
                     </div>
 
                     {if $status eq "Unpaid" || $status eq "Draft"}
-                        
+
 	                    <div class="invoicequote-paymentmethod">{lang key='paymentmethod'}</div>
-	                    
+
 	                    <div class="invoicequote-paymentselect" data-role="paymethod-info">
 	                        {if $status eq "Unpaid" && $allowchangegateway}
 	                            <form method="post" action="{$smarty.server.PHP_SELF}?id={$invoiceid}" class="form-inline">
@@ -82,21 +86,24 @@
 	                        {else}
 	                            {$paymentmethod}{if $paymethoddisplayname} ({$paymethoddisplayname}){/if}
 	                        {/if}
-	                    </div>    
-	                    
+	                    </div>
+
                         <div class="invoicequote-paymentbutton payment-btn-container d-print-none">
                             {$paymentbutton}
-                        </div>	                                      
-                        
+                        </div>
+
                     {/if}
 
                 </div><!-- .invoicequote-header-right -->
-                
+
             </div><!-- .invoicequote-header -->
 
             <div class="invoicequote-container-inner">
 
-            {if $paymentSuccessAwaitingNotification}
+            {* custom alert that can be provided by the hooks (ClientAreaPageViewInvoice for example) *}
+            {if isset($customAlert) && is_array($customAlert)}
+                {include file="$template/includes/panel.tpl" type=$customAlert.type|escape headerTitle=$customAlert.title|escape bodyContent=$customAlert.message|escape bodyTextCenter=true}
+            {elseif $paymentSuccessAwaitingNotification}
                 {include file="$template/includes/panel.tpl" type="success" headerTitle="{lang key='success'}" bodyContent="{lang key='invoicePaymentSuccessAwaitingNotify'}" bodyTextCenter=true}
             {elseif $paymentSuccess}
                 {include file="$template/includes/panel.tpl" type="success" headerTitle="{lang key='success'}" bodyContent="{lang key='invoicepaymentsuccessconfirmation'}" bodyTextCenter=true}
@@ -111,7 +118,7 @@
             {/if}
 
             <div class="invoicequote-addresses">
-                
+
                 <div class="invoicequote-address">
                     <div class="invoicequote-address-heading">{lang key='invoicesinvoicedto'}</div>
                     <address class="small-text">
@@ -131,15 +138,15 @@
                         {/if}
                     </address>
                 </div><!-- .invoicequote-addresses -->
-                
+
                 <div class="invoicequote-address">
                     <div class="invoicequote-address-heading">{lang key='invoicespayto'}</div>
                     <address class="small-text">
                         {$payto}
                         {if $taxCode}<br />{$taxIdLabel}: {$taxCode}{/if}
                     </address>
-                </div><!-- .invoicequote-addresses -->                
-                
+                </div><!-- .invoicequote-addresses -->
+
             </div><!-- .invoicequote-addresses -->
 
             {if $manualapplycredit}
@@ -208,12 +215,8 @@
                             </tr>
                         {/if}
                         <tr>
-                            <td class="total-row text-right"><strong>{lang key='invoicescredit'}</strong></td>
-                            <td class="total-row text-center">{$credit}</td>
-                        </tr>
-                        <tr>
                             <td class="total-row text-right"><strong>{lang key='invoicestotal'}</strong></td>
-                            <td class="total-row text-center">{$total}</td>
+                            <td class="total-row text-center">{$invoiceamount}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -224,55 +227,84 @@
                 <p>* {lang key='invoicestaxindicator'}</p>
             {/if}
 
-            <div class="transactions-container small-text">
-                <div class="table-responsive">
+            <hr />
+
+            <div class="row w-100 mx-auto mb-3">
+                <div class="card w-100">
+                    <div class="card-title py-1 px-2 text-white mb-0 font-weight-bold bg-info">
+                        {lang key='billing.ledger.title'}
+                    </div>
+                    <div class="card-text table-responsive transactions-container">
                     <table class="table table-sm">
                         <thead>
-                            <tr>
-                                <td class="text-center"><strong>{lang key='invoicestransdate'}</strong></td>
-                                <td class="text-center"><strong>{lang key='invoicestransgateway'}</strong></td>
-                                <td class="text-center"><strong>{lang key='invoicestransid'}</strong></td>
-                                <td class="text-center"><strong>{lang key='invoicestransamount'}</strong></td>
-                            </tr>
+                        <tr>
+                            <td class="text-center font-weight-bold">{lang key='billing.ledger.date'}</td>
+                            <td class="text-center font-weight-bold">{lang key='billing.ledger.type'}</td>
+                            <td class="text-center font-weight-bold">{lang key='billing.ledger.reference'}</td>
+                            <td class="text-center font-weight-bold">{lang key='invoicestransamount'}</td>
+                        </tr>
                         </thead>
                         <tbody>
-                            {foreach $transactions as $transaction}
-                                <tr>
-                                    <td class="text-center">{$transaction.date}</td>
-                                    <td class="text-center">{$transaction.gateway}</td>
-                                    <td class="text-center">{$transaction.transid}</td>
-                                    <td class="text-center">{$transaction.amount}</td>
-                                </tr>
-                            {foreachelse}
-                                <tr>
-                                    <td class="text-center" colspan="4">{lang key='invoicestransnonefound'}</td>
-                                </tr>
-                            {/foreach}
+                        {foreach $transactions as $transaction}
                             <tr>
-                                <td class="text-right" colspan="3"><strong>{lang key='invoicesbalance'}</strong></td>
-                                <td class="text-center">{$balance}</td>
+                                <td class="text-center">{$transaction.date}</td>
+                                <td class="text-center">
+                                    {if $transaction.gateway}
+                                        {$transaction.gateway} &mdash;
+                                    {/if}
+                                    {$transaction.typeLabel}
+                                </td>
+                                <td class="text-center">
+                                    {if $transaction.referenceHref}
+                                        <a href="{$transaction.referenceHref}" target="_blank">
+                                    {/if}
+                                    {if $transaction.isCreditNote}
+                                        {lang key='billing.creditnote'}
+                                    {elseif $transaction.isDebitNote}
+                                        {lang key='billing.debitnote'}
+                                    {/if}
+                                    {$transaction.referenceId|truncate:24:"...":false:true}
+                                    {if $transaction.referenceHref}
+                                        </a>
+                                    {/if}
+                                </td>
+                                <td class="text-center">{$transaction.amount}</td>
                             </tr>
+                            {foreachelse}
+                            <tr>
+                                <td class="text-center" colspan="4">{lang key='invoicestransnonefound'}</td>
+                            </tr>
+                        {/foreach}
+                        <tr>
+                            <td class="total-row text-right font-weight-bold" colspan="3">{lang key='invoicesbalance'}</td>
+                            <td class="total-row text-center">{$balance}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
-            </div>
-
-            <div class="invoicequote-actions d-print-none" style="display:flex; justify-content:flex-end; clear:both; margin:14px 12px 10px 0;">
-                <div class="btn-group-sm" style="display:flex; align-items:center; gap:10px;">
-                    <a href="javascript:window.print()" class="btn btn-default" style="border-radius:4px;"><i class="fas fa-print"></i> {lang key='print'}</a>
-                    <a href="dl.php?type=i&amp;id={$invoiceid}" class="btn btn-default" style="border-radius:4px;"><i class="fas fa-download"></i> {lang key='invoicesdownload'}</a>
                 </div>
             </div>
 
+            {if isset($invoiceQrHtml) && !empty($invoiceQrHtml)}
+                <div class="invoice-qr-wrapper mt-3 mb-4">
+                    {$invoiceQrHtml}
+                </div>
+            {/if}
+
+            <div class="float-right btn-group btn-group-sm d-print-none">
+                <a href="javascript:window.print()" class="btn btn-default"><i class="fas fa-print"></i> {lang key='print'}</a>
+                <a href="dl.php?type=i&amp;id={$invoiceid}" class="btn btn-default"><i class="fas fa-download"></i> {lang key='invoicesdownload'}</a>
+            </div>
+
         {/if}
-        
+
 	        <div class="clearfix"></div>
-        
+
         </div><!-- .invoicequote-container-inner -->
 
     </div><!-- .invoice-container -->
 
-    <div class="backtoclientarea"><a href="clientarea.php?action=invoices">{lang key='invoicesbacktoclientarea'}</a></div>
+    <div class="backtoclientarea"><a href="{$WEB_ROOT}/clientarea.php?action=invoices">{lang key='invoicesbacktoclientarea'}</a></div>
 
     <div id="fullpage-overlay" class="w-hidden">
         <div class="outer-wrapper">

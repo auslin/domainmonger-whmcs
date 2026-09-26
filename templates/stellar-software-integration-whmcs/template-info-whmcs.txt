@@ -1,13 +1,12 @@
-WHMCS Version Support: V8.12
+WHMCS Version Support: V9
 
 ----- Showing an old version? -----
 
 If you see an old version of WHMCS listed above it means your integration template is missing updates to make it compatible with the latest version.
 
-You can update your WHMCS integration template following the applicable guide:
+You can update your WHMCS integration template following the guide:
 
-WordPress Theme: https://www.zomex.com/docs/wordpress-themes/how-to-update-whmcs-integration/
-HTML Template: https://www.zomex.com/docs/html-templates/how-to-update-whmcs-integration/
+https://www.zomex.com/docs/wizardpanel/wordpress/updates/whmcs/
 
 If you run into any issues feel free to send us a ticket below:
 

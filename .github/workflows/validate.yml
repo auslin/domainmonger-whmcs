@@ -1,0 +1,36 @@
+name: Repository Validation
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate repository source
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+        with:
+          fetch-depth: 1
+
+      - name: Confirm PHP version
+        shell: bash
+        run: |
+          set -euo pipefail
+          php -v
+          python3 --version
+          bash --version | head -1
+
+      - name: Validate repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash scripts/validate-repo.sh

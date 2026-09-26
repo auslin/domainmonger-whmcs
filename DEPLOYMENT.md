@@ -40,12 +40,14 @@ Normal development does not write to production.
 3. Deploy the exact intended commit to shared staging with **Actions → WHMCS Staging Deployment** and the required confirmation `DEPLOY-STAGING`.
 4. Test the affected WHMCS routes and workflows on staging.
 5. For shared frontend changes, validate WordPress and `/manage/` together and keep production blocked until the paired integration is clean.
-6. Merge or otherwise ensure the validated commit is the current `main` commit.
-7. Record the exact full 40-character SHA that passed staging.
-8. Wait for explicit user authorization to deploy that validated release to production.
-9. Start **Actions → WHMCS Production Deployment** from `main`.
-10. Enter the exact staging-tested SHA and the required confirmation `DEPLOY-WHMCS-PRODUCTION`.
-11. Pass the GitHub `production` Environment approval gate.
+6. Merge the validated change through a pull request into `main`; direct-to-`main` commits are not eligible for production promotion.
+7. Because merging can create a new commit SHA, run **WHMCS Staging Deployment** again from `main` and perform a final staging smoke test of that exact merged commit.
+8. Record the exact full 40-character `main` SHA that passed this post-merge staging run.
+9. Wait for explicit user authorization to deploy that validated release to production.
+10. Start **Actions → WHMCS Production Deployment** from `main`.
+11. Enter that exact post-merge staging-tested SHA and the required confirmation `DEPLOY-WHMCS-PRODUCTION`.
+12. The production workflow verifies that the SHA is associated with a merged PR into `main` and that the exact SHA has a successful **WHMCS Staging Deployment** run from `main`.
+13. Pass the GitHub `production` Environment approval gate.
 12. The workflow verifies the restricted WHMCS SSH gate, then the server independently validates the requested SHA against current `origin/main`.
 13. The guarded server deployment creates the rollback bundle and pre-deploy SHA-256 manifest before writing managed production files.
 14. The guarded server deployment applies the exact validated commit, clears WHMCS compiled templates, and writes the post-deploy manifest.
@@ -78,8 +80,10 @@ The normal production path is the manual **WHMCS Production Deployment** GitHub 
 The workflow requires all of the following before production code can be written:
 
 - it must be started from `main`;
-- the user must enter the full 40-character SHA of the exact staging-tested commit;
+- the user must enter the full 40-character SHA of the exact post-merge `main` commit tested on staging;
 - that SHA must equal current `origin/main`;
+- that SHA must be associated with a merged pull request into `main`;
+- that exact SHA must have a successful staging deployment workflow run from `main`;
 - the user must enter `DEPLOY-WHMCS-PRODUCTION`;
 - the GitHub `production` Environment gate must be approved;
 - the pinned SSH host key must match;

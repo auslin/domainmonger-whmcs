@@ -5,7 +5,7 @@
    Do not load the customer v8x renderer when dmv9support is present.
 *}
 {if $smarty.get.dmv9support|default:'' eq '1'}
-    {include file="orderforms/standard_cart_2/domainregisterv9.tpl"}
+    {include file="orderforms/standard_cart/domainregister.tpl"}
 {else}
     {include file="orderforms/standard_cart_2/domainregister-patch275-direct.tpl"}
 {/if}

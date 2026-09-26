@@ -104,18 +104,16 @@ The WHMCS deployment workflow therefore treats **cache purge + public post-purge
 - Registrar/provider actions on staging are only for explicit controlled tests.
 - Do not commit license keys, database credentials, API keys, encryption hashes, or other secrets.
 
+## Maintained language overrides
+
+`lang/overrides/english.php` is maintained source code and follows the same Git-based deployment workflow as other tracked WHMCS customizations.
+
+- GitHub `main` is authoritative for the complete intended file.
+- Make language changes in Git, deploy that version to staging, test it, and promote the same approved version to production.
+- Do not preserve undocumented staging-only or production-only language edits. Treat them as drift and reconcile any legitimate change back into Git before the next deployment.
+- The former merge-only / never-overwrite exception is retired now that GitHub is the source of truth.
+
 ## Protected project paths
-
-### Language overrides
-
-Never overwrite or rebuild `lang/overrides/english.php`.
-
-When adding language keys:
-1. start from the latest GitHub version;
-2. confirm the key is not already present;
-3. merge only the required key(s);
-4. preserve every existing override;
-5. merge in place on staging/production rather than replacing the whole file.
 
 ### Stellar integration folder
 

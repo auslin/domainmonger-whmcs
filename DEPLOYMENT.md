@@ -22,59 +22,80 @@ WordPress and WHMCS remain separate projects even though they share the same hos
 
 Normal development does not write to production.
 
-- GitHub is the code source of truth.
-- Development changes are committed in Git and deployed to staging with the staging deployment command.
-- Production is a separate deployment action after staging passes and the user explicitly approves production deployment.
+- GitHub is the code source of truth and GitHub Actions is the normal deployment path.
+- WHMCS staging deploys use the protected `staging` GitHub Environment and staging-only FTPS credentials restricted to the staging `/manage/` tree.
+- WHMCS production deploys use the protected `production` GitHub Environment and a dedicated SSH key restricted by `authorized_keys` to the WHMCS deployment gate.
+- The WHMCS production SSH identity cannot open a general shell, allocate a PTY, forward ports, forward an agent, or use X11.
+- The restricted WHMCS SSH gate can invoke only the guarded WHMCS production deploy command.
+- Production is a separate manual deployment action after staging passes and the user explicitly approves production deployment.
 - Generic instructions such as `continue`, `do it`, or approval of a staging result are not production authorization.
-- Manual WinSCP/SFTP file copies into `/home/register/public_html/manage/` are not the normal deployment mechanism.
-- The saved root/server session is for controlled deployment, recovery, or diagnostics; routine development must not use it to edit production.
+- Desktop/WinSCP/mRemoteNG access is not part of the normal deployment path and is reserved for user-controlled break-glass diagnostics or recovery.
 - Production deployment creates a timestamped rollback bundle and before/after SHA-256 manifests before the release is considered complete.
 
 ## Standard workflow
 
 1. Start with a GitHub Issue.
-2. Create a feature/fix branch from `main`.
-3. Make the smallest scoped change needed and commit it.
-4. Run `sudo scripts/deploy-whmcs-staging.sh --dry-run`.
-5. Deploy the committed branch with `sudo scripts/deploy-whmcs-staging.sh`.
-6. Test the affected WHMCS routes and workflows on staging.
-7. Open/update the PR with the staging results.
-8. Merge only after staging validation passes.
-9. Wait for explicit user authorization to deploy the validated release to production.
-10. Run the guarded production dry-run with `sudo scripts/deploy-whmcs-production.sh --approve-production --dry-run`.
-11. Deploy with `sudo scripts/deploy-whmcs-production.sh --approve-production`.
-12. Retain the automatically created production rollback bundle and manifests.
-13. Purge/clear applicable caches and re-request the affected public routes.
-14. Verify the public response reflects the newly deployed code/assets.
-15. Record the production verification and rollback-bundle path in the related Issue/PR.
+2. Create the change in Git and commit it.
+3. Deploy the exact intended commit to shared staging with **Actions → WHMCS Staging Deployment** and the required confirmation `DEPLOY-STAGING`.
+4. Test the affected WHMCS routes and workflows on staging.
+5. For shared frontend changes, validate WordPress and `/manage/` together and keep production blocked until the paired integration is clean.
+6. Merge or otherwise ensure the validated commit is the current `main` commit.
+7. Record the exact full 40-character SHA that passed staging.
+8. Wait for explicit user authorization to deploy that validated release to production.
+9. Start **Actions → WHMCS Production Deployment** from `main`.
+10. Enter the exact staging-tested SHA and the required confirmation `DEPLOY-WHMCS-PRODUCTION`.
+11. Pass the GitHub `production` Environment approval gate.
+12. The workflow verifies the restricted WHMCS SSH gate, then the server independently validates the requested SHA against current `origin/main`.
+13. The guarded server deployment creates the rollback bundle and pre-deploy SHA-256 manifest before writing managed production files.
+14. The guarded server deployment applies the exact validated commit, clears WHMCS compiled templates, and writes the post-deploy manifest.
+15. GitHub checks public `/manage/` reachability.
+16. Re-request every affected live route and verify a concrete marker or workflow behavior; reachability alone is not final verification.
+17. Record the production verification and rollback-bundle path in the related Issue/PR.
 
 ## Deployment commands
 
 ### Staging
 
-```bash
-cd /home/register/git/domainmonger-whmcs
-sudo scripts/deploy-whmcs-staging.sh --dry-run
-sudo scripts/deploy-whmcs-staging.sh
-```
+The normal staging path is GitHub Actions:
 
-Staging may deploy a clean committed feature/fix branch. The staging command has no production target.
+1. Open **Actions → WHMCS Staging Deployment**.
+2. Select the intended branch/commit.
+3. Enter `DEPLOY-STAGING`.
+4. Run the workflow.
+5. Validate the affected staging WHMCS routes and workflows.
+
+The staging workflow deploys only the maintained WHMCS payload through staging-only FTPS credentials restricted to the staging `/manage/` tree. It does not have production credentials.
+
+The normal staging workflow intentionally excludes `templates/stellar-software-integration-whmcs/integration/`.
+
+The server-side staging scripts remain available for controlled diagnostics or recovery, but they are not the normal deployment route.
 
 ### Production
 
-```bash
-cd /home/register/git/domainmonger-whmcs
-git fetch origin main
-git merge --ff-only origin/main
-sudo scripts/deploy-whmcs-production.sh --approve-production --dry-run
-sudo scripts/deploy-whmcs-production.sh --approve-production
-```
+The normal production path is the manual **WHMCS Production Deployment** GitHub Actions workflow.
 
-The production command refuses to run without the explicit `--approve-production` flag, requires `main`, requires `HEAD == origin/main`, and creates a rollback bundle under `/home/register/production-backups/` before changing runtime files.
+The workflow requires all of the following before production code can be written:
 
-The normal WHMCS deployment intentionally excludes `templates/stellar-software-integration-whmcs/integration/`. A coordinated WordPress/WHMCS integration release must explicitly add `--include-integration` to the staging and production commands after the paired release has passed shared staging.
+- it must be started from `main`;
+- the user must enter the full 40-character SHA of the exact staging-tested commit;
+- that SHA must equal current `origin/main`;
+- the user must enter `DEPLOY-WHMCS-PRODUCTION`;
+- the GitHub `production` Environment gate must be approved;
+- the pinned SSH host key must match;
+- the dedicated WHMCS SSH key must authenticate as the restricted deployment account;
+- the forced-command gate must reject a general shell command before deployment proceeds;
+- the server-side deploy wrapper independently checks that the requested SHA equals current `origin/main`;
+- the server Git checkout must be clean.
+
+The restricted WHMCS SSH key cannot open a general shell. It is forced through the DomainMonger WHMCS SSH gate and may invoke only the guarded WHMCS production deployment command.
+
+Before a production apply writes managed WHMCS files, the guarded server deployment creates a timestamped rollback bundle under `/home/register/production-backups/` plus a pre-deploy SHA-256 manifest. After deployment it writes a second manifest and clears compiled WHMCS templates.
+
+The normal GitHub production workflow intentionally excludes `templates/stellar-software-integration-whmcs/integration/`. A coordinated WordPress/WHMCS integration release requires a separately reviewed deployment path after the paired release has passed shared staging; do not silently broaden the normal workflow to include those fragments.
 
 `lang/overrides/english.php` is deployed normally as maintained Git source code.
+
+The direct server-side production scripts remain the guarded deployment engine used underneath GitHub and are also available for user-controlled break-glass recovery. They are not the normal release trigger.
 
 ## WordPress theme / WHMCS integration production gate
 

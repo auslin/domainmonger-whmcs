@@ -18,21 +18,63 @@ GitHub is the source of truth for maintained DomainMonger WHMCS customizations.
 
 WordPress and WHMCS remain separate projects even though they share the same hostname hierarchy. Files outside `/manage/` belong to the WordPress project unless explicitly documented otherwise.
 
+## Deployment access model
+
+Normal development does not write to production.
+
+- GitHub is the code source of truth.
+- Development changes are committed in Git and deployed to staging with the staging deployment command.
+- Production is a separate deployment action after staging passes and the user explicitly approves production deployment.
+- Generic instructions such as `continue`, `do it`, or approval of a staging result are not production authorization.
+- Manual WinSCP/SFTP file copies into `/home/register/public_html/manage/` are not the normal deployment mechanism.
+- The saved root/server session is for controlled deployment, recovery, or diagnostics; routine development must not use it to edit production.
+- Production deployment creates a timestamped rollback bundle and before/after SHA-256 manifests before the release is considered complete.
+
 ## Standard workflow
 
 1. Start with a GitHub Issue.
 2. Create a feature/fix branch from `main`.
-3. Make the smallest scoped change needed.
-4. Deploy the branch to staging.
-5. Test the affected WHMCS routes and workflows on staging.
-6. Open/update the PR with the staging results.
-7. Merge only after staging validation passes.
-8. Back up affected production files/data when the change requires it.
-9. Deploy the merged `main` change to production.
-10. Purge applicable production page/server/CDN caches for the affected `/manage/` routes.
-11. Re-request the affected public routes after the purge.
-12. Verify the public response reflects the newly deployed code/assets.
-13. Record the production verification in the related Issue/PR.
+3. Make the smallest scoped change needed and commit it.
+4. Run `sudo scripts/deploy-whmcs-staging.sh --dry-run`.
+5. Deploy the committed branch with `sudo scripts/deploy-whmcs-staging.sh`.
+6. Test the affected WHMCS routes and workflows on staging.
+7. Open/update the PR with the staging results.
+8. Merge only after staging validation passes.
+9. Wait for explicit user authorization to deploy the validated release to production.
+10. Run the guarded production dry-run with `sudo scripts/deploy-whmcs-production.sh --approve-production --dry-run`.
+11. Deploy with `sudo scripts/deploy-whmcs-production.sh --approve-production`.
+12. Retain the automatically created production rollback bundle and manifests.
+13. Purge/clear applicable caches and re-request the affected public routes.
+14. Verify the public response reflects the newly deployed code/assets.
+15. Record the production verification and rollback-bundle path in the related Issue/PR.
+
+## Deployment commands
+
+### Staging
+
+```bash
+cd /home/register/git/domainmonger-whmcs
+sudo scripts/deploy-whmcs-staging.sh --dry-run
+sudo scripts/deploy-whmcs-staging.sh
+```
+
+Staging may deploy a clean committed feature/fix branch. The staging command has no production target.
+
+### Production
+
+```bash
+cd /home/register/git/domainmonger-whmcs
+git fetch origin main
+git merge --ff-only origin/main
+sudo scripts/deploy-whmcs-production.sh --approve-production --dry-run
+sudo scripts/deploy-whmcs-production.sh --approve-production
+```
+
+The production command refuses to run without the explicit `--approve-production` flag, requires `main`, requires `HEAD == origin/main`, and creates a rollback bundle under `/home/register/production-backups/` before changing runtime files.
+
+The normal WHMCS deployment intentionally excludes `templates/stellar-software-integration-whmcs/integration/`. A coordinated WordPress/WHMCS integration release must explicitly add `--include-integration` to the staging and production commands after the paired release has passed shared staging.
+
+`lang/overrides/english.php` is deployed normally as maintained Git source code.
 
 ## WordPress theme / WHMCS integration production gate
 

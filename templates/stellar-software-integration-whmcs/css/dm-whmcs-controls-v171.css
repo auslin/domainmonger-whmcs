@@ -1725,3 +1725,43 @@ body.whmcsbody .client-home-cards .card .list-group .label-default {
     box-shadow: none !important;
     white-space: nowrap !important;
 }
+
+/* DomainMonger Patch 197
+   WizardPanel 3.1 regression fixes: invoice action spacing + dashboard domain CTA colors. */
+
+/* Client dashboard domain CTAs: restore DomainMonger primary/secondary colors over WizardPanel secondary defaults. */
+body.whmcsbody.whmcs-templatefile-clientareahome #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .btn,
+body.whmcsbody.whmcs-templatefile-clientareahome #main-body .client-home-cards .card[menuItemName="Register Domains"] .btn {
+    background: #f58220 !important;
+    background-color: #f58220 !important;
+    border-color: #f58220 !important;
+    color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareahome #main-body .client-home-cards .card[menuItemName="Register a New Domain"] .btn:hover,
+body.whmcsbody.whmcs-templatefile-clientareahome #main-body .client-home-cards .card[menuItemName="Register Domains"] .btn:hover {
+    background: #214e7a !important;
+    background-color: #214e7a !important;
+    border-color: #214e7a !important;
+    color: #ffffff !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareahome #main-body .client-home-cards .card[menuItemName="Transfer Your Domains"] .btn,
+body.whmcsbody.whmcs-templatefile-clientareahome #main-body .client-home-cards .card[menuItemName="Transfer Domains"] .btn,
+body.whmcsbody.whmcs-templatefile-clientareahome #main-body .client-home-cards .card[menuItemName="Transfer Domains to Us"] .btn {
+    background: #163a5f !important;
+    background-color: #163a5f !important;
+    border-color: #163a5f !important;
+    color: #ffffff !important;
+    text-shadow: none !important;
+}
+
+body.whmcsbody.whmcs-templatefile-clientareahome #main-body .client-home-cards .card[menuItemName="Transfer Your Domains"] .btn:hover,
+body.whmcsbody.whmcs-templatefile-clientareahome #main-body .client-home-cards .card[menuItemName="Transfer Domains"] .btn:hover,
+body.whmcsbody.whmcs-templatefile-clientareahome #main-body .client-home-cards .card[menuItemName="Transfer Domains to Us"] .btn:hover {
+    background: #214e7a !important;
+    background-color: #214e7a !important;
+    border-color: #214e7a !important;
+    color: #ffffff !important;
+}

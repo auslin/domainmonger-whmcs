@@ -18,11 +18,11 @@
 {* {\WHMCS\View\Asset::fontCssInclude('open-sans-family.css')} *}
 <link href="{assetPath file='all.min.css'}?v={$versionHash}" rel="stylesheet">
 <link href="{assetPath file='theme.min.css'}?v={$versionHash}" rel="stylesheet">
-<link href="{$WEB_ROOT}/assets/css/fontawesome-all.min.css" rel="stylesheet">
+{* <link href="{$WEB_ROOT}/assets/css/fontawesome-all.min.css" rel="stylesheet"> *}
 {assetExists file="custom.css"}
 <link href="{$__assetPath__}" rel="stylesheet">
 {/assetExists}
-<link href="{$WEB_ROOT}/templates/{$template}/css/dm-whmcs-controls-v171.css?v=196" rel="stylesheet">
+<link href="{$WEB_ROOT}/templates/{$template}/css/dm-whmcs-controls-v171.css?v=197" rel="stylesheet">
 
 <script>
     var csrfToken = '{$token}',

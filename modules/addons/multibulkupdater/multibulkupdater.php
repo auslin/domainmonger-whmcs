@@ -2824,6 +2824,10 @@ function multibulkupdater_move_preflight_whmcs(array $domains, string $destinati
         return ['ok' => false, 'mode' => 'whmcs', 'destination' => [], 'rows' => [], 'message' => (string) $target['message']];
     }
 
+    if (strcasecmp((string) ($target['status'] ?? ''), 'Closed') === 0) {
+        return ['ok' => false, 'mode' => 'whmcs', 'destination' => $target, 'rows' => [], 'message' => 'The destination WHMCS account is Closed and cannot receive moved domains.'];
+    }
+
     $rows = [];
     $blocked = 0;
     foreach ($domains as $domainName) {

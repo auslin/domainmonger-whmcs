@@ -23,6 +23,7 @@ WordPress and WHMCS remain separate projects even though they share the same hos
 Normal development does not write to production.
 
 - GitHub is the code source of truth and GitHub Actions is the normal deployment path.
+- `Repository Validation` runs on `main` pushes, pull requests, and on demand; staging and production deployment workflows also run `scripts/validate-repo.sh` themselves before any deployment step.
 - WHMCS staging deploys use the protected `staging` GitHub Environment and staging-only FTPS credentials restricted to the staging `/manage/` tree.
 - WHMCS production deploys use the protected `production` GitHub Environment and a dedicated SSH key restricted by `authorized_keys` to the WHMCS deployment gate.
 - The WHMCS production SSH identity cannot open a general shell, allocate a PTY, forward ports, forward an agent, or use X11.
